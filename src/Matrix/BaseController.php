@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BaseController
 {
     private string $views = 'C:\Users\merli\PhpstormProjects\projectHaarlemFestival\src\Views';
-    private string $cache = 'C:\Users\merli\PhpstormProjects\projectHaarlemFestival\cache';
+    private string $cache = 'C:\Users\merli\PhpstormProjects\projectHaarlemFestival\CompiledTemplates';
     private BladeOne $blade;
 
     function __construct() {
