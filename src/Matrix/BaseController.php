@@ -3,6 +3,7 @@ namespace Matrix;
 
 use eftec\bladeone\BladeOne;
 use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -24,5 +25,10 @@ class BaseController
         return new Response(
             $this->blade->run($bladeName,$args)
         );
+    }
+
+    protected function json($args): Response
+    {
+        return new JsonResponse($args);
     }
 }
