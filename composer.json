@@ -8,7 +8,8 @@
     "symfony/routing": "^6.0",
     "symfony/http-kernel": "^6.0",
     "twig/twig": "^3.0",
-    "symfony/asset": "^6.0"
+    "symfony/asset": "^6.0",
+    "eftec/bladeone": "^4.2"
   },
   "autoload": {
     "psr-4": {
