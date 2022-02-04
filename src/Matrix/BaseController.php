@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseController
 {
-    private string $views = 'C:\Users\merli\PhpstormProjects\projectHaarlemFestival\src\Views';
-    private string $cache = 'C:\Users\merli\PhpstormProjects\projectHaarlemFestival\CompiledTemplates';
+    private string $views = '/home/merlijn/PhpstormProjects/Haarlem-festival/src/Views';
+    private string $cache = '/home/merlijn/PhpstormProjects/Haarlem-festival/CompiledTemplates';
     private BladeOne $blade;
 
     function __construct() {

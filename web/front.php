@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 
-require_once __DIR__.'/../vendor/autoload.php';
-
 use Matrix\Framework;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\Routing;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $request = Request::createFromGlobals();
 $routes = include __DIR__.'/../src/app.php';
