@@ -7,11 +7,18 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\Routing;
 
+$loader = new Nette\Loaders\RobotLoader;
+$loader->addDirectory(__DIR__ . '/src');
+
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 1));
 $dotenv->load();
 
+//Load routes into the application
 $request = Request::createFromGlobals();
 $routes = include __DIR__.'/../src/app.php';
+
+//Load capsule into the application
+include dirname(__DIR__, 1)."/src/Config/Connection.php";
 
 $context = new Routing\RequestContext();
 $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
