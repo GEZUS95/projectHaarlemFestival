@@ -9,12 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseController
 {
-    private string $views = '/home/merlijn/PhpstormProjects/Haarlem-festival/src/Views';
-    private string $cache = '/home/merlijn/PhpstormProjects/Haarlem-festival/CompiledTemplates';
     private BladeOne $blade;
 
     function __construct() {
-        $this->blade = new BladeOne($this->views,$this->cache,BladeOne::MODE_DEBUG);
+        $this->blade = new BladeOne($_ENV['VIEW_FILE_LOCATION'],$_ENV['COMPILED_FILE_LOCATION'],BladeOne::MODE_DEBUG);
     }
 
     /**

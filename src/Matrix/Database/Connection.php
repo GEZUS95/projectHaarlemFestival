@@ -9,16 +9,16 @@ class Connection {
     private static ?Connection $instance = null;
     private PDO $conn;
 
-    private string $host = "mysql";
-    private string $user = "root";
-    private string $pass = "secret123";
-    private string $name = "phpProject";
-
     private function __construct()
     {
-        $this->conn = new PDO("mysql:host={$this->host};
-    dbname={$this->name}", $this->user,$this->pass,
-            array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+        $this->conn = new PDO(
+            "mysql:host={$_ENV['DATABASE_HOST']};
+                dbname={$_ENV['DATABASE_NAME']}",
+                $_ENV['DATABASE_USER'],
+                $_ENV['DATABASE_PASSWORD'],
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'")
+        );
+
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
