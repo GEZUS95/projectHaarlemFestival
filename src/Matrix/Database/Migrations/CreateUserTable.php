@@ -8,7 +8,7 @@ class CreateUserTable
 {
     public function up()
     {
-        if(Capsule::schema()->hasTable('user'))
+        if (Capsule::schema()->hasTable('user'))
             return;
 
         Capsule::schema()->create('user', function ($table) {

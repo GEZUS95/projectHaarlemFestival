@@ -12,7 +12,6 @@ foreach (glob($pathToMigrationFolder . "/*.php") as $file)
     $class = basename($file, '.php');
     $prf = "Matrix\Database\Migrations\\";
 
-    if (class_exists($prf.$class))
     {
         $s = $prf . $class;
         $obj = new  $s;
