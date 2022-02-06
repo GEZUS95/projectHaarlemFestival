@@ -10,6 +10,4 @@ $dotenv->load();
 //Load capsule into the application
 include __DIR__ . "/src/Config/Connection.php";
 
-//start the php session
-$session = new \Matrix\SessionManager();
 

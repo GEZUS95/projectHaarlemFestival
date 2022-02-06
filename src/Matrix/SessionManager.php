@@ -4,20 +4,22 @@ namespace Matrix;
 
 class SessionManager
 {
-    public function __construct(?string $cacheExpire = null, ?string $cacheLimiter = null)
+    private static ?SessionManager $session = null;
+
+    private function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
-
-            if ($cacheLimiter !== null) {
-                session_cache_limiter($cacheLimiter);
-            }
-
-            if ($cacheExpire !== null) {
-                session_cache_expire($cacheExpire);
-            }
-
             session_start();
         }
+    }
+
+    public static function getSessionManager(): ?SessionManager
+    {
+        if (!self::$session) {
+            self::$session = new SessionManager();
+        }
+
+        return self::$session;
     }
 
     /**
