@@ -1,3 +1,2 @@
-<h1>{{$name}}</h1>
+<h1>test</h1>
 {{$result->id}}
-{{$result->name}}

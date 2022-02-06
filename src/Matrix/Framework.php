@@ -34,8 +34,10 @@ class Framework
 
             return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $exception) {
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('Not Found', 404);
         } catch (\Exception $exception) {
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('An error occurred', 500);
         }
     }

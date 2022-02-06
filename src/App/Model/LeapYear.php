@@ -1,5 +1,5 @@
 <?php
-namespace Http\Model;
+namespace App\Model;
 
 class LeapYear
 {

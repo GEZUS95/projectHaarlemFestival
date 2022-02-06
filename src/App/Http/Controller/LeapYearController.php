@@ -1,11 +1,12 @@
 <?php
 
-namespace Http\Controller;
+namespace  App\Http\Controller;
 
+use App\Model\User;
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-use Http\Model\LeapYear;
+use App\Model\LeapYear;
 use Matrix\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,9 @@ class LeapYearController extends BaseController
             $result ='Nope, this is not a leap year.';
         }
 
-        $r = Capsule::table('users')->where('name', '=', "john doe")->first();
+//        $r = Capsule::table('user')->where('id', '=', "1")->first();
+
+        $r = User::query()->where('id', '=', "1")->first();
 
         return $this->render('hello', [
             'name' => "john doe",

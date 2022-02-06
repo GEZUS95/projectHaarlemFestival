@@ -3,7 +3,6 @@
 require_once dirname(__DIR__, 1)."/Boot.php";
 
 $pathToMigrationFolder = dirname(__DIR__, 1)."/src/Matrix/Database/Migrations";
-var_dump(glob($pathToMigrationFolder . "/*.php"));
 
 foreach (glob($pathToMigrationFolder . "/*.php") as $file)
 {
@@ -18,4 +17,6 @@ foreach (glob($pathToMigrationFolder . "/*.php") as $file)
         $obj->up();
     }
 }
+
+die("Migrations ran updated the database correctly!");
 

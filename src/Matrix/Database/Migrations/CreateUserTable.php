@@ -13,6 +13,9 @@ class CreateUserTable
 
         Capsule::schema()->create('user', function ($table) {
             $table->increments('id');
+            $table->string("email")->unique();
+            $table->string("password");
+            $table->bigInteger("role_id");
             $table->timestamps();
         });
     }
