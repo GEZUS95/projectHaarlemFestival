@@ -13,7 +13,7 @@ class RoleSeeder
         ]);
 
         Role::create([
-            'permissions' => "['Admin']",
+            'permissions' => "['admin']",
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\LeapYearController;
 use Symfony\Component\Routing;
@@ -21,5 +22,10 @@ $routes->add('login', new Routing\Route('/login', [
 $routes->add('login_post', new Routing\Route('/login', [
     '_controller' =>  [new LoginController(), 'login'],
 ], [], [], '', [],['POST']));
+
+$routes->add('admin', new Routing\Route('/admin', [
+    '_controller' =>  [new AdminMainController(), 'index'],
+], [], [], '', [],['GET']));
+
 return $routes;
 

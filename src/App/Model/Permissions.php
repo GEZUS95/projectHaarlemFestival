@@ -17,6 +17,6 @@ class Permissions extends Model {
         }
     }
 
-    public const __ADMIN__ = 'Admin';
+    public const __ADMIN__ = 'admin';
 
 }
