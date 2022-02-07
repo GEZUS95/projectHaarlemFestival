@@ -12,10 +12,16 @@ class CreateUserTable
             return;
 
         Capsule::schema()->create('user', function ($table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string("email")->unique();
             $table->string("password");
-            $table->bigInteger("role_id");
+            $table->unsignedBigInteger("role_id");
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('role')
+                ->unisigned();
+
             $table->timestamps();
         });
     }

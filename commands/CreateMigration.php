@@ -29,7 +29,7 @@ class Create" . ucfirst($filename) . "Table
             return;
             
         Capsule::schema()->create('" . $filename . "', function (\$table) {
-            \$table->increments('id');
+            \$table->bigIncrements('id');
             \$table->timestamps();
         });
     }

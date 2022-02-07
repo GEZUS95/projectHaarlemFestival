@@ -3,7 +3,6 @@
 namespace Matrix\Managers;
 
 use App\Model\User;
-use Illuminate\Database\Eloquent\Model;
 
 class AuthManager
 {

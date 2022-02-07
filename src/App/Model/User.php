@@ -14,4 +14,18 @@ class User extends Model {
         'role_id'
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
+    protected $casts = [
+        'role_id' => 'integer',
+    ];
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+
+        return $this->belongsTo(Role::class);
+
+    }
 }
