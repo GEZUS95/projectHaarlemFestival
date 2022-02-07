@@ -39,3 +39,6 @@ class Create" . ucfirst($filename) . "Table
 $fileWriter = fopen($updateFullPath, 'w');
 fwrite($fileWriter, substr($content, strpos($content, "\n") + 1));
 fclose($fileWriter);
+
+die("Migration Create" . ucfirst($filename) . "Table created successfully");
+
