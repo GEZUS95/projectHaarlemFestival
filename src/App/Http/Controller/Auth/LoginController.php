@@ -3,7 +3,9 @@
 namespace  App\Http\Controller\Auth;
 
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use Matrix\BaseController;
+use Matrix\Factory\ValidatorFactory;
 use Matrix\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,20 +23,29 @@ class LoginController extends BaseController {
         return $this->render('auth.login', []);
     }
 
-    public function login(Request $request): Response
+    public function login(Request $request)
     {
 
         $data = $request->request->all();
-        var_dump($data);
 
         $session = SessionManager::getSessionManager();
 
         if($data["token"] != $session->get("login_form_csrf_token"))
             return new Response('Unauthorized', 403);
 
-        //@todo install package
-        //https://packagist.org/packages/prettus/laravel-validation
-        //validate request after this and upload user into db
+        $validator = (new ValidatorFactory())->make(
+            $data,
+            [
+                'token' => 'required',
+                'email' => 'required',
+                'password' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $referer = $request->headers->get('referer');
+            return $this->Redirect($referer);
+        }
 
 
         return $this->json(['result' => "t"]);

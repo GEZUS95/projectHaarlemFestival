@@ -4,15 +4,19 @@
     "symfony/maker-bundle": "^1.36"
   },
   "require": {
-    "symfony/http-foundation": "^6.0",
-    "symfony/routing": "^6.0",
-    "symfony/http-kernel": "^6.0",
-    "symfony/asset": "^6.0",
+    "php": "^7.3|^8.0",
+    "symfony/http-foundation": "^5.0",
+    "symfony/routing": "^5.0",
+    "symfony/http-kernel": "^5.0",
+    "symfony/asset": "^5.0",
     "eftec/bladeone": "^4.2",
     "ext-pdo": "*",
     "vlucas/phpdotenv": "^5.4",
     "nette/robot-loader": "^3.4",
-    "illuminate/database": "^8.0"
+    "illuminate/database": "^8.0",
+    "illuminate/validation": "^8.0",
+    "illuminate/translation": "^8.0",
+    "illuminate/filesystem": "^8.0"
   },
   "autoload": {
     "psr-4": {
@@ -20,3 +24,4 @@
     }
   }
 }
+

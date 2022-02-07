@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class BaseController
 {
@@ -28,5 +29,10 @@ class BaseController
     protected function json($args): Response
     {
         return new JsonResponse($args);
+    }
+
+    protected function Redirect($url): RedirectResponse
+    {
+        return new RedirectResponse($url);
     }
 }
