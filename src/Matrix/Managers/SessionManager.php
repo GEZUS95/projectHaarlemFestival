@@ -1,6 +1,6 @@
 <?php
 
-namespace Matrix;
+namespace Matrix\Managers;
 
 class SessionManager
 {

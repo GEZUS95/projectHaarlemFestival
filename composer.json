@@ -4,7 +4,7 @@
     "symfony/maker-bundle": "^1.36"
   },
   "require": {
-    "php": "^7.3|^8.0",
+    "php": "^7.4|^8.0",
     "symfony/http-foundation": "^5.0",
     "symfony/routing": "^5.0",
     "symfony/http-kernel": "^5.0",

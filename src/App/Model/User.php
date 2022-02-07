@@ -8,7 +8,10 @@ class User extends Model {
 
     protected $table = 'user';
 
-    public function login(){
+    protected $fillable = [
+        'email',
+        'password',
+        'role_id'
+    ];
 
-    }
 }

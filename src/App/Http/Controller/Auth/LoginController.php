@@ -3,10 +3,10 @@
 namespace  App\Http\Controller\Auth;
 
 use Exception;
-use Illuminate\Support\Facades\Validator;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
-use Matrix\SessionManager;
+use Matrix\Managers\AuthManager;
+use Matrix\Managers\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,9 +25,7 @@ class LoginController extends BaseController {
 
     public function login(Request $request)
     {
-
         $data = $request->request->all();
-
         $session = SessionManager::getSessionManager();
 
         if($data["token"] != $session->get("login_form_csrf_token"))
@@ -47,8 +45,12 @@ class LoginController extends BaseController {
             return $this->Redirect($referer);
         }
 
+        if(!AuthManager::login($data["email"], $data["password"])){
+            $referer = $request->headers->get('referer');
+            return $this->Redirect($referer);
+        }
 
-        return $this->json(['result' => "t"]);
+        return $this->json(['result' => AuthManager::getCurrentUser()]);
     }
 
 }
