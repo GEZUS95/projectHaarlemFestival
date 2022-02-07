@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class AuthManager
 {
-    protected static ?Model $user = null;
+    protected static ?User $user = null;
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     */
     public static function login($email, $password): bool
     {
         $user = User::query()
@@ -24,6 +29,11 @@ class AuthManager
         return true;
     }
 
+    /**
+     * @param $password
+     * @param $hash
+     * @return bool
+     */
     private static function verifyPassword($password, $hash): bool
     {
         return password_verify($password, $hash);
@@ -33,6 +43,9 @@ class AuthManager
         SessionManager::getSessionManager()->remove("user_email");
     }
 
+    /**
+     * @return bool
+     */
     public static function isLoggedIn(): bool
     {
         $user_email = SessionManager::getSessionManager()->has("user_email");
@@ -45,13 +58,19 @@ class AuthManager
         return true;
     }
 
-    public static function getCurrentUser(): ?Model
+    /**
+     * @return User|null
+     */
+    public static function getCurrentUser(): ?User
     {
         if(self::$user == null)
             return null;
 
-        if(self::isLoggedIn())
+        //hide password in case it some1 how ends up in the front end :P
+        if(self::isLoggedIn()) {
+            self::$user->password = null;
             return self::$user;
+        }
 
         return null;
     }
