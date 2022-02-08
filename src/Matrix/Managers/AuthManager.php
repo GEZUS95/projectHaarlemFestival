@@ -5,6 +5,7 @@ namespace Matrix\Managers;
 use App\Model\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Matrix\Exception\NotLoggedInException;
 
 class AuthManager
 {
@@ -50,7 +51,7 @@ class AuthManager
 
         if($email == null){
             self::logout();
-            return false;
+            throw new NotLoggedInException();
         }
 
         return true;
@@ -65,9 +66,9 @@ class AuthManager
         $user = User::query()->where("email", "=", $email)->first();
 
         if($user == null)
-            return null;
+            throw new NotLoggedInException();
 
-        //hide password in case it some1 how ends up in the front end :P
+        //@TODO check if self::isLoggedIn() is dupe code remove if it is!
         if(self::isLoggedIn()) {
             $user->password = null;
             return $user;

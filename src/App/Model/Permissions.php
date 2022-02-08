@@ -18,5 +18,5 @@ class Permissions extends Model {
     }
 
     public const __ADMIN__ = 'admin';
-
+    public const __VIEW_CMS_PAGE__ = 'view_cms_page';
 }

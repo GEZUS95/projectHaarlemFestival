@@ -17,9 +17,7 @@ class AdminMainController extends BaseController
      */
     public function index(): Response
     {
-
-        GuardManager::guard(Permissions::__ADMIN__);
-
+        GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
         return $this->render('partials.admin.index', []);
     }
 
