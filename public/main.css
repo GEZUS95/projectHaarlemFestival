@@ -3,3 +3,15 @@ footer {
 
 body {
   background: navy; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; }
+
+footer {
+  margin-top: auto; }
+
+body {
+  display: flex;
+  flex-direction: column; }
