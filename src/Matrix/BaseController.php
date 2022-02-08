@@ -12,7 +12,7 @@ class BaseController
     private BladeOne $blade;
 
     function __construct() {
-        $this->blade = new BladeOne($_ENV['VIEW_FILE_LOCATION'],$_ENV['COMPILED_FILE_LOCATION'],BladeOne::MODE_DEBUG);
+        $this->blade = new BladeOne(dirname(__DIR__, 2) . "/resources/views",dirname(__DIR__, 2) . "/public/views",BladeOne::MODE_DEBUG);
     }
 
     /**

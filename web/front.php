@@ -9,7 +9,7 @@ use Symfony\Component\Routing;
 
 //Load routes into the application
 $request = Request::createFromGlobals();
-$routes = include __DIR__.'/../src/app.php';
+$routes = include __DIR__ . '/../src/route.php';
 
 $context = new Routing\RequestContext();
 $matcher = new Routing\Matcher\UrlMatcher($routes, $context);

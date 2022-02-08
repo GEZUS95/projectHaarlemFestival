@@ -12,6 +12,7 @@ $routes = [
     ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
+    //@TODO make a controller for this and make sure this works 100% and not half or some shit!
     ["name" => "css", "url" => "/main.css", "controller" => function () {
         $file = '../public/main.css';
         $response = new BinaryFileResponse($file);
