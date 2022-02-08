@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="http://127.0.0.1:4321/main.css">
+    <link rel="stylesheet" href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("css")}}">
     <title>Document</title>
 </head>
 <body>
@@ -16,6 +16,7 @@
 </main>
 @include("partials.admin.layout.footer")
 
-<script type="text/javascript" src="http://127.0.0.1:4321/main.js"></script>
+
+<script type="text/javascript" src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("js")}}"></script>
 </body>
 </html>

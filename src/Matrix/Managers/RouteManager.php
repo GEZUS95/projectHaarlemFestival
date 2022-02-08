@@ -31,7 +31,7 @@ class RouteManager
         return $this->generatedRoutes;
     }
 
-    public static function getUrlByRouteName($name)
+    public static function getUrlByRouteName($name): string
     {
         if (self::$routeList == null) {
             throw new ResourceNotFoundException("Routes are not set");
@@ -39,7 +39,7 @@ class RouteManager
 
         foreach (self::$routeList as $r) {
             if ($r["name"] == $name)
-                return $r["url"];
+                return "http://" .$_SERVER['SERVER_NAME'].$r["url"];
         }
 
         throw new ResourceNotFoundException("Routes not found");
