@@ -3,29 +3,17 @@
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\LeapYearController;
-use Symfony\Component\Routing;
+use Matrix\Managers\RouteManager;
 
-$routes = new Routing\RouteCollection();
-$routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
-    '_controller' =>  [new LeapYearController(), 'index'],
-], [], [], '', [],['GET']));
-
-$routes->add('leap_year_json', new Routing\Route('/is_leap_year_json/{year}', [
-    '_controller' =>  [new LeapYearController(), 'jsonTest'],
-]));
-
-$routes->add('login', new Routing\Route('/login', [
-    '_controller' =>  [new LoginController(), 'index'],
-], [], [], '', [],['GET']));
+$routes = [
+    ["name" => "leap_year", "url" => "/is_leap_year/{year}", "controller" => [new LeapYearController(), 'index'], "method" => "GET"],
+    ["name" => "leap_year_json", "url" => "/is_leap_year_json/{year}", "controller" => [new LeapYearController(), 'jsonTest'], "method" => "GET"],
+    ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
+    ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
+    ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
+];
 
 
-$routes->add('login_post', new Routing\Route('/login', [
-    '_controller' =>  [new LoginController(), 'login'],
-], [], [], '', [],['POST']));
-
-$routes->add('admin', new Routing\Route('/admin', [
-    '_controller' =>  [new AdminMainController(), 'index'],
-], [], [], '', [],['GET']));
-
-return $routes;
+$generatedRoute = new RouteManager($routes);
+return $generatedRoute->getGeneratedRoutes();
 
