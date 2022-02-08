@@ -1,0 +1,1 @@
+export const otherVar = "THIS IS FROM ANOTHER FOLDER!";

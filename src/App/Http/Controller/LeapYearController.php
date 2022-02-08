@@ -4,7 +4,6 @@ namespace  App\Http\Controller;
 
 use App\Model\User;
 use Exception;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 use App\Model\LeapYear;
 use Matrix\BaseController;
