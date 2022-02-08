@@ -3,8 +3,10 @@
 
 namespace App\Http\Controller\Admin;
 
+use App\Model\Permissions;
 use Exception;
 use Matrix\BaseController;
+use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMainController extends BaseController
@@ -15,6 +17,8 @@ class AdminMainController extends BaseController
      */
     public function index(): Response
     {
+
+        GuardManager::guard(Permissions::__ADMIN__);
 
         return $this->render('partials.admin.index', []);
     }

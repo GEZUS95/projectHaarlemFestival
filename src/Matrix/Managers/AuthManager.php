@@ -3,11 +3,11 @@
 namespace Matrix\Managers;
 
 use App\Model\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class AuthManager
 {
-    protected static ?User $user = null;
-
     /**
      * @param $email
      * @param $password
@@ -24,7 +24,6 @@ class AuthManager
         }
 
         SessionManager::getSessionManager()->set("user_email", $user->email);
-        self::$user = $user;
         return true;
     }
 
@@ -47,9 +46,9 @@ class AuthManager
      */
     public static function isLoggedIn(): bool
     {
-        $user_email = SessionManager::getSessionManager()->has("user_email");
+        $email = SessionManager::getSessionManager()->get("user_email");
 
-        if(self::$user != $user_email){
+        if($email == null){
             self::logout();
             return false;
         }
@@ -58,17 +57,20 @@ class AuthManager
     }
 
     /**
-     * @return User|null
+     * @return Builder|Model|object|null
      */
-    public static function getCurrentUser(): ?User
+    public static function getCurrentUser()
     {
-        if(self::$user == null)
+        $email = SessionManager::getSessionManager()->get("user_email");
+        $user = User::query()->where("email", "=", $email)->first();
+
+        if($user == null)
             return null;
 
         //hide password in case it some1 how ends up in the front end :P
         if(self::isLoggedIn()) {
-            self::$user->password = null;
-            return self::$user;
+            $user->password = null;
+            return $user;
         }
 
         return null;
