@@ -2,6 +2,9 @@
 
 namespace Matrix;
 
+use Matrix\Exception\NotLoggedInException;
+use Matrix\Exception\UnauthorizedAccessException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
@@ -36,6 +39,12 @@ class Framework
         } catch (ResourceNotFoundException $exception) {
             highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('Not Found', 404);
+        } catch (UnauthorizedAccessException $exception) {
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
+            return new Response('Unauthorized', 403);
+        }catch (NotLoggedInException $exception) {
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
+            return new RedirectResponse('/login', 303);
         } catch (\Exception $exception) {
             highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('An error occurred', 500);
