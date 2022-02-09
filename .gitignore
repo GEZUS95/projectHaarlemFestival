@@ -2,3 +2,5 @@ vendor
 .idea
 .env
 node_modules
+
+public/views
