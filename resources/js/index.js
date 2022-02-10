@@ -1,10 +1,7 @@
 // import _ from 'lodash';
-import {otherVar} from "./subDir/someotherfile";
+import SideNavigation from "./components/admin/SideNavigation";
 
-console.log(otherVar);
-console.log("HELLO WORLD BLYAT!");
-
-window.console.log("TEST");
+window.customElements.define('side-navigation', SideNavigation);
 
 //npm i -g webpack
 //npm i -g webpack-cli

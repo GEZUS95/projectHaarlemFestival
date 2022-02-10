@@ -1,0 +1,17 @@
+.partials-admin-layout-nav {
+  height: 70px;
+  background: #1A222A;
+  box-shadow: rgba(0, 0, 0, 0.44) 1.95px 1.95px 2.6px;
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 100;
+}
+
+.partials-admin-layout-nav-header {
+  font-size: 28px;
+  font-weight: bold;
+  margin-left: 245px;
+  color: #ffffff;
+}

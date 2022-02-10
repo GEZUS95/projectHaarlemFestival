@@ -1,12 +1,8 @@
-@import 'partials/admin/layout/footer.scss';
+@import 'partials/admin/layout/main.scss';
+@import 'partials/admin/layout/nav.scss';
+@import 'partials/admin/layout/sidenav.scss';
 @import 'partials/event/index.scss';
 @import 'layout/footer.scss';
-@import 'layout/footer.scss';
-@import 'layout/footer.scss';
-
-body {
-    background: navy;
-}
 
 html, body {
     margin: 0;

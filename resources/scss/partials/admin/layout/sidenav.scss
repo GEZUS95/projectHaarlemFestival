@@ -1,0 +1,66 @@
+.partials-admin-layout-sidenav {
+  height: 100%;
+  background-color: #ECEFF1;
+  width: 240px;
+}
+
+.partials-admin-layout-sidenav-title {
+  color: #5A5D61;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 6px 0;
+}
+.partials-admin-layout-sidenav-btn-events-titles {
+  width: 100%;
+  margin-left: 10px;
+}
+
+.partials-admin-layout-sidenav-btn-add-events {
+  @extend .partials-admin-layout-sidenav-btn;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.partials-admin-layout-sidenav-btn-events-plus {
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+}
+
+.partials-admin-layout-sidenav-btn-events {
+
+  .partials-admin-layout-sidenav-btn-event-icon {
+    height: 25px;
+    min-width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @extend .partials-admin-layout-sidenav-btn;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .fa-location-arrow {
+    color: #263238;
+    transform: rotate(45deg);
+  }
+
+  .fa-gear {
+    color: #1F883C;
+    margin-right: 5px;
+  }
+}
+
+.partials-admin-layout-sidenav-btn {
+  background-color: #CFD8DC;
+  color: #263238;
+  font-size: 20px;
+  height: 40px;
+}
