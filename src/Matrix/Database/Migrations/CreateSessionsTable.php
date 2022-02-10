@@ -13,6 +13,7 @@ class CreateSessionsTable
 
         Capsule::schema()->create('sessions', function ($table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('restaurant_id');
             $table->unsignedInteger('sessions_amount');
             $table->unsignedInteger('duration');
             $table->date('start_time');

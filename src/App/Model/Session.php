@@ -10,6 +10,7 @@ class Session extends Model {
     protected $table = 'sessions';
 
     protected $fillable = [
+        'restaurant_id',
         'sessions_amount',
         'duration',
         'start_time',
