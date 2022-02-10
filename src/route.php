@@ -4,6 +4,7 @@ use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Auth\LoginController;
 use Matrix\Managers\RouteManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 $routes = [
     ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
@@ -25,6 +26,17 @@ $routes = [
         $response->setMaxAge(1);
         $response->headers->set('Content-Type', 'text/javascript');
         return $response;
+    }, "method" => "GET"],
+    ["name" => "test", "url" => "/test", "controller" => function () {
+        $event = \App\Model\Event::query()
+            ->where("id", "=", 1)
+            ->with("programs")
+            ->with("programs.items")
+            ->with("programs.items.locations")
+            ->with("programs.items.performer")
+            ->get();
+
+        return new JsonResponse($event);
     }, "method" => "GET"],
 ];
 
