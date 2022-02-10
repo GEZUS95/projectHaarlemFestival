@@ -2,6 +2,7 @@
 
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Auth\LoginController;
+use App\Http\Controller\EventController;
 use Matrix\Managers\RouteManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,17 +28,7 @@ $routes = [
         $response->headers->set('Content-Type', 'text/javascript');
         return $response;
     }, "method" => "GET"],
-    ["name" => "test", "url" => "/test", "controller" => function () {
-        $event = \App\Model\Event::query()
-            ->where("id", "=", 1)
-            ->with("programs")
-            ->with("programs.items")
-            ->with("programs.items.locations")
-            ->with("programs.items.performer")
-            ->get();
-
-        return new JsonResponse($event);
-    }, "method" => "GET"],
+    ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 ];
 
 
