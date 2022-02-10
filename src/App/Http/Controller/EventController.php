@@ -24,7 +24,7 @@ class EventController extends BaseController
             ->with("programs.items.performer")
             ->get();
 
-        return $this->json($event);
+        return $this->render("partials.event.index", ["event" => $event]);
     }
 
 }
