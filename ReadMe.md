@@ -11,7 +11,7 @@ symfony server:start --port=4321 --passthru=front.php
 2. Xamp installeren
 3. composer
 4. Node.js installeren
-5. gofish installeren
+5. gofish installeren      https://gofi.sh/#install
 6. symphony installeren
 7. git clone https://github.com/GEZUS95/projectHaarlemFestival
 8. run npm i -g webpack & npm i -g webpack-cli
