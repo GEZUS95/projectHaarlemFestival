@@ -3,8 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class User extends Model {
+class User extends Model
+{
 
     protected $table = 'user';
 
@@ -22,10 +26,24 @@ class User extends Model {
         'role_id' => 'integer',
     ];
 
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function role(): BelongsTo
     {
 
         return $this->belongsTo(Role::class);
+
+    }
+
+    public function shoppingCards(): HasMany
+    {
+
+        return $this->hasMany(ShoppingCard::class, 'user_id');
+
+    }
+
+    public function settings(): HasOne
+    {
+
+        return $this->hasOne(UserSettings::class);
 
     }
 }

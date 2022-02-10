@@ -10,11 +10,11 @@ class CreateRestaurantsTable
     {
         if (Capsule::schema()->hasTable('restaurants'))
             return;
-            
+
         Capsule::schema()->create('restaurants', function ($table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->float('float');
+            $table->float('price');
             $table->longText('menu');
             $table->string('logo');
             $table->timestamps();

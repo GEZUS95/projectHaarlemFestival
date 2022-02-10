@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _subDir_someotherfile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./subDir/someotherfile */ \"./resources/js/subDir/someotherfile.js\");\n// import _ from 'lodash';\r\n\r\n\r\nconsole.log(_subDir_someotherfile__WEBPACK_IMPORTED_MODULE_0__.otherVar);\r\nconsole.log(\"HELLO WORLD BLYAT!\");\r\n\r\nwindow.console.log(\"TEST\");\r\n\r\n//npm i -g webpack\r\n//npm i -g webpack-cli\n\n//# sourceURL=webpack://projecthaarlemfestival/./resources/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _subDir_someotherfile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./subDir/someotherfile */ \"./resources/js/subDir/someotherfile.js\");\n// import _ from 'lodash';\n\n\nconsole.log(_subDir_someotherfile__WEBPACK_IMPORTED_MODULE_0__.otherVar);\nconsole.log(\"HELLO WORLD BLYAT!\");\n\nwindow.console.log(\"TEST\");\n\n//npm i -g webpack\n//npm i -g webpack-cli\n\n//# sourceURL=webpack://projecthaarlemfestival/./resources/js/index.js?");
 
 /***/ }),
 

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model {
 
@@ -12,7 +13,7 @@ class Role extends Model {
         'permissions',
     ];
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function user(): HasMany
     {
 
         return $this->hasMany(User::class, 'role_id');
