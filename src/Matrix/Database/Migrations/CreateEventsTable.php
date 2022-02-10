@@ -16,7 +16,6 @@ class CreateEventsTable
             $table->string('title')->unique();
             $table->float('total_price_event');
             $table->longText('description');
-            $table->longText('images');
             $table->timestamps();
         });
     }

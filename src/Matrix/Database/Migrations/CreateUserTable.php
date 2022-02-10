@@ -8,10 +8,10 @@ class CreateUserTable
 {
     public function up()
     {
-        if (Capsule::schema()->hasTable('user'))
+        if (Capsule::schema()->hasTable('users'))
             return;
 
-        Capsule::schema()->create('user', function ($table) {
+        Capsule::schema()->create('users', function ($table) {
             $table->bigIncrements('id');
             $table->string("email")->unique();
             $table->string("password");

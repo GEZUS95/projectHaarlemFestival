@@ -16,7 +16,6 @@ class CreatePerformersTable
             $table->string('name')->unique();
             $table->string('type');
             $table->longText('description');
-            $table->longText('images');
             $table->longText('socials');
             $table->timestamps();
         });

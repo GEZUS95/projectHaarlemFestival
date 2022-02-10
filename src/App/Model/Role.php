@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model {
 
-    protected $table = 'role';
+    protected $table = 'roles';
 
     protected $fillable = [
         'permissions',
@@ -17,12 +17,6 @@ class Role extends Model {
     {
 
         return $this->hasMany(User::class, 'role_id');
-
-    }
-
-    public function addPermission($permission){
-
-
 
     }
 }

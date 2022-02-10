@@ -8,10 +8,10 @@ class CreateRoleTable
 {
     public function up()
     {
-        if (Capsule::schema()->hasTable('role'))
+        if (Capsule::schema()->hasTable('roles'))
             return;
 
-        Capsule::schema()->create('role', function ($table) {
+        Capsule::schema()->create('roles', function ($table) {
             $table->bigIncrements('id');
             $table->longText("permissions");
             $table->timestamps();

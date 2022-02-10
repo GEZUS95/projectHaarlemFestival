@@ -3,6 +3,9 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Program extends Model {
 
@@ -23,18 +26,23 @@ class Program extends Model {
         'event_id' => 'integer',
     ];
 
-    public function events(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function events(): BelongsTo
     {
 
         return $this->belongsTo(Event::class);
 
     }
 
-    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function items(): HasMany
     {
 
         return $this->hasMany(Item::class, 'program_id');
 
+    }
+
+    public function orders(): MorphToMany
+    {
+        return $this->morphToMany(Order::class, 'order_able', 'order_able');
     }
 
 }

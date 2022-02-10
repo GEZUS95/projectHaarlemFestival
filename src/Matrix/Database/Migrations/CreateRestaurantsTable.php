@@ -13,10 +13,12 @@ class CreateRestaurantsTable
 
         Capsule::schema()->create('restaurants', function ($table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->float('price');
-            $table->longText('menu');
-            $table->string('logo');
+            $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('type_id');
+            $table->float("stars");
+            $table->unsignedInteger("seats");
+            $table->float("price");
+            $table->boolean("accessibility");
             $table->timestamps();
         });
     }

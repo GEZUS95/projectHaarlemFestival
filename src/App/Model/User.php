@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class User extends Model
 {
 
-    protected $table = 'user';
+    protected $table = 'users';
 
     protected $fillable = [
         'email',
@@ -33,10 +33,10 @@ class User extends Model
 
     }
 
-    public function shoppingCards(): HasMany
+    public function orders(): HasMany
     {
 
-        return $this->hasMany(ShoppingCard::class, 'user_id');
+        return $this->hasMany(Order::class, 'user_id');
 
     }
 

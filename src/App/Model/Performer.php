@@ -13,7 +13,6 @@ class Performer extends Model {
         'name',
         'type',
         'description',
-        'images',
         'socials',
     ];
 
@@ -29,5 +28,10 @@ class Performer extends Model {
 
         return $this->hasMany(Item::class, 'special_guest_id');
 
+    }
+
+    public function images(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Image::class, 'image_ables');
     }
 }

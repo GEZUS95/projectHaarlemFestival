@@ -3,6 +3,8 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Event extends Model {
 
@@ -12,14 +14,23 @@ class Event extends Model {
         'title',
         'total_price_event',
         'description',
-        'images'
     ];
 
-    public function programs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function programs(): HasMany
     {
 
         return $this->hasMany(Program::class, 'event_id');
 
+    }
+
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Image::class, 'image_ables');
+    }
+
+    public function orders(): MorphToMany
+    {
+        return $this->morphToMany(Order::class, 'order_able', 'order_able');
     }
 
 }

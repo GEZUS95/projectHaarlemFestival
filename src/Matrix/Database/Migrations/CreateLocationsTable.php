@@ -19,7 +19,6 @@ class CreateLocationsTable
             $table->string('stage')->nullable();
             $table->string('color');
             $table->unsignedInteger('seats');
-            $table->longText('images');
             $table->timestamps();
         });
     }

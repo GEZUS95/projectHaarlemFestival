@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Item extends Model
 {
@@ -55,5 +56,10 @@ class Item extends Model
 
         return $this->belongsTo(Performer::class);
 
+    }
+
+    public function orders(): MorphToMany
+    {
+        return $this->morphToMany(Order::class, 'order_able', 'order_able');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Location extends Model {
@@ -16,7 +17,6 @@ class Location extends Model {
         'stage',
         'color',
         'seats',
-        'images',
     ];
 
     protected $casts = [
@@ -27,6 +27,18 @@ class Location extends Model {
     {
 
         return $this->hasMany(Item::class, 'location_id');
+
+    }
+
+    public function images(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Image::class, 'image_ables');
+    }
+
+    public function restaurants(): BelongsTo
+    {
+
+        return $this->belongsTo(Restaurant::class);
 
     }
 
