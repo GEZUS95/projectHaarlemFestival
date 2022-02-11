@@ -57,6 +57,15 @@
     margin-right: 5px;
   }
 }
+.partials-admin-layout-sidenav-users-other {
+  @extend .partials-admin-layout-sidenav-btn;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 35px;
+}
+
+
 
 .partials-admin-layout-sidenav-btn {
   background-color: #CFD8DC;

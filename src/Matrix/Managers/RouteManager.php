@@ -31,10 +31,15 @@ class RouteManager
         return $this->generatedRoutes;
     }
 
-    public static function getUrlByRouteName($name): string
+    public static function getUrlByRouteName($name, $params = array()): string
     {
         if (self::$routeList == null) {
             throw new ResourceNotFoundException("Routes are not set");
+        }
+
+        if($params != array()){
+            //@TODO loop to $params and add them to the route before returning
+            return "/";
         }
 
         foreach (self::$routeList as $r) {

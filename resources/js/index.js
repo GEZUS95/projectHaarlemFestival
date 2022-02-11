@@ -1,7 +1,7 @@
 // import _ from 'lodash';
-import SideNavigation from "./components/admin/SideNavigation";
-
-window.customElements.define('side-navigation', SideNavigation);
+import SideNavigationLink from "./components/admin/SideNavigationLink";
+//
+window.customElements.define('side-navigation-link', SideNavigationLink);
 
 //npm i -g webpack
 //npm i -g webpack-cli

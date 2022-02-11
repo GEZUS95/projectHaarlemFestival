@@ -16,22 +16,37 @@
             <div class="partials-admin-layout-sidenav-btn-events-titles">Add Event</div>
         </div>
         <div class="partials-admin-layout-sidenav-title">Users</div>
-        <div class="partials-admin-layout-sidenav-btn">
-            <div>Permissions and roles</div>
+        <div class="partials-admin-layout-sidenav-users-other">
+            <side-navigation-link
+                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_roles")}}"
+                    link-name="Roles"
+            ></side-navigation-link>
         </div>
 
-        <div class="partials-admin-layout-sidenav-btn">
-            <div>Search</div>
+        <div class="partials-admin-layout-sidenav-users-other">
+            <side-navigation-link
+                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_users")}}"
+                    link-name="Users"
+            ></side-navigation-link>
         </div>
         <div class="partials-admin-layout-sidenav-title">Other</div>
-        <div class="partials-admin-layout-sidenav-btn">
-            <div>Performers</div>
+        <div class="partials-admin-layout-sidenav-users-other">
+            <side-navigation-link
+                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_performers")}}"
+                    link-name="Performers"
+            ></side-navigation-link>
         </div>
-        <div class="partials-admin-layout-sidenav-btn">
-            <div>locations</div>
+        <div class="partials-admin-layout-sidenav-users-other">
+            <side-navigation-link
+                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_locations")}}"
+                    link-name="Locations"
+            ></side-navigation-link>
         </div>
-        <div class="partials-admin-layout-sidenav-btn">
-            <div>restaurants</div>
+        <div class="partials-admin-layout-sidenav-users-other">
+            <side-navigation-link
+                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
+                    link-name="Restaurants"
+            ></side-navigation-link>
         </div>
     </div>
 </div>
