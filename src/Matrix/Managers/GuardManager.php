@@ -29,5 +29,12 @@ class GuardManager
         //user has the right perms let her/him pass
         return true;
     }
+
+    public static function guardBool($permission): bool
+    {
+        try {
+            return self::guard($permission);
+        } catch (NotLoggedInException | UnauthorizedAccessException $e) { return false;}
+    }
 }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controller\Admin\AdminEventController;
 use App\Http\Controller\Admin\AdminLocationsController;
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
@@ -20,10 +21,13 @@ $routes = [
     ["name" => "admin_restaurants", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantController(), 'index'], "method" => "GET"],
     ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminRolesController(), 'index'], "method" => "GET"],
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
-    //@TODO make a controller for this and make sure this works 100% and not half or some shit!
+    ["name" => "admin_event", "url" => "/admin/event/{title}", "controller" => [new AdminEventController(), 'index'], "method" => "GET"],
+    ["name" => "admin_event_edit", "url" => "/admin/event/{title}/edit", "controller" => [new AdminEventController(), 'edit'], "method" => "GET"],
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],
     ["name" => "js", "url" => "/main.js", "controller" => [new FrontendController(), 'javascript'], "method" => "GET"],
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
+
+    ["name" => "json_admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
 ];
 
 $generatedRoute = new RouteManager($routes);

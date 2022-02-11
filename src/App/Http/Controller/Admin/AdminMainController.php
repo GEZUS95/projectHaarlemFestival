@@ -3,6 +3,7 @@
 
 namespace App\Http\Controller\Admin;
 
+use App\Model\Event;
 use App\Model\Permissions;
 use Exception;
 use Matrix\BaseController;
@@ -19,6 +20,15 @@ class AdminMainController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
         return $this->render('partials.admin.index', []);
+    }
+
+    public function getEventTitles(): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
+
+        $eventTitles = Event::query()->get()->map->only(['title']);
+
+        return $this->json(["titles" => $eventTitles]);
     }
 
 }
