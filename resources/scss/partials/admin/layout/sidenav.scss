@@ -9,9 +9,10 @@
   font-size: 36px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
-  padding: 6px 0;
+  padding: 0 35px;
+  height: 70px;
 }
 .partials-admin-layout-sidenav-btn-events-titles {
   width: 100%;
