@@ -14,7 +14,6 @@ class EventSubNavigation extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log(this.title + "connected");
         this.shadowRoot.innerHTML = `
             <style>
                 .navigation {
@@ -77,8 +76,6 @@ class EventSubNavigation extends HTMLElement {
         this._$btn = this._$root.querySelector(".btn");
         this._$time = this._$root.querySelector(".time");
         this._$btn.addEventListener("click", this.handleBtnClick);
-        console.log(this._$root)
-        console.log(this._$time)
     }
 
     getDateString(){
@@ -100,12 +97,6 @@ class EventSubNavigation extends HTMLElement {
     }
 
     static get observedAttributes() { return ["title"]; }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            console.log(newValue);
-        }
-    }
 }
 
 export default EventSubNavigation;
