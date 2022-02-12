@@ -25,3 +25,4 @@ symfony server:start --port=4321 --passthru=front.php
 16. npm run dev
 17. symfony server:start --port=4321 --passthru=front.php
 18. bij errors neem contact op met merlijn.
+19. https://stackoverflow.com/questions/48588120/browser-loads-old-bundle-js-from-webpack front end error how to solve when page not refreshing

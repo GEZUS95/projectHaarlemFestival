@@ -20,7 +20,7 @@
 @include("partials.admin.layout.nav")
 <main class="partials-admin-layout-main">
     @include("partials.admin.layout.sidenav")
-    <div>
+    <div class="partials-admin-layout-main-content">
         @yield("content")
     </div>
 </main>

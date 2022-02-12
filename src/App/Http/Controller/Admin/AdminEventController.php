@@ -18,7 +18,7 @@ class AdminEventController extends BaseController
     public function index($title): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
-        return $this->render('partials.admin.partials.events.overview', []);
+        return $this->render('partials.admin.partials.events.overview', ["event_title" => $title]);
     }
 
     /**
