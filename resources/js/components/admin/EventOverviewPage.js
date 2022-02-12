@@ -9,11 +9,34 @@ class EventOverviewPage extends HTMLElement {
     }
 
     getStyleObject(){
-        return `<style>
+        return `<style>    
             .schedule {
                 display: flex;
                 flex-direction: row;
             }    
+            
+            .schedule-hours-display {
+                min-width: 90px;
+            }
+            
+            .schedule-days {
+                width: 100%;
+            }
+            
+            .schedule-days-title {
+                justify-content: center;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                height: 50px;
+                font-size: 18px;
+                font-weight: bold;
+                background-color: #DDE1E3;
+            }
+            
+            .schedule-holder {
+                height: 70px;
+            }
         
         </style>`
     }
@@ -26,23 +49,23 @@ class EventOverviewPage extends HTMLElement {
         this.shadowRoot.innerHTML = `
         ${this.getStyleObject()}
         <div class="schedule">
-            <div>
-                <div>filler div!</div>
+            <div class="schedule-hours-display">
+                <div class="schedule-days-title"></div>
                 <div>
                     ${displayHours.map((hours) => {
-                        return `<div>${hours}</div>`
+                        return `<div class="schedule-holder">${hours}</div>`
                     }).join('')}
                 </div>
             </div>
             ${this._$scedule.map((days) => {
                 return `
-                <div>
-                    <div>${days.date}</div>
+                <div class="schedule-days">
+                    <div class="schedule-days-title">${this.formatDayString(days.date)}</div>
                     
                     <div>
                         ${days.hours.map((hours) => {
                         return `
-                            <div>${hours.hourInt}</div>`
+                            <div class="schedule-holder">${hours.hourInt}</div>`
                         }).join('')}
                     </div>
                 </div>
@@ -86,6 +109,10 @@ class EventOverviewPage extends HTMLElement {
         return date;
     }
 
+    formatDayString(date){
+        let dateString = date.toLocaleDateString('en-us', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        return dateString.replace(/,/g, "");
+    }
 
     static get observedAttributes() {
         return [""];

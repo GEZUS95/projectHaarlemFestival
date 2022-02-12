@@ -1,11 +1,12 @@
 .partials-admin-layout-main {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: calc(100% - 70px);
 }
 
 .partials-admin-layout-main-content {
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: hidden;
 }
