@@ -15,8 +15,8 @@ class EventOverviewPage extends HTMLElement {
                 flex-direction: row;
             }    
             
-            .schedule-hours-display {
-                min-width: 90px;
+            .schedule-hours-filler {
+                min-width: 75px;
             }
             
             .schedule-days {
@@ -34,8 +34,30 @@ class EventOverviewPage extends HTMLElement {
                 background-color: #DDE1E3;
             }
             
+            .schedule-hours-display-holder-hours {
+                font-size: 32px;
+                font-weight: bold;
+            }
+            
+            .schedule-hours-display-holder-minutes{
+                font-size: 16px;
+                font-weight: bold;
+                margin-left: 5px;
+                margin-top: 5px;
+            }
+            
+            .schedule-hours-display-holder {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                margin-left: 10px;
+            }
             .schedule-holder {
                 height: 70px;
+            }
+            
+            .schedule-hours-display {
+                background-color: #DDE1E3;
             }
         
         </style>`
@@ -49,11 +71,17 @@ class EventOverviewPage extends HTMLElement {
         this.shadowRoot.innerHTML = `
         ${this.getStyleObject()}
         <div class="schedule">
-            <div class="schedule-hours-display">
+            <div class="schedule-hours-filler">
                 <div class="schedule-days-title"></div>
-                <div>
+                <div class="schedule-hours-display">
                     ${displayHours.map((hours) => {
-                        return `<div class="schedule-holder">${hours}</div>`
+                        return `<div class="schedule-holder schedule-hours-display-holder">
+                                    <div class="schedule-hours-display-holder-hours">${hours.toLocaleString('en-US', {
+                                        minimumIntegerDigits: 2,
+                                        useGrouping: false
+                                    })}</div>
+                                    <div class="schedule-hours-display-holder-minutes">00</div>
+                            </div>`
                     }).join('')}
                 </div>
             </div>
