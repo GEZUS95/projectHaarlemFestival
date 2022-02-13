@@ -4,7 +4,8 @@ class EventOverviewPage extends HTMLElement {
         this.attachShadow({mode: "open"});
 
         this._$root = null;
-        this._$scedule = this.getScheduleWithOutItems();
+        this._$date = this.getMonday()
+        this._$scedule = this.getSchedule();
         console.log(this._$scedule);
     }
 
@@ -72,7 +73,8 @@ class EventOverviewPage extends HTMLElement {
         </style>`
     }
 
-    connectedCallback() {
+    initComponent(data) {
+        console.log(JSON.parse(data))
         let displayHours = [];
         for(let hours = 0; hours < 24; hours++){
             displayHours.push(hours);
@@ -115,13 +117,12 @@ class EventOverviewPage extends HTMLElement {
 
     }
 
-    getScheduleWithOutItems(){
-        const monday = this.getMonday(new Date());
+    getSchedule(){
         let scheduleWithOutItems = [];
         for(let days = 0; days < 7; days++){
             let hoursArray = [];
-            const nextDays = new Date(monday);
-            nextDays.setDate(monday.getDate() + days);
+            const nextDays = new Date(this._$date);
+            nextDays.setDate(this._$date.getDate() + days);
 
             for(let hours = 0; hours < 24; hours++){
                 hoursArray.push({
@@ -139,7 +140,8 @@ class EventOverviewPage extends HTMLElement {
         return scheduleWithOutItems;
     }
 
-    getMonday(date) {
+    getMonday() {
+        const date = new Date();
         const day = date.getDay() || 7;
         if (day !== 1)
             date.setHours(-24 * (day - 1));
@@ -152,12 +154,18 @@ class EventOverviewPage extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [""];
+        return ["link"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            console.log(newValue);
+            const _this = this;
+
+            fetch(newValue)
+                .then(response => response.json())
+                .then((data) => {
+                    _this.initComponent(data);
+                });
         }
     }
 }

@@ -13,5 +13,5 @@
             width: 0; /* For Chrome, Safari, and Opera */
         }
     </style>
-    <event-overview-page style="overflow-y: scroll"></event-overview-page>
+    <event-overview-page link="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_json", ["title" => $event_title])}}" style="overflow-y: scroll"></event-overview-page>
 @endsection

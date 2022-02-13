@@ -37,17 +37,38 @@ class RouteManager
             throw new ResourceNotFoundException("Routes are not set");
         }
 
-        if($params != array()){
-            //@TODO loop to $params and add them to the route before returning
-            return "/";
+        if ($params != array()) {
+            $generatedRoute = self::getUrl($name);
+
+            if ($generatedRoute == null)
+                throw new ResourceNotFoundException("Route not found");
+
+            foreach ($params as $param) {
+                foreach (explode("/", $generatedRoute) as $url) {
+                    if (!empty($url) && $url[0] == '{' && $url[strlen($url) - 1] == '}' && $params[substr($url, 1, -1)] == $param) {
+                        $generatedRoute = str_replace($url, $param, $generatedRoute);
+                    }
+                }
+            }
+            return "http://" . $_SERVER['SERVER_NAME'] . $generatedRoute;
         }
+
 
         foreach (self::$routeList as $r) {
             if ($r["name"] == $name)
-                return "http://" .$_SERVER['SERVER_NAME'].$r["url"];
+                return "http://" . $_SERVER['SERVER_NAME'] . $r["url"];
         }
 
-        throw new ResourceNotFoundException("Routes not found");
+        throw new ResourceNotFoundException("Route not found");
 
+    }
+
+    private static function getUrl($name)
+    {
+        foreach (self::$routeList as $r) {
+            if ($r["name"] == $name)
+                return $r["url"];
+        }
+        return null;
     }
 }
