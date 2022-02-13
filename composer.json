@@ -17,7 +17,8 @@
     "illuminate/validation": "^8.0",
     "illuminate/translation": "^8.0",
     "illuminate/filesystem": "^8.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "fakerphp/faker": "^1.19"
   },
   "autoload": {
     "psr-4": {
@@ -25,4 +26,3 @@
     }
   }
 }
-

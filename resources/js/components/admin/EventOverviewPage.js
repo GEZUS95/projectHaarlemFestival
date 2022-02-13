@@ -53,11 +53,20 @@ class EventOverviewPage extends HTMLElement {
                 margin-left: 10px;
             }
             .schedule-holder {
-                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
             }
             
             .schedule-hours-display {
                 background-color: #DDE1E3;
+            }
+            
+            .schedule-hours-box {
+                background-color: #BAC8CF;
+                box-sizing: border-box;
+                border-right:  1px solid #ffffff;
+                border-bottom: 2px solid #ffffff;
+                border-left:   1px solid #ffffff;
             }
         
         </style>`
@@ -88,12 +97,12 @@ class EventOverviewPage extends HTMLElement {
             ${this._$scedule.map((days) => {
                 return `
                 <div class="schedule-days">
-                    <div class="schedule-days-title">${this.formatDayString(days.date)}</div>
+                    <div class="schedule-days-title" id="${days}">${this.formatDayString(days.date)}</div>
                     
                     <div>
                         ${days.hours.map((hours) => {
                         return `
-                            <div class="schedule-holder">${hours.hourInt}</div>`
+                            <div class="schedule-holder schedule-hours-box" id="${hours.hourInt}"></div>`
                         }).join('')}
                     </div>
                 </div>

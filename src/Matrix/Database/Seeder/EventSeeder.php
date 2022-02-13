@@ -7,11 +7,14 @@ use App\Model\Location;
 use App\Model\Performer;
 use App\Model\Program;
 use Carbon\Carbon;
+use Faker\Factory;
 
 class EventSeeder
 {
     public function seed()
     {
+        $faker = Factory::create();
+
         Event::create([
             'title' => "Jazz",
             'total_price_event' => 230,
@@ -24,7 +27,7 @@ class EventSeeder
             'title' => "Friday program",
             'total_price_program' => 80,
             'start_time' => Carbon::now(),
-            'end_time' => Carbon::now(),
+            'end_time' => Carbon::now()->addHours(6),
             'color' => "#FFFFFF",
             'event_id' => $event->id,
         ]);
@@ -38,23 +41,43 @@ class EventSeeder
             'seats' => 200,
         ]);
 
-        Performer::create([
-            'name' => "floris",
-            'type' => "jazz",
-            'description' => "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-            'socials' => json_encode(array()),
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            Performer::create([
+                'name' => $faker->name(),
+                'type' => "jazz",
+                'description' => $faker->paragraph(8),
+                'socials' => json_encode(array()),
+            ]);
+        }
+
 
         $program = Program::findOrFail(1);
         $location = Location::findOrFail(1);
-        $performer = Performer::findOrFail(1);
 
         Item::create([
             'program_id' => $program->id,
             'location_id' => $location->id,
-            'performer_id' => $performer->id,
-            'start_time' => Carbon::now(),
-            'end_time' => Carbon::now(),
+            'performer_id' =>  Performer::all()->random(1)->first()->id,
+            'start_time' => Carbon::now()->addHours(1),
+            'end_time' => Carbon::now()->addHours(2),
+            'price' => 20,
+        ]);
+
+        Item::create([
+            'program_id' => $program->id,
+            'location_id' => $location->id,
+            'performer_id' => Performer::inRandomOrder()->first()->id,
+            'start_time' => Carbon::now()->addHours(3),
+            'end_time' => Carbon::now()->addHours(4),
+            'price' => 20,
+        ]);
+
+        Item::create([
+            'program_id' => $program->id,
+            'location_id' => $location->id,
+            'performer_id' => Performer::inRandomOrder()->first()->id,
+            'start_time' => Carbon::now()->addHours(5),
+            'end_time' => Carbon::now()->addHours(6),
             'price' => 20,
         ]);
     }
