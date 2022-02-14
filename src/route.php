@@ -28,7 +28,7 @@ $routes = [
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 
     ["name" => "json_admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
-    ["name" => "admin_event_json", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'event'], "method" => "GET"],
+    ["name" => "admin_event_json", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'event'], "method" => "POST"],
 ];
 
 $generatedRoute = new RouteManager($routes);

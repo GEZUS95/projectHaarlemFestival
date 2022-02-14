@@ -8,12 +8,12 @@ class EventOverviewPage extends HTMLElement {
         this._$url = null;
 
         window.addEventListener("schedule-next-week", (() => {
-            this._$date = this.getMonday(new Date(this._$date.setDate(this._$date.getDate() + 7)))
+            this._$date = this.getMonday(new Date(new Date(this._$date).setDate(new Date(this._$date).getDate() + 7)))
             this.fetchData();
         }));
 
         window.addEventListener("schedule-pref-week", (() => {
-            this._$date = this.getMonday(new Date(this._$date.setDate(this._$date.getDate() - 7)))
+            this._$date = this.getMonday(new Date(new Date(this._$date).setDate(new Date(this._$date).getDate() - 7)))
             this.fetchData();
         }));
 
@@ -88,7 +88,7 @@ class EventOverviewPage extends HTMLElement {
     }
 
     initComponent(data) {
-        console.log(JSON.parse(data))
+        console.log(data);
         const schedule = this.getSchedule()
         let displayHours = [];
         for(let hours = 0; hours < 24; hours++){
@@ -137,7 +137,7 @@ class EventOverviewPage extends HTMLElement {
         for(let days = 0; days < 7; days++){
             let hoursArray = [];
             const nextDays = new Date(this._$date);
-            nextDays.setDate(this._$date.getDate() + days);
+            nextDays.setDate(new Date(this._$date).getDate() + days);
 
             for(let hours = 0; hours < 24; hours++){
                 hoursArray.push({
@@ -159,7 +159,7 @@ class EventOverviewPage extends HTMLElement {
         const day = date.getDay() || 7;
         if (day !== 1)
             date.setHours(-24 * (day - 1));
-        return date;
+        return date.toISOString().split('T')[0];
     }
 
     formatDayString(date){
@@ -174,11 +174,16 @@ class EventOverviewPage extends HTMLElement {
     fetchData(){
         const _this = this;
 
-        fetch(this._$url)
-            .then(response => response.json())
-            .then((data) => {
-                _this.initComponent(data);
-            });
+        if(this._$date == null || this._$url == null)
+            return;
+
+        let formData = new FormData();
+        formData.append('date', this._$date);
+
+
+        this.postRequest(this._$url, formData).then(data => {
+            _this.initComponent(JSON.parse(data["events"]));
+        });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -186,6 +191,18 @@ class EventOverviewPage extends HTMLElement {
             this._$url = newValue;
             this.fetchData();
         }
+    }
+
+    async postRequest(url = '', data) {
+
+        console.log(url, data)
+        const response = await fetch(url, {
+            method: 'POST',
+            body: data
+        });
+
+        console.log(response)
+        return response.json();
     }
 }
 
