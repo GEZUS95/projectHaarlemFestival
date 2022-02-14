@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Location extends Model {
 
@@ -30,7 +31,7 @@ class Location extends Model {
 
     }
 
-    public function images(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    public function images(): MorphToMany
     {
         return $this->morphToMany(Image::class, 'image_ables');
     }

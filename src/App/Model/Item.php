@@ -37,7 +37,7 @@ class Item extends Model
 
     }
 
-    public function locations(): BelongsTo
+    public function location(): BelongsTo
     {
 
         return $this->belongsTo(Location::class);

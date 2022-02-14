@@ -182,6 +182,8 @@ class EventOverviewPage extends HTMLElement {
                                         <div class="${pro.type}" style="background-color: ${pro.program.color}">
                                             ${pro.type === "program_start" ? pro.program.title : ''}
                                             ${hours.items.map((i) => {
+                                                console.log(hours.items);
+                                                
                                                 return `
                                                 <div class="${i.type}">
                                                     ${i.type === "item_start" ? i.item["performer"]["name"] : ''}

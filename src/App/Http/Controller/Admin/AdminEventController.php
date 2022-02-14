@@ -40,7 +40,7 @@ class AdminEventController extends BaseController
             ->whereRelation('programs', 'start_time', '>=', $startOfWeek)
             ->whereRelation('programs', 'end_time', '<=', $endOfWeek)
             ->with("programs.items")
-            ->with("programs.items.locations")
+            ->with("programs.items.location")
             ->with("programs.items.performer")
             ->first();
 
