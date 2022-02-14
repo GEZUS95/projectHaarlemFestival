@@ -4,9 +4,23 @@ class EventOverviewPage extends HTMLElement {
         this.attachShadow({mode: "open"});
 
         this._$root = null;
-        this._$date = this.getMonday()
-        this._$scedule = this.getSchedule();
-        console.log(this._$scedule);
+        this._$date = this.getMonday(new Date())
+        this._$url = null;
+
+        window.addEventListener("schedule-next-week", (() => {
+            this._$date = this.getMonday(new Date(this._$date.setDate(this._$date.getDate() + 7)))
+            this.fetchData();
+        }));
+
+        window.addEventListener("schedule-pref-week", (() => {
+            this._$date = this.getMonday(new Date(this._$date.setDate(this._$date.getDate() - 7)))
+            this.fetchData();
+        }));
+
+        window.addEventListener("schedule-custom-date", (evt => {
+            this._$date = this.getMonday(evt.detail)
+            this.fetchData();
+        }));
     }
 
     getStyleObject(){
@@ -75,6 +89,7 @@ class EventOverviewPage extends HTMLElement {
 
     initComponent(data) {
         console.log(JSON.parse(data))
+        const schedule = this.getSchedule()
         let displayHours = [];
         for(let hours = 0; hours < 24; hours++){
             displayHours.push(hours);
@@ -96,7 +111,7 @@ class EventOverviewPage extends HTMLElement {
                     }).join('')}
                 </div>
             </div>
-            ${this._$scedule.map((days) => {
+            ${schedule.map((days) => {
                 return `
                 <div class="schedule-days">
                     <div class="schedule-days-title" id="${days}">${this.formatDayString(days.date)}</div>
@@ -140,8 +155,7 @@ class EventOverviewPage extends HTMLElement {
         return scheduleWithOutItems;
     }
 
-    getMonday() {
-        const date = new Date();
+    getMonday(date) {
         const day = date.getDay() || 7;
         if (day !== 1)
             date.setHours(-24 * (day - 1));
@@ -157,15 +171,20 @@ class EventOverviewPage extends HTMLElement {
         return ["link"];
     }
 
+    fetchData(){
+        const _this = this;
+
+        fetch(this._$url)
+            .then(response => response.json())
+            .then((data) => {
+                _this.initComponent(data);
+            });
+    }
+
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            const _this = this;
-
-            fetch(newValue)
-                .then(response => response.json())
-                .then((data) => {
-                    _this.initComponent(data);
-                });
+            this._$url = newValue;
+            this.fetchData();
         }
     }
 }
