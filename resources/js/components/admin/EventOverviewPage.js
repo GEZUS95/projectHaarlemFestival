@@ -3,7 +3,6 @@ class EventOverviewPage extends HTMLElement {
         super();
         this.attachShadow({mode: "open"});
 
-        this._$root = null;
         this._$date = this.getMonday(new Date())
         this._$url = null;
 
@@ -175,15 +174,13 @@ class EventOverviewPage extends HTMLElement {
                     <div>
                         ${days.hours.map((hours) => {
                         return `
-                            <div class="schedule-holder schedule-hours-box" id="${hours.hourInt}">
+                            <div class="schedule-holder schedule-hours-box" id="${new Date(days.date).getDay() +"_"+ hours.hourInt}">
                                 ${hours.program.map((pro) => {
                                     return `
                                     <div class="schedule-hours-box-sub">
                                         <div class="${pro.type}" style="background-color: ${pro.program.color}">
                                             ${pro.type === "program_start" ? pro.program.title : ''}
                                             ${hours.items.map((i) => {
-                                                console.log(hours.items);
-                                                
                                                 return `
                                                 <div class="${i.type}">
                                                     ${i.type === "item_start" ? i.item["performer"]["name"] : ''}
@@ -200,6 +197,54 @@ class EventOverviewPage extends HTMLElement {
             }).join('')}
         </div>
         `;
+
+        this._$row = null;
+        this._$firstPlaced = false;
+        this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', function(event) {
+
+            // `event.buttons` gets the state of the mouse buttons
+            // 0 = not pressed, 1 = left click pressed, 2 = right click pressed
+            if (event.buttons === 1) {
+                const el = event.path[0];
+                if(el.classList[0] === "schedule-holder"){
+                    if(this._$row == null)
+                        this._$row = el.id.split("_")[0];
+
+                    if(this._$row != null && this._$row === el.id.split("_")[0] && this._$firstPlaced === true){
+                        if(el.querySelector(".schedule-hours-box-sub") === null) {
+                            Array.from(el.parentElement.childNodes).forEach((element) => {
+                                if(el.id === element.id && element.id.split("_")[1] > 0) {
+                                    const idOfElementAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 1);
+                                    const idOfElementTwoAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 2);
+
+                                    const elementAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementAboveThisNode});
+                                    const elementTwoAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementTwoAboveThisNode});
+
+                                    if(elementTwoAboveThisNode && elementAboveThisNode){
+                                        if(!elementAboveThisNode.querySelector(".program_start")) elementAboveThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_between" style="background-color: #ffffff"></div></div>`;
+                                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
+                                    }
+
+                                    if(elementTwoAboveThisNode === undefined && elementAboveThisNode){
+                                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
+                                    }
+                                }
+                            })
+                        }
+                    } else if(this._$firstPlaced === false) {
+                        this._$firstPlaced = true;
+                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
+                    }
+                }
+            }
+
+            if (event.buttons === 0) {
+                this._$row = null;
+                this._$firstPlaced = false;
+
+                //@todo if only 1 element is placed then we need to add 1 shit under there but this is for tomorrow this took to long
+            }
+        });
     }
 
     disconnectedCallback() {
@@ -264,7 +309,6 @@ class EventOverviewPage extends HTMLElement {
             })
         }
 
-        console.log(schedule)
         return schedule;
     }
 
