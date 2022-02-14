@@ -42,10 +42,9 @@ class AdminEventController extends BaseController
             ->with("programs.items")
             ->with("programs.items.locations")
             ->with("programs.items.performer")
-            ->get()
-            ->toJson();
+            ->first();
 
-        return $this->json(["events" => $event]);
+        return $this->json(["events" => json_encode($event)]);
     }
 
     /**

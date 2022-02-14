@@ -15,8 +15,8 @@ class CreateProgramsTable
             $table->bigIncrements('id');
             $table->string('title')->unique();
             $table->float('total_price_program');
-            $table->date('start_time');
-            $table->date('end_time');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->string('color');
             $table->unsignedBigInteger('event_id');
             $table->timestamps();

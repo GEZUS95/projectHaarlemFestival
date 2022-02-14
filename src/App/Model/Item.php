@@ -22,13 +22,13 @@ class Item extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'date',
-        'end_time' => 'date',
         'program_id' => 'integer',
         'location_id' => 'integer',
         'performer_id' => 'integer',
         'special_guest_id' => 'integer',
     ];
+
+    protected $dateFormat = 'Y-m-d H:i';
 
     public function programs(): BelongsTo
     {

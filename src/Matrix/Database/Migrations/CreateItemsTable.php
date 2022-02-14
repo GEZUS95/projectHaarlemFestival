@@ -17,8 +17,8 @@ class CreateItemsTable
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('performer_id');
             $table->unsignedBigInteger('special_guest_id')->nullable();
-            $table->date('start_time');
-            $table->date('end_time');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->float('price');
             $table->timestamps();
         });

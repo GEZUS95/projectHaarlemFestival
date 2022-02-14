@@ -23,7 +23,7 @@ class EventOverviewPage extends HTMLElement {
         }));
     }
 
-    getStyleObject(){
+    getStyleObject() {
         return `<style>    
             .schedule {
                 display: flex;
@@ -88,10 +88,9 @@ class EventOverviewPage extends HTMLElement {
     }
 
     initComponent(data) {
-        console.log(data);
-        const schedule = this.getSchedule()
+        const schedule = this.getSchedule(data)
         let displayHours = [];
-        for(let hours = 0; hours < 24; hours++){
+        for (let hours = 0; hours < 24; hours++) {
             displayHours.push(hours);
         }
         this.shadowRoot.innerHTML = `
@@ -119,7 +118,23 @@ class EventOverviewPage extends HTMLElement {
                     <div>
                         ${days.hours.map((hours) => {
                         return `
-                            <div class="schedule-holder schedule-hours-box" id="${hours.hourInt}"></div>`
+                            <div class="schedule-holder schedule-hours-box" id="${hours.hourInt}">
+                                ${hours.program.map((pro) => {
+                                    return `
+                                    <div>
+                                        ${pro.type}
+                                        ${pro.program.title}
+                                    </div>`
+                                }).join('')}
+                                
+                                ${hours.items.map((i) => {
+                                    return `
+                                        <div>
+                                            ${i.type}
+                                            ${i.item["performer"]["name"]}
+                                        </div>`
+                                }).join('')}
+                            </div>`
                         }).join('')}
                     </div>
                 </div>
@@ -128,31 +143,71 @@ class EventOverviewPage extends HTMLElement {
         </div>
         `;
     }
+
     disconnectedCallback() {
 
     }
 
-    getSchedule(){
-        let scheduleWithOutItems = [];
-        for(let days = 0; days < 7; days++){
+    getSchedule(data) {
+        let schedule = [];
+        for (let days = 0; days < 7; days++) {
             let hoursArray = [];
             const nextDays = new Date(this._$date);
             nextDays.setDate(new Date(this._$date).getDate() + days);
+            for (let hours = 0; hours < 24; hours++) {
+                let programArr = [];
+                let itemArr = [];
 
-            for(let hours = 0; hours < 24; hours++){
+                if(data != null) {
+                    if (data["programs"]) {
+                        data["programs"].forEach((program) => {
+                            const programStartTime = new Date(program["start_time"]);
+                            const programEndTime = new Date(program["end_time"]);
+                            if (this.datesAreOnSameDay(nextDays, programStartTime)) {
+
+                                if (programStartTime.getHours() === hours) programArr.push({
+                                    type: "program_start",
+                                    program
+                                })
+                                if (hours > programStartTime.getHours() && hours < programEndTime.getHours()) programArr.push({
+                                    type: "program_between",
+                                    program
+                                })
+                                if (programEndTime.getHours() === hours) programArr.push({type: "program_end", program})
+
+                                if (program["items"]) {
+                                    program["items"].forEach((item) => {
+                                        const itemStartTime = new Date(item["start_time"]);
+                                        const itemEndTime = new Date(item["end_time"]);
+
+                                        if (itemStartTime.getHours() === hours) itemArr.push({type: "item_start", item})
+                                        if (hours > itemStartTime.getHours() && hours < itemEndTime.getHours()) itemArr.push({
+                                            type: "item_between",
+                                            item
+                                        })
+                                        if (itemEndTime.getHours() === hours) itemArr.push({type: "item_end", item})
+                                    })
+                                }
+                            }
+                        })
+                    }
+                }
+
                 hoursArray.push({
                     hourInt: hours,
-                    items: [],
+                    program: programArr,
+                    items: itemArr,
                 })
             }
 
-            scheduleWithOutItems.push({
+            schedule.push({
                 date: nextDays,
                 hours: hoursArray
             })
         }
 
-        return scheduleWithOutItems;
+        console.log(schedule)
+        return schedule;
     }
 
     getMonday(date) {
@@ -162,8 +217,13 @@ class EventOverviewPage extends HTMLElement {
         return date.toISOString().split('T')[0];
     }
 
-    formatDayString(date){
-        let dateString = date.toLocaleDateString('en-us', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    formatDayString(date) {
+        let dateString = date.toLocaleDateString('en-us', {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
         return dateString.replace(/,/g, "");
     }
 
@@ -171,17 +231,16 @@ class EventOverviewPage extends HTMLElement {
         return ["link"];
     }
 
-    fetchData(){
+    fetchData() {
         const _this = this;
 
-        if(this._$date == null || this._$url == null)
+        if (this._$date == null || this._$url == null)
             return;
 
         let formData = new FormData();
         formData.append('date', this._$date);
 
-
-        this.postRequest(this._$url, formData).then(data => {
+        this.postFormData(this._$url, formData).then(data => {
             _this.initComponent(JSON.parse(data["events"]));
         });
     }
@@ -193,16 +252,19 @@ class EventOverviewPage extends HTMLElement {
         }
     }
 
-    async postRequest(url = '', data) {
-
-        console.log(url, data)
+    async postFormData(url = '', data) {
         const response = await fetch(url, {
             method: 'POST',
             body: data
         });
 
-        console.log(response)
         return response.json();
+    }
+
+    datesAreOnSameDay(first, second) {
+        return first.getFullYear() === second.getFullYear() &&
+            first.getMonth() === second.getMonth() &&
+            first.getDate() === second.getDate();
     }
 }
 

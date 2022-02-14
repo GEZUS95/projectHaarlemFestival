@@ -26,8 +26,8 @@ class EventSeeder
         Program::create([
             'title' => "Friday program",
             'total_price_program' => 80,
-            'start_time' => Carbon::now(),
-            'end_time' => Carbon::now()->addHours(6),
+            'start_time' => Carbon::now()->startOfDay()->addHours(12),
+            'end_time' => Carbon::now()->startOfDay()->addHours(22),
             'color' => "#FFFFFF",
             'event_id' => $event->id,
         ]);
@@ -58,8 +58,8 @@ class EventSeeder
             'program_id' => $program->id,
             'location_id' => $location->id,
             'performer_id' =>  Performer::all()->random(1)->first()->id,
-            'start_time' => Carbon::now()->addHours(1),
-            'end_time' => Carbon::now()->addHours(2),
+            'start_time' => Carbon::now()->startOfDay()->addHours(13),
+            'end_time' => Carbon::now()->startOfDay()->addHours(14),
             'price' => 20,
         ]);
 
@@ -67,8 +67,8 @@ class EventSeeder
             'program_id' => $program->id,
             'location_id' => $location->id,
             'performer_id' => Performer::inRandomOrder()->first()->id,
-            'start_time' => Carbon::now()->addHours(3),
-            'end_time' => Carbon::now()->addHours(4),
+            'start_time' => Carbon::now()->startOfDay()->addHours(15),
+            'end_time' => Carbon::now()->startOfDay()->addHours(16),
             'price' => 20,
         ]);
 
@@ -76,8 +76,8 @@ class EventSeeder
             'program_id' => $program->id,
             'location_id' => $location->id,
             'performer_id' => Performer::inRandomOrder()->first()->id,
-            'start_time' => Carbon::now()->addHours(5),
-            'end_time' => Carbon::now()->addHours(6),
+            'start_time' => Carbon::now()->startOfDay()->addHours(18),
+            'end_time' => Carbon::now()->startOfDay()->addHours(20),
             'price' => 20,
         ]);
     }

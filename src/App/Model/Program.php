@@ -20,9 +20,9 @@ class Program extends Model {
         'event_id',
     ];
 
+    protected $dateFormat = 'Y-m-d H:i';
+
     protected $casts = [
-        'start_time' => 'date',
-        'end_time' => 'date',
         'event_id' => 'integer',
     ];
 
