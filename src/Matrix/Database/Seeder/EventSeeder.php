@@ -76,8 +76,8 @@ class EventSeeder
             'program_id' => $firstProgram->id,
             'location_id' => $location->id,
             'performer_id' => Performer::inRandomOrder()->first()->id,
-            'start_time' => Carbon::now()->startOfDay()->addHours(15),
-            'end_time' => Carbon::now()->startOfDay()->addHours(16),
+            'start_time' => Carbon::now()->startOfDay()->addHours(14),
+            'end_time' => Carbon::now()->startOfDay()->addHours(15),
             'price' => 20,
         ]);
 

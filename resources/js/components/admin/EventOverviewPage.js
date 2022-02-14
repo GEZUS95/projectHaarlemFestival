@@ -119,6 +119,28 @@ class EventOverviewPage extends HTMLElement {
                 padding: 0 5px 0 5px;
                 margin: 0 5px 0 5px;
             }
+            
+            .item_start {
+                padding: 5px;
+                margin-top: 5px;
+                background: #0569c1;
+                height: 70px;
+                border-top-right-radius: 2px;
+                border-top-left-radius: 2px;
+            }
+            
+            .item_between {
+                padding: 5px;
+                background: #0569c1;
+                height: 70px;
+                border-top-right-radius: 2px;
+                border-top-left-radius: 2px;
+            }
+            
+            .item_end {
+                margin-bottom: 5px;
+            }
+            
         </style>`
     }
 
@@ -161,9 +183,8 @@ class EventOverviewPage extends HTMLElement {
                                             ${pro.type === "program_start" ? pro.program.title : ''}
                                             ${hours.items.map((i) => {
                                                 return `
-                                                <div>
-                                                    ${i.type}
-                                                    ${i.item["performer"]["name"]}
+                                                <div class="${i.type}">
+                                                    ${i.type === "item_start" ? i.item["performer"]["name"] : ''}
                                                 </div>`
                                             }).join('')}
                                         </div>
