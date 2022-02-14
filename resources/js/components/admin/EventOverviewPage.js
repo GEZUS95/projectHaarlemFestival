@@ -76,6 +76,11 @@ class EventOverviewPage extends HTMLElement {
                 background-color: #DDE1E3;
             }
             
+            .schedule-hours-box-sub {
+                display: flex;
+                justify-content: center;
+                min-height: 70px;
+            }
             .schedule-hours-box {
                 background-color: #BAC8CF;
                 box-sizing: border-box;
@@ -84,6 +89,36 @@ class EventOverviewPage extends HTMLElement {
                 border-left:   1px solid #ffffff;
             }
         
+            .program_start {
+                border-top:    1px solid  #000000;
+                border-right:  1px solid  #000000;
+                border-left:   1px solid  #000000;
+                width: 100%;
+                border-top-right-radius: 2px;
+                border-top-left-radius: 2px;
+                padding: 5px 5px 0 5px;
+                margin: 5px 5px 0 5px;
+            }
+            
+            .program_between {
+                border-right:  1px solid  #000000;
+                border-left:   1px solid  #000000;
+                width: 100%;
+                padding: 0 5px 0 5px;
+                margin: 0 5px 0 5px;
+            }
+            
+            .program_end {
+                border-right:  1px solid  #000000;
+                border-bottom: 1px solid  #000000;
+                border-left:   1px solid  #000000;
+                width: 100%;
+                height: 10px;
+                border-bottom-right-radius: 2px;
+                border-bottom-left-radius: 2px;
+                padding: 0 5px 0 5px;
+                margin: 0 5px 0 5px;
+            }
         </style>`
     }
 
@@ -121,18 +156,18 @@ class EventOverviewPage extends HTMLElement {
                             <div class="schedule-holder schedule-hours-box" id="${hours.hourInt}">
                                 ${hours.program.map((pro) => {
                                     return `
-                                    <div>
-                                        ${pro.type}
-                                        ${pro.program.title}
+                                    <div class="schedule-hours-box-sub">
+                                        <div class="${pro.type}" style="background-color: ${pro.program.color}">
+                                            ${pro.type === "program_start" ? pro.program.title : ''}
+                                            ${hours.items.map((i) => {
+                                                return `
+                                                <div>
+                                                    ${i.type}
+                                                    ${i.item["performer"]["name"]}
+                                                </div>`
+                                            }).join('')}
+                                        </div>
                                     </div>`
-                                }).join('')}
-                                
-                                ${hours.items.map((i) => {
-                                    return `
-                                        <div>
-                                            ${i.type}
-                                            ${i.item["performer"]["name"]}
-                                        </div>`
                                 }).join('')}
                             </div>`
                         }).join('')}
