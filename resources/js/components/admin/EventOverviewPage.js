@@ -212,6 +212,7 @@ class EventOverviewPage extends HTMLElement {
 
                     if(this._$row != null && this._$row === el.id.split("_")[0] && this._$firstPlaced === true){
                         if(el.querySelector(".schedule-hours-box-sub") === null) {
+                            //@todo check while mouse down if there is an "program_end in the row then we can only place under there!"
                             Array.from(el.parentElement.childNodes).forEach((element) => {
                                 if(el.id === element.id && element.id.split("_")[1] > 0) {
                                     const idOfElementAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 1);
