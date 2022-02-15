@@ -23,7 +23,14 @@ class EventOverviewPage extends HTMLElement {
     }
 
     getStyleObject() {
-        return `<style>    
+        return `<style>   
+            :host {
+                -webkit-user-select: none; /* Safari */        
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* IE10+/Edge */
+                user-select: none; /* Standard */
+            }
+             
             .schedule {
                 display: flex;
                 flex-direction: row;
@@ -65,7 +72,10 @@ class EventOverviewPage extends HTMLElement {
                 align-items: flex-start;
                 justify-content: flex-start;
                 margin-left: 10px;
+                max-height: 70px;
+                min-height: 70px;
             }
+            
             .schedule-holder {
                 max-height: 70px;
                 min-height: 70px;
@@ -149,6 +159,7 @@ class EventOverviewPage extends HTMLElement {
         for (let hours = 0; hours < 24; hours++) {
             displayHours.push(hours);
         }
+
         this.shadowRoot.innerHTML = `
         ${this.getStyleObject()}
         <div class="schedule">
@@ -156,7 +167,7 @@ class EventOverviewPage extends HTMLElement {
                 <div class="schedule-days-title"></div>
                 <div class="schedule-hours-display">
                     ${displayHours.map((hours) => {
-                        return `<div class="schedule-holder schedule-hours-display-holder">
+                        return `<div class="schedule-hours-display-holder">
                                     <div class="schedule-hours-display-holder-hours">${hours.toLocaleString('en-US', {
                                         minimumIntegerDigits: 2,
                                         useGrouping: false
@@ -200,52 +211,61 @@ class EventOverviewPage extends HTMLElement {
 
         this._$row = null;
         this._$firstPlaced = false;
-        this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', function(event) {
+        this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms );
+    }
 
-            // `event.buttons` gets the state of the mouse buttons
-            // 0 = not pressed, 1 = left click pressed, 2 = right click pressed
-            if (event.buttons === 1) {
-                const el = event.path[0];
-                if(el.classList[0] === "schedule-holder"){
-                    if(this._$row == null)
-                        this._$row = el.id.split("_")[0];
+    createPrograms(event){
+        // `event.buttons` gets the state of the mouse buttons
+        // 0 = not pressed, 1 = left click pressed, 2 = right click pressed
+        if (event.buttons === 1) {
+            const el = event.path[0];
+            if(el.classList[0] !== "schedule-holder")
+                return;
 
-                    if(this._$row != null && this._$row === el.id.split("_")[0] && this._$firstPlaced === true){
-                        if(el.querySelector(".schedule-hours-box-sub") === null) {
-                            //@todo check while mouse down if there is an "program_end in the row then we can only place under there!"
-                            Array.from(el.parentElement.childNodes).forEach((element) => {
-                                if(el.id === element.id && element.id.split("_")[1] > 0) {
-                                    const idOfElementAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 1);
-                                    const idOfElementTwoAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 2);
+            if(this._$row == null)
+                this._$row = el.id.split("_")[0];
 
-                                    const elementAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementAboveThisNode});
-                                    const elementTwoAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementTwoAboveThisNode});
+            if(this._$firstPlaced === false) {
+                this._$firstPlaced = true;
+                el.innerHTML += `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
+            }
 
-                                    if(elementTwoAboveThisNode && elementAboveThisNode){
-                                        if(!elementAboveThisNode.querySelector(".program_start")) elementAboveThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_between" style="background-color: #ffffff"></div></div>`;
-                                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
-                                    }
+            if(this._$row != null &&
+                this._$row === el.id.split("_")[0] &&
+                this._$firstPlaced === true &&
+                el.querySelector(".schedule-hours-box-sub") === null
+            ){
+                Array.from(el.parentElement.childNodes).forEach((element) => {
+                    if(!(el.id === element.id && element.id.split("_")[1] > 0))
+                        return;
 
-                                    if(elementTwoAboveThisNode === undefined && elementAboveThisNode){
-                                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
-                                    }
-                                }
-                            })
-                        }
-                    } else if(this._$firstPlaced === false) {
-                        this._$firstPlaced = true;
-                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
+                    const idOfElementAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 1);
+                    const idOfElementTwoAboveThisNode = this._$row + "_" + (element.id.split("_")[1] - 2);
+
+                    const elementAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementAboveThisNode});
+                    const elementTwoAboveThisNode = Array.from(el.parentElement.children).find(e => { return e.id === idOfElementTwoAboveThisNode});
+
+                    if(!elementAboveThisNode.querySelector(".schedule-hours-box-sub"))
+                        return;
+
+                    if(elementTwoAboveThisNode && elementAboveThisNode){
+                        if(!elementAboveThisNode.querySelector(".program_start")) elementAboveThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_between" style="background-color: #ffffff"></div></div>`;
+                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
                     }
-                }
-            }
 
-            if (event.buttons === 0) {
-                this._$row = null;
-                this._$firstPlaced = false;
-
-                //@todo if only 1 element is placed then we need to add 1 shit under there but this is for tomorrow this took to long
+                    if(elementTwoAboveThisNode === undefined && elementAboveThisNode){
+                        el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
+                    }
+                })
             }
-        });
+        }
+
+        if (event.buttons === 0) {
+            this._$row = null;
+            this._$firstPlaced = false;
+
+            //@todo if only 1 element is placed then we need to add 1 shit under there but this is for tomorrow this took to long
+        }
     }
 
     disconnectedCallback() {
@@ -262,39 +282,39 @@ class EventOverviewPage extends HTMLElement {
                 let programArr = [];
                 let itemArr = [];
 
-                if(data != null) {
-                    if (data["programs"]) {
-                        data["programs"].forEach((program) => {
-                            const programStartTime = new Date(program["start_time"]);
-                            const programEndTime = new Date(program["end_time"]);
-                            if (this.datesAreOnSameDay(nextDays, programStartTime)) {
+                if (data != null && data["programs"]) {
+                    data["programs"].forEach((program) => {
+                        const programStartTime = new Date(program["start_time"]);
+                        const programEndTime = new Date(program["end_time"]);
 
-                                if (programStartTime.getHours() === hours) programArr.push({
-                                    type: "program_start",
-                                    program
-                                })
-                                if (hours > programStartTime.getHours() && hours < programEndTime.getHours()) programArr.push({
-                                    type: "program_between",
-                                    program
-                                })
-                                if (programEndTime.getHours() === hours) programArr.push({type: "program_end", program})
+                        if (!this.datesAreOnSameDay(nextDays, programStartTime))
+                            return;
 
-                                if (program["items"]) {
-                                    program["items"].forEach((item) => {
-                                        const itemStartTime = new Date(item["start_time"]);
-                                        const itemEndTime = new Date(item["end_time"]);
-
-                                        if (itemStartTime.getHours() === hours) itemArr.push({type: "item_start", item})
-                                        if (hours > itemStartTime.getHours() && hours < itemEndTime.getHours()) itemArr.push({
-                                            type: "item_between",
-                                            item
-                                        })
-                                        if (itemEndTime.getHours() === hours) itemArr.push({type: "item_end", item})
-                                    })
-                                }
-                            }
+                        if (programStartTime.getHours() === hours) programArr.push({
+                            type: "program_start",
+                            program
                         })
-                    }
+                        if (hours > programStartTime.getHours() && hours < programEndTime.getHours()) programArr.push({
+                            type: "program_between",
+                            program
+                        })
+
+                        if (programEndTime.getHours() === hours) programArr.push({type: "program_end", program})
+
+                        if (program["items"]) {
+                            program["items"].forEach((item) => {
+                                const itemStartTime = new Date(item["start_time"]);
+                                const itemEndTime = new Date(item["end_time"]);
+
+                                if (itemStartTime.getHours() === hours) itemArr.push({type: "item_start", item})
+                                if (hours > itemStartTime.getHours() && hours < itemEndTime.getHours()) itemArr.push({
+                                    type: "item_between",
+                                    item
+                                })
+                                if (itemEndTime.getHours() === hours) itemArr.push({type: "item_end", item})
+                            })
+                        }
+                    })
                 }
 
                 hoursArray.push({
@@ -313,11 +333,17 @@ class EventOverviewPage extends HTMLElement {
         return schedule;
     }
 
-    getMonday(date) {
-        const day = date.getDay() || 7;
-        if (day !== 1)
-            date.setHours(-24 * (day - 1));
-        return date.toISOString().split('T')[0];
+    getMonday(fromDate) {
+        let dayLength = 24 * 60 * 60 * 1000;
+        let currentDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+        let currentWeekDayMillisecond = ((currentDate.getDay()) * dayLength);
+        let monday = new Date(currentDate.getTime() - currentWeekDayMillisecond + dayLength);
+
+        if (monday > currentDate) {
+            monday = new Date(monday.getTime() - (dayLength * 7));
+        }
+
+        return monday.toUTCString();
     }
 
     formatDayString(date) {

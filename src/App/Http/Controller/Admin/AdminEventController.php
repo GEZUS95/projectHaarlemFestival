@@ -31,9 +31,9 @@ class AdminEventController extends BaseController
 
         $data = $request->request->all();
 
-        $parsedDate = Carbon::parse($data["date"]);
-        $startOfWeek = $parsedDate->startOfWeek()->format('Y-m-d H:i');
-        $endOfWeek = $parsedDate->endOfWeek()->format('Y-m-d H:i');
+        $parsedDate = Carbon::parse($data["date"])->addHour();
+        $startOfWeek = $parsedDate->format('Y-m-d H:i');
+        $endOfWeek = $parsedDate->copy()->endOfWeek()->format('Y-m-d H:i');
 
         $event = Event::query()
             ->where("title", "=", $title)
