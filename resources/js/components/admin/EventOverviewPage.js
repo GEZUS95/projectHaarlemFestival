@@ -211,8 +211,8 @@ class EventOverviewPage extends HTMLElement {
 
         this._$row = null;
         this._$firstPlaced = false;
-        this._$placedItem = null;
-        this._$firstPlacedItem = null;
+        this._$lastPlacedItemId = null;
+        this._$firstPlacedItemId = null;
         this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms );
     }
 
@@ -229,12 +229,18 @@ class EventOverviewPage extends HTMLElement {
 
             if(this._$firstPlaced === false) {
                 this._$firstPlaced = true;
-                el.innerHTML += `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
+
                 const idOfElementBelowThisNode = this._$row + "_" + (parseInt(el.id.split("_")[1]) + 1);
                 const elementBelowThisNode = Array.from(el.parentElement.children).find(e => {
                     return e.id === idOfElementBelowThisNode
                 });
+
+                if(elementBelowThisNode.querySelector(".schedule-hours-box-sub") !== null)
+                    return;
+
+                el.innerHTML += `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
                 elementBelowThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
+                this._$firstPlacedItemId = el.id
             }
 
             if(this._$row != null &&
@@ -263,11 +269,16 @@ class EventOverviewPage extends HTMLElement {
                     if(elementTwoAboveThisNode === undefined && elementAboveThisNode){
                         el.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
                     }
+
+                    this._$lastPlacedItemId = el.id;
                 })
             }
         }
 
         if (event.buttons === 0) {
+            // console.log(this._$firstPlacedItemId)
+            // console.log(this._$lastPlacedItemId)
+
             this._$row = null;
             this._$firstPlaced = false;
         }
