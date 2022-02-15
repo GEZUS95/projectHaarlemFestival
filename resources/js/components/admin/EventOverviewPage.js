@@ -211,6 +211,8 @@ class EventOverviewPage extends HTMLElement {
 
         this._$row = null;
         this._$firstPlaced = false;
+        this._$placedItem = null;
+        this._$firstPlacedItem = null;
         this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms );
     }
 
@@ -228,6 +230,11 @@ class EventOverviewPage extends HTMLElement {
             if(this._$firstPlaced === false) {
                 this._$firstPlaced = true;
                 el.innerHTML += `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
+                const idOfElementBelowThisNode = this._$row + "_" + (parseInt(el.id.split("_")[1]) + 1);
+                const elementBelowThisNode = Array.from(el.parentElement.children).find(e => {
+                    return e.id === idOfElementBelowThisNode
+                });
+                elementBelowThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
             }
 
             if(this._$row != null &&
@@ -263,8 +270,6 @@ class EventOverviewPage extends HTMLElement {
         if (event.buttons === 0) {
             this._$row = null;
             this._$firstPlaced = false;
-
-            //@todo if only 1 element is placed then we need to add 1 shit under there but this is for tomorrow this took to long
         }
     }
 
