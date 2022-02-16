@@ -21,6 +21,11 @@ class EventOverviewPage extends HTMLElement {
             this._$date = this.getMonday(evt.detail)
             this.fetchData();
         }));
+
+        window.addEventListener("force-refresh", (evt => {
+            this._$date = this.getMonday(evt.detail)
+            this.fetchData();
+        }));
     }
 
     getStyleObject() {
@@ -289,12 +294,25 @@ class EventOverviewPage extends HTMLElement {
             const eventId = this._$eventId;
             setTimeout(() => {
                 let startTime = this.getMonday(new Date(this._$date));
-                let endTime = startTime;
-                startTime = new Date(new Date(startTime).setHours(parseInt(firstPlaced.split("_")[1])));
-                startTime = new Date(new Date(startTime).setDate(new Date(new Date(startTime)).getDate() + (parseInt(firstPlaced.split("_")[0]) - 1)));
 
-                endTime = new Date(new Date(endTime).setHours(parseInt(lastPlaced.split("_")[1])));
-                endTime = new Date(new Date(endTime).setDate(new Date(new Date(endTime)).getDate() + (parseInt(lastPlaced.split("_")[0]) - 1)));
+                if(parseInt(firstPlaced.split("_")[0]) === 0)
+                    startTime = this.getSundayOfWeek(this._$date);
+
+                let endTime = startTime;
+
+                if(parseInt(firstPlaced.split("_")[0]) === 0) {
+                    startTime = new Date(new Date(startTime).setHours(parseInt(firstPlaced.split("_")[1])));
+                    startTime = new Date(new Date(startTime).setDate(new Date(new Date(startTime)).getDate() + (parseInt(firstPlaced.split("_")[0]))));
+
+                    endTime = new Date(new Date(endTime).setHours(parseInt(lastPlaced.split("_")[1])));
+                    endTime = new Date(new Date(endTime).setDate(new Date(new Date(endTime)).getDate() + (parseInt(lastPlaced.split("_")[0]))));
+                } else {
+                    startTime = new Date(new Date(startTime).setHours(parseInt(firstPlaced.split("_")[1])));
+                    startTime = new Date(new Date(startTime).setDate(new Date(new Date(startTime)).getDate() + (parseInt(firstPlaced.split("_")[0]) - 1)));
+
+                    endTime = new Date(new Date(endTime).setHours(parseInt(lastPlaced.split("_")[1])));
+                    endTime = new Date(new Date(endTime).setDate(new Date(new Date(endTime)).getDate() + (parseInt(lastPlaced.split("_")[0]) - 1)));
+                }
 
                 window.dispatchEvent(new CustomEvent('init-create-program-modal', {
                     detail: {
@@ -310,6 +328,14 @@ class EventOverviewPage extends HTMLElement {
             this._$row = null;
             this._$firstPlaced = false;
         }
+    }
+
+    getSundayOfWeek(date) {
+        const today = new Date(date);
+        const first = today.getDate() - today.getDay() + 1;
+        const last = first + 6;
+
+        return new Date(today.setDate(last));
     }
 
     disconnectedCallback() {
@@ -378,6 +404,7 @@ class EventOverviewPage extends HTMLElement {
     }
 
     getMonday(fromDate) {
+        fromDate = new Date(fromDate);
         let dayLength = 24 * 60 * 60 * 1000;
         let currentDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
         let currentWeekDayMillisecond = ((currentDate.getDay()) * dayLength);
@@ -387,7 +414,7 @@ class EventOverviewPage extends HTMLElement {
             monday = new Date(monday.getTime() - (dayLength * 7));
         }
 
-        return monday.toUTCString();
+        return monday;
     }
 
     formatDayString(date) {

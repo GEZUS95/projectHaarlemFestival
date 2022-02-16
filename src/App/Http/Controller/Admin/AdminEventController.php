@@ -6,6 +6,7 @@ namespace App\Http\Controller\Admin;
 use App\Model\Event;
 use App\Model\Permissions;
 use Carbon\Carbon;
+use DateTime;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -25,13 +26,16 @@ class AdminEventController extends BaseController
         return $this->render('partials.admin.partials.events.overview', ["event_title" => $title]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function overview(Request $request, $title): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
 
         $data = $request->request->all();
 
-        $parsedDate = Carbon::parse($data["date"])->addHour();
+        $parsedDate = Carbon::parse(strtotime($data["date"]));
         $startOfWeek = $parsedDate->format('Y-m-d H:i');
         $endOfWeek = $parsedDate->copy()->endOfWeek()->format('Y-m-d H:i');
 

@@ -104,9 +104,13 @@ class CreateProgramModal extends BaseModal {
 
     }
 
-    updateData(e){
-        console.log(this, e.path[0].value)
+    handleCancelBtnClick() {
+        super.handleCancelBtnClick();
+        console.log(this._$formData.start_time);
+        window.dispatchEvent(new CustomEvent('force-refresh', {detail: this._$formData.start_time}))
+    }
 
+    updateData(e){
         this._$formData[e.path[0].name] = e.path[0].value;
         this.updateModalTitle(this._$formData.title);
     }
@@ -123,21 +127,17 @@ class CreateProgramModal extends BaseModal {
         if(!this.formDataIsFilled(this._$formData))
             return;
 
-        let formData = new FormData();
-        const data = this._$formData;
-        for (const key in data) {
-            if (!data.hasOwnProperty(key))
-                return;
-            formData.append(key, data[key])
-        }
+        let formData = this.createFormData(this._$formData)
 
         this.query(this._$url, formData, "POST").then(data => {
-            console.log(data);
+            if(data.Error){
+                return;
+            }
+            window.dispatchEvent(new CustomEvent('force-refresh', {detail: startTime}))
+            super.closeForm();
         });
 
     }
-
-
 
     disconnectedCallback() {
 

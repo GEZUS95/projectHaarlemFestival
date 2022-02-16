@@ -170,6 +170,16 @@ class BaseModel extends BaseComponent {
         return passed;
     }
 
+    createFormData(data){
+        let formData = new FormData();
+        for (const key in data) {
+            if (!data.hasOwnProperty(key))
+                return;
+            formData.append(key, data[key])
+        }
+        return formData;
+    }
+
     updateModalTitle(title){
         const navTitle = this.shadowRoot.querySelector(".nav-title");
         navTitle.innerHTML = title
@@ -184,6 +194,10 @@ class BaseModel extends BaseComponent {
     }
 
     handleCancelBtnClick(){
+        this.closeForm();
+    }
+
+    closeForm(){
         this.shadowRoot.innerHTML = '';
     }
 

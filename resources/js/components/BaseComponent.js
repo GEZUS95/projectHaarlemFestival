@@ -5,7 +5,7 @@ class BaseComponent extends HTMLElement {
 
     }
 
-    async query(url = '', data, method = "GET") {
+    async query(url = '', data, method = "POST") {
         const response = await fetch(url, {
             method: method,
             body: data

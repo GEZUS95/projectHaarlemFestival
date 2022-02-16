@@ -43,7 +43,7 @@ class AdminProgramController extends BaseController
 
         $event = Event::find($data["event_id"]);
         if($event == null)
-            return $this->json(['Error' => "Event not found"]);
+            return $this->json(['error' => "Event not found"]);
 
         $startTime = Carbon::parse($data["start_time"])->addHour();
         $endTime = Carbon::parse($data["end_time"])->addHour();
@@ -57,7 +57,7 @@ class AdminProgramController extends BaseController
             'event_id' => $event->id,
         ]);
 
-        return $this->json([$data, $startTime, $endTime]);
+        return $this->json(json_encode(["success" => "successfully created item!"]));
     }
 
 }
