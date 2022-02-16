@@ -13,7 +13,7 @@
             width: 0; /* For Chrome, Safari, and Opera */
         }
     </style>
-    <event-overview-page link="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_json", ["title" => $event_title])}}" style="overflow-y: scroll"></event-overview-page>
+    <event-overview-page link="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_overview", ["title" => $event_title])}}" style="overflow-y: scroll"></event-overview-page>
 
-    <create-program-modal></create-program-modal>
+    <create-program-modal url="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_program_create")}}"></create-program-modal>
 @endsection

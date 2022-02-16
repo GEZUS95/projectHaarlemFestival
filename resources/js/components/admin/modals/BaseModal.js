@@ -1,7 +1,8 @@
-class BaseModel extends HTMLElement {
+import BaseComponent from "../../BaseComponent";
+
+class BaseModel extends BaseComponent {
     constructor() {
         super();
-        this.attachShadow({mode: "open"});
 
         this._$title = "Untitled"
         this._$update = false;
@@ -150,6 +151,23 @@ class BaseModel extends HTMLElement {
         if(btnUpdate) btnUpdate.addEventListener("click", this.handleUpdateBtnClick.bind(this));
         if(btnDelete) btnDelete.addEventListener("click", this.handleDeleteBtnClick.bind(this));
         if(btnCancel) btnCancel.addEventListener("click", this.handleCancelBtnClick.bind(this));
+    }
+
+    formDataIsFilled(data){
+        let passed = true;
+        for (const key in data) {
+
+            if (!data.hasOwnProperty(key))
+                return false;
+
+            const el = this.shadowRoot.querySelector(`input[name="${key}"]`);
+            if(!data[key]) {
+                passed = false;
+                el.classList.add("failed")
+            }
+        }
+
+        return passed;
     }
 
     updateModalTitle(title){

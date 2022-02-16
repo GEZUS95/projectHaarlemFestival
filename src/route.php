@@ -4,6 +4,7 @@ use App\Http\Controller\Admin\AdminEventController;
 use App\Http\Controller\Admin\AdminLocationsController;
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
+use App\Http\Controller\Admin\AdminProgramController;
 use App\Http\Controller\Admin\AdminRestaurantController;
 use App\Http\Controller\Admin\AdminRolesController;
 use App\Http\Controller\Admin\AdminUsersController;
@@ -27,8 +28,9 @@ $routes = [
     ["name" => "js", "url" => "/main.js", "controller" => [new FrontendController(), 'javascript'], "method" => "GET"],
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 
-    ["name" => "json_admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
-    ["name" => "admin_event_json", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'event'], "method" => "POST"],
+    ["name" => "admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
+    ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
+    ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
 ];
 
 $generatedRoute = new RouteManager($routes);
