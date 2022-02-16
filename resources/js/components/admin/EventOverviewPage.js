@@ -5,6 +5,7 @@ class EventOverviewPage extends HTMLElement {
 
         this._$date = this.getMonday(new Date())
         this._$url = null;
+        this._$eventId = null;
 
         window.addEventListener("schedule-next-week", (() => {
             this._$date = this.getMonday(new Date(new Date(this._$date).setDate(new Date(this._$date).getDate() + 7)))
@@ -154,6 +155,7 @@ class EventOverviewPage extends HTMLElement {
     }
 
     initComponent(data) {
+        this._$eventId = data.id
         const schedule = this.getSchedule(data)
         let displayHours = [];
         for (let hours = 0; hours < 24; hours++) {
@@ -213,7 +215,7 @@ class EventOverviewPage extends HTMLElement {
         this._$firstPlaced = false;
         this._$lastPlacedItemId = null;
         this._$firstPlacedItemId = null;
-        this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms );
+        this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms.bind(this) );
     }
 
     createPrograms(event){
@@ -241,6 +243,7 @@ class EventOverviewPage extends HTMLElement {
                 el.innerHTML += `<div class="schedule-hours-box-sub"> <div class="program_start" style="background-color: #ffffff"></div></div>`;
                 elementBelowThisNode.innerHTML = `<div class="schedule-hours-box-sub"> <div class="program_end" style="background-color: #ffffff"></div></div>`;
                 this._$firstPlacedItemId = el.id
+                this._$lastPlacedItemId = elementBelowThisNode.id
             }
 
             if(this._$row != null &&
@@ -276,9 +279,32 @@ class EventOverviewPage extends HTMLElement {
         }
 
         if (event.buttons === 0) {
-            // console.log(this._$firstPlacedItemId)
-            // console.log(this._$lastPlacedItemId)
+            if(this._$firstPlacedItemId === null && this._$lastPlacedItemId === null)
+                return;
 
+            const firstPlaced = this._$firstPlacedItemId;
+            const lastPlaced = this._$lastPlacedItemId;
+            const eventId = this._$eventId;
+            setTimeout(() => {
+                let startTime = this.getMonday(new Date(this._$date));
+                let endTime = startTime;
+                startTime = new Date(new Date(startTime).setHours(parseInt(firstPlaced.split("_")[1])));
+                startTime = new Date(new Date(startTime).setDate(new Date(new Date(startTime)).getDate() + (parseInt(firstPlaced.split("_")[0]) - 1)));
+
+                endTime = new Date(new Date(endTime).setHours(parseInt(lastPlaced.split("_")[1])));
+                endTime = new Date(new Date(endTime).setDate(new Date(new Date(endTime)).getDate() + (parseInt(lastPlaced.split("_")[0]) - 1)));
+
+                window.dispatchEvent(new CustomEvent('init-create-program-modal', {
+                    detail: {
+                        startTime: startTime,
+                        endTime: endTime,
+                        eventId: eventId,
+                    }
+                }))
+            }, 0)
+
+            this._$firstPlacedItemId = null;
+            this._$lastPlacedItemId = null;
             this._$row = null;
             this._$firstPlaced = false;
         }
