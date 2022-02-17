@@ -12,6 +12,7 @@ use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
 use App\Http\Controller\FrontendController;
+use App\Http\Controller\TestEmailController;
 use Matrix\Managers\RouteManager;
 
 $routes = [
@@ -30,6 +31,8 @@ $routes = [
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],
     ["name" => "js", "url" => "/main.js", "controller" => [new FrontendController(), 'javascript'], "method" => "GET"],
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
+
+    ["name" => "test_email", "url" => "/emailtest", "controller" => [new TestEmailController(), 'index'], "method" => "GET"],
 
     ["name" => "admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
     ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
