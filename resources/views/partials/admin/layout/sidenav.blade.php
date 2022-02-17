@@ -2,7 +2,7 @@
     <div class="partials-admin-layout-sidenav-title">Events</div>
     <div>
         <side-navigation-events
-            titles="{{\Matrix\Managers\RouteManager::getUrlByRouteName("json_admin_event_titles")}}"
+            titles="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_titles")}}"
         ></side-navigation-events>
         <div class="partials-admin-layout-sidenav-btn-add-events">
             <div class="partials-admin-layout-sidenav-btn-event-icon partials-admin-layout-sidenav-btn-events-plus"><i class="fa-solid fa-circle-plus"></i></div>

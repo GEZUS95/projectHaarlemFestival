@@ -4,12 +4,16 @@ import SideNavigationEvents from "./components/admin/SideNavigationEvents";
 import EventSubNavigation from "./components/admin/EventSubNavigation";
 import EventOverviewPage from "./components/admin/EventOverviewPage";
 import CreateProgramModal from "./components/admin/modals/CreateProgramModal";
+import PaginatorComponent from "./components/admin/PaginatorComponent";
+import SubNavigation from "./components/admin/SubNavigation";
 //
 window.customElements.define('side-navigation-link', SideNavigationLink);
 window.customElements.define('side-navigation-events', SideNavigationEvents);
 window.customElements.define('event-sub-navigation', EventSubNavigation);
 window.customElements.define('event-overview-page', EventOverviewPage);
 window.customElements.define('create-program-modal', CreateProgramModal);
+window.customElements.define('paginator-component', PaginatorComponent);
+window.customElements.define('admin-sub-navigation', SubNavigation);
 
 //npm i -g webpack
 //npm i -g webpack-cli

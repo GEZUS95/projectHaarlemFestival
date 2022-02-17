@@ -14,6 +14,14 @@ class BaseComponent extends HTMLElement {
         return response.json();
     }
 
+    async queryGet(url) {
+        const response = await fetch(url, {
+            method: "GET",
+        });
+
+        return response.json();
+    }
+
 }
 
 export default BaseComponent;
