@@ -22,10 +22,22 @@ class EmailManager
             //->priority(Email::PRIORITY_HIGH)
             ->subject($subject)
             ->text($message);
-        try {
-            $mailer->send($email);
-        } catch (\Exception $exception){
-            return new Response("success");
-        }
+        $mailer->send($email);
+    }
+
+    public static function sendCSSEmail($emailAddress, $subject, $message)
+    {
+        $transport = Transport::fromDsn('smtp://no-reply@haarlemfestival.com:no-reply2022@mail.haarlemfestival.com:587');
+        $mailer = new Mailer($transport);
+        $email = (new Email())
+            ->from('no-reply@haarlemfestival.com')
+            ->to($emailAddress)
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject($subject)
+            ->text($message);
+        $mailer->send($email);
     }
 }

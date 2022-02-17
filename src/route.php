@@ -14,7 +14,7 @@ use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
 use App\Http\Controller\FoodController;
 use App\Http\Controller\FrontendController;
-use App\Http\Controller\TestEmailController;
+use App\Http\Controller\EmailController;
 use Matrix\Managers\RouteManager;
 
 $routes = [
@@ -48,8 +48,9 @@ $routes = [
     // Test routes
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 
-    ["name" => "test_email", "url" => "/emailtest", "controller" => [new TestEmailController(), 'index'], "method" => "GET"],
-    ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new TestEmailController(), 'sendEmail'], "method" => "POST"],
+    ["name" => "test_email", "url" => "/emailtest", "controller" => [new EmailController(), 'index'], "method" => "GET"],
+    ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendEmail'], "method" => "POST"],
+    ["name" => "test_CSS_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendCSSEmail'], "method" => "POST"],
 
     // Other routes
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],

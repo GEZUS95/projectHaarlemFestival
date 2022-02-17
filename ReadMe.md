@@ -9,7 +9,7 @@ symfony server:start --port=4321 --passthru=front.php
 
 1. Git instaleren
 2. Xamp installeren
-3. composer
+3. composer installeren
 4. Node.js installeren
 5. gofish installeren      https://gofi.sh/#install
 6. symphony installeren
