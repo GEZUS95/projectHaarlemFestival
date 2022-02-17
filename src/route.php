@@ -9,6 +9,7 @@ use App\Http\Controller\Admin\AdminRestaurantController;
 use App\Http\Controller\Admin\AdminRolesController;
 use App\Http\Controller\Admin\AdminUsersController;
 use App\Http\Controller\Auth\LoginController;
+use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
 use App\Http\Controller\FrontendController;
 use Matrix\Managers\RouteManager;
@@ -16,6 +17,8 @@ use Matrix\Managers\RouteManager;
 $routes = [
     ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
+    ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
+    ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
     ["name" => "admin_performers", "url" => "/admin/performers", "controller" => [new AdminPerformerController(), 'index'], "method" => "GET"],
     ["name" => "admin_locations", "url" => "/admin/locations", "controller" => [new AdminLocationsController(), 'index'], "method" => "GET"],
