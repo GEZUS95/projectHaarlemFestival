@@ -21,7 +21,10 @@ $routes = [
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
     ["name" => "admin_performers", "url" => "/admin/performers", "controller" => [new AdminPerformerController(), 'index'], "method" => "GET"],
+
     ["name" => "admin_locations", "url" => "/admin/locations", "controller" => [new AdminLocationsController(), 'index'], "method" => "GET"],
+    ["name" => "admin_locations_paginator", "url" => "/admin/location/{page}/{amount}", "controller" => [new AdminLocationsController(), 'show'], "method" => "GET"],
+
     ["name" => "admin_restaurants", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantController(), 'index'], "method" => "GET"],
     ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminRolesController(), 'index'], "method" => "GET"],
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
