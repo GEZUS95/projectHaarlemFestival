@@ -6,13 +6,16 @@ use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Matrix\Managers\SessionManager;
 
 class BaseController
 {
     private BladeOne $blade;
+    protected SessionManager $session;
 
     function __construct() {
         $this->blade = new BladeOne(dirname(__DIR__, 2) . "/resources/views",dirname(__DIR__, 2) . "/public/views",BladeOne::MODE_DEBUG);
+        $this->session = SessionManager::getSessionManager();
     }
 
     /**

@@ -18,7 +18,8 @@
     "illuminate/translation": "^8.0",
     "illuminate/filesystem": "^8.0",
     "ext-json": "*",
-    "fakerphp/faker": "^1.19"
+    "fakerphp/faker": "^1.19",
+    "symfony/mailer": "^6.0"
   },
   "autoload": {
     "psr-4": {
