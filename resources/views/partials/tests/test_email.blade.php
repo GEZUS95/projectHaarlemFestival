@@ -1,11 +1,14 @@
 @extends('layout.main')
 @section('content')
+
     <h1>Email-Test</h1>
 
-    <form action="" method="post">
+    <form id="email_form" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("test_email_post")}}" method="post">
         <input type = "hidden">
-        Email: <input type="email" name="Email address of the recipient:" required><br>
-        Message: <input type="text" name="Message:" required><br>
+        Email: <input type="email" name="email" id="email" required><br>
+        Subject: <input type="text" name="subject" id="subject" required><br>
+        Message: <input type="text" name="message" id="message" required><br>
         <input type="submit">
     </form>
+
 @endsection

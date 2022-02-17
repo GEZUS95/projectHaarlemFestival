@@ -33,6 +33,7 @@ $routes = [
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 
     ["name" => "test_email", "url" => "/emailtest", "controller" => [new TestEmailController(), 'index'], "method" => "GET"],
+    ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new TestEmailController(), 'sendEmail'], "method" => "POST"],
 
     ["name" => "admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
     ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],

@@ -4,16 +4,12 @@ namespace App\Http\Controller;
 
 use Exception;
 use Matrix\BaseController;
+use Matrix\Managers\EmailManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mailer\Mailer;
 
 class TestEmailController extends BaseController
 {
-
     /**
      * @throws Exception
      */
@@ -22,21 +18,16 @@ class TestEmailController extends BaseController
         return $this->render("partials.tests.test_email", []);
     }
 
-    public function sendEmail($recipient)
+    public function sendEmail()
     {
-        $transport = Transport::fromDsn('smtp://localhost');
-        $mailer = new Mailer($transport);
+        $email = $_POST["email"];
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+        $subject = $_POST["subject"];
+        $message = $_POST["message"];
+        EmailManager::sendEmail($email, $subject, $message);
 
-        $email = (new Email())
-            ->from('info@haarlemfestival.com')
-            ->to($recipient)
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Haarlem Festival Mail!')
-            ->text('Lets go!');
-
-        $mailer->send($email);
+        return $this->render("partials.tests.test_email", []);
     }
 }
