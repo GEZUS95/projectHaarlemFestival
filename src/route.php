@@ -8,6 +8,7 @@ use App\Http\Controller\Admin\AdminProgramController;
 use App\Http\Controller\Admin\AdminRestaurantController;
 use App\Http\Controller\Admin\AdminRolesController;
 use App\Http\Controller\Admin\AdminUsersController;
+use App\Http\Controller\HomeController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
@@ -16,6 +17,7 @@ use App\Http\Controller\TestEmailController;
 use Matrix\Managers\RouteManager;
 
 $routes = [
+    ["name" => "home", "url" => "/", "controller" => [new HomeController(), 'index'], "method" => "GET"],
     ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
     ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
