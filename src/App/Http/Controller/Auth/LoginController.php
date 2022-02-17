@@ -17,8 +17,7 @@ class LoginController extends BaseController {
      */
     public function index(Request $request): Response
     {
-        $session = SessionManager::getSessionManager();
-        $session->set("login_form_csrf_token",  bin2hex(random_bytes(24)));
+        $this->session->set("login_form_csrf_token",  bin2hex(random_bytes(24)));
 
         return $this->render('auth.login', []);
     }
@@ -26,7 +25,7 @@ class LoginController extends BaseController {
     public function login(Request $request)
     {
         $data = $request->request->all();
-        $session = SessionManager::getSessionManager();
+        $this->session = SessionManager::getSessionManager();
 
         if($data["token"] != $session->get("login_form_csrf_token"))
             return new Response('Unauthorized', 403);
