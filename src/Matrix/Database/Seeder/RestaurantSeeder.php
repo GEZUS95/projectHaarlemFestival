@@ -13,10 +13,11 @@ class RestaurantSeeder
     {
         $faker = Factory::create();
 
+        $cuisines = ['European', 'Dutch', 'Modern', 'Fish and seafood', 'French', 'Asian', 'International', 'Steakhouse', 'Argentinian'];
         // Create restaurant types
-        for($i = 0; $i < 10; $i++){
+        foreach($cuisines as $c){
             RestaurantType::create([
-                'type' => $faker->word(),
+                'type' => $c,
             ]);
         }
 
