@@ -12,7 +12,7 @@ use App\Http\Controller\HomeController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
-use App\Http\Controller\FoodController;
+use App\Http\Controller\RestaurantController;
 use App\Http\Controller\FrontendController;
 use App\Http\Controller\EmailController;
 use Matrix\Managers\RouteManager;
@@ -26,7 +26,8 @@ $routes = [
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
     
     // Food routes
-    ["name" => "food", "url" => "/food", "controller" => [new FoodController(), 'index'], "method" => "GET"],
+    ["name" => "restaurant", "url" => "/restaurant", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
+    ["name" => "restaurant_single", "url" => "/restaurant/{id}", "controller" => [new RestaurantController(), 'single'], "method" => "GET"],
 
     // Admin routes
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
