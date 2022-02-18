@@ -11,6 +11,7 @@ class RestaurantSeeder
 {
     public function seed()
     {
+        //TODO: create a list of restaurant types and seed them instead of random words
         $faker = Factory::create();
 
         // Create restaurant types
