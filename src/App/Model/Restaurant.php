@@ -12,6 +12,7 @@ class Restaurant extends Model {
     protected $table = 'restaurants';
 
     protected $fillable = [
+        'name',
         'location_id',
         'type_id',
         'stars',
@@ -26,7 +27,7 @@ class Restaurant extends Model {
 
     public function types(): BelongsToMany
     {
-        return $this->belongsToMany(RestaurantType::class, 'restaurant_types_link', 'restaurant_types_id', 'restaurant_id');
+        return $this->belongsToMany(RestaurantType::class, 'restaurant_types_link', 'restaurant_id', 'restaurant_types_id');
     }
 
     public function locations(): HasOne

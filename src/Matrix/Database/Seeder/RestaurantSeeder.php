@@ -36,6 +36,6 @@ class RestaurantSeeder
             'accessibility' => 1,
         ]);
 
-        $restaurant->types()->attach([5,6,7]);
+        $restaurant->types()->attach([5,1,4]);
     }
 }
