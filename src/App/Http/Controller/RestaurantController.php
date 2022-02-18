@@ -18,8 +18,9 @@ class RestaurantController extends BaseController
     public function index(Request $request): Response
     {
         $this->session->set("login_form_csrf_token",  bin2hex(random_bytes(24)));
+        $res = Restaurant::all();
 
-        return $this->render("partials.restaurant.index", []);
+        return $this->render("partials.restaurant.index", ['restaurant' => $res]);
     }
 
     /**
