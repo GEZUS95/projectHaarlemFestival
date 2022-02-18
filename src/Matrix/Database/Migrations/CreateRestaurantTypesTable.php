@@ -13,7 +13,7 @@ class CreateRestaurantTypesTable
 
         Capsule::schema()->create('restaurant_types', function ($table) {
             $table->bigIncrements('id');
-            $table->float("type");
+            $table->string("type");
             $table->timestamps();
         });
 
