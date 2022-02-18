@@ -18,5 +18,5 @@ foreach (glob($pathToMigrationFolder . "/*.php") as $file)
     }
 }
 
-die("Migrations ran updated the database correctly!");
+echo ("Migrations ran, updated the database correctly! \n");
 

@@ -8,5 +8,5 @@ Capsule::schema()->disableForeignKeyConstraints();
 Capsule::schema()->dropAllTables();
 Capsule::schema()->enableForeignKeyConstraints();
 
-die("dropped all tables");
+echo ("dropped all tables\n");
 
