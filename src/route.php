@@ -50,7 +50,6 @@ $routes = [
 
     ["name" => "test_email", "url" => "/emailtest", "controller" => [new EmailController(), 'index'], "method" => "GET"],
     ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendEmail'], "method" => "POST"],
-    ["name" => "test_CSS_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendCSSEmail'], "method" => "POST"],
 
     // Other routes
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],
