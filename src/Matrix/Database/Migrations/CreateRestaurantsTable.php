@@ -15,7 +15,6 @@ class CreateRestaurantsTable
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('location_id');
-            $table->unsignedBigInteger('type_id');
             $table->float("stars");
             $table->unsignedInteger("seats");
             $table->float("price");

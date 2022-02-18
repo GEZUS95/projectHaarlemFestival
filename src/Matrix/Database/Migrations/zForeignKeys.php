@@ -68,17 +68,17 @@ class zForeignKeys
         });
 
         //restaurant_types_link
-        Capsule::schema()->table('restaurant_types_link', function ($table) {
-            $table->foreign('restaurant_types_id')
-                ->references('id')
-                ->on('restaurant_types')
-                ->unisigned();
-
-            $table->foreign('restaurant_id')
-                ->references('id')
-                ->on('restaurants')
-                ->unisigned();
-        });
+//        Capsule::schema()->table('restaurant_types_link', function ($table) {
+//            $table->foreign('restaurant_types_id')
+//                ->references('id')
+//                ->on('restaurant_types')
+//                ->unisigned();
+//
+//            $table->foreign('restaurant_id')
+//                ->references('id')
+//                ->on('restaurants')
+//                ->unisigned();
+//        });
 
         Capsule::schema()->table('sessions', function ($table) {
             $table->foreign('restaurant_id')

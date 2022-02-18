@@ -6,7 +6,6 @@ use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\EmailManager;
-use Matrix\Managers\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

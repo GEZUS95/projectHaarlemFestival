@@ -11,30 +11,30 @@ class RestaurantSeeder
 {
     public function seed()
     {
-        //TODO: create a list of restaurant types and seed them instead of random words
         $faker = Factory::create();
 
         // Create restaurant types
         for($i = 0; $i < 10; $i++){
-        RestaurantType::create([
-            'type' => $faker->word(),
-        ]);
+            RestaurantType::create([
+                'type' => $faker->word(),
+            ]);
         }
 
         // Get location and type for creating a restaurant
         $location = Location::query()->where("id", "=", 2)->first();
-        $type = RestaurantType::query()->where("id", "=", 1);
+//        $type = RestaurantType::query()->where("id", "=", 1);
 
 
         // Creating a restaurant
-        Restaurant::create([
+        $restaurant = Restaurant::create([
             'name' => 'Ratatouille',
             'location_id' => $location->id,
-            'type_id' => 1,
             'stars' => 4,
             'seats' => 50,
             'price' => 44.00,
             'accessibility' => 1,
         ]);
+
+        $restaurant->types()->attach([5,6,7]);
     }
 }

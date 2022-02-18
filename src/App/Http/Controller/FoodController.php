@@ -21,6 +21,9 @@ class FoodController extends BaseController
         return $this->render("partials.food.index", []);
     }
 
+    /**
+     * @throws Exception
+     */
     public function restaurant(Request $request, $title): Response
     {
         $restaurant = Event::query()

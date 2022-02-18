@@ -6,6 +6,7 @@ use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\AuthManager;
+use Matrix\Managers\RouteManager;
 use Matrix\Managers\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,9 @@ use App\Model\User;
 
 class RegisterController extends BaseController {
 
+    /**
+     * @throws Exception
+     */
     public function index(Request $request): Response
     {
         
@@ -37,9 +41,9 @@ class RegisterController extends BaseController {
         );
 
         if ($validator->fails()) {
-            $referer = $request->headers->get('referer');
             return $this->json(['result' => $validator->errors()]);
         }
+
         $userExist = (User::query()
             ->where('email','=',$data["email"])
             ->first());
@@ -55,7 +59,7 @@ class RegisterController extends BaseController {
         ]);
 
         if(!AuthManager::login($user->email, $user->password)){
-            $referer = \Matrix\Managers\RouteManager::getUrlByRouteName("login");
+            $referer = RouteManager::getUrlByRouteName("login");
             return $this->Redirect($referer);
         }
 
