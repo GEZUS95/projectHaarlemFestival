@@ -6,8 +6,8 @@ class PaginatorComponent extends BaseComponent {
 
         this._$url = null;
         this._$locations = null;
-        this._$updateUrl = null;
-        this._$createUrl = null;
+        this._$create_url = null;
+        this._$update_url = null;
         this._$fields = null;
         this._$currentPage = 0;
         this._$amount = 10;
@@ -107,22 +107,26 @@ class PaginatorComponent extends BaseComponent {
     }
 
     initComponent(data) {
+        console.log(data);
         this._$locations = data.location;
+        console.log(this._$url)
 
-        if(this._$fields !== null && typeof this._$fields === "string")
+        if(this._$fields !== null && typeof this._$fields === 'string')
             this._$fields = Array.from(this._$fields.split("|"));
+
+        console.log(this._$fields)
 
         this.shadowRoot.innerHTML = `
             ${this.styleObject()}
             <div class="container">
                 <div class="actions">
                     <input class="actions-search" type="text" name="search" placeholder="search...">
-                    <a href="#">Add location</a>
+                    <a href="${this._$create_url}">Add location</a>
                 </div>
                 <div class="sub-actions">
-                    <div class="sub-actions-pref">pref</div>    
+                    <a class="sub-actions-pref">pref</a>    
                     <input value="${this._$currentPage}" type="number" name="page">    
-                    <div class="sub-actions-next">next</div>    
+                    <a class="sub-actions-next">next</a>    
                 </div>
                 <div class="paginator">
                     <div class="paginator-title">
@@ -132,13 +136,13 @@ class PaginatorComponent extends BaseComponent {
                         <div class="paginator-actions">Actions</div>
                     </div>
                     <div class="paginator-data">
-                        ${this._$locations.map((loc) => {
+                        ${data.location.map((loc) => {
                             if(this._$fields === null) 
                                 return `<div>No data found</div>`;
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
                                 return `<div class="paginator-con">${loc[field]}</div>`;
-                            }).join('')}<a href="#" class="paginator-actions">btn</a></div>`
+                            }).join('')}<a href="${this.generateShowUrl(this._$update_url, loc["id"])}" class="paginator-actions">btn</a></div>`
     
                         }).join('')}
                     </div>
@@ -146,22 +150,18 @@ class PaginatorComponent extends BaseComponent {
             </div>
         `;
 
-        this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this));
-        this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this));
+        this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this))
+        this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this))
     }
 
     pref(){
-        if(this._$locations === null || this._$currentPage === 0)
-            return;
+        if(this._$currentPage <= 0)return;
 
         this._$currentPage = this._$currentPage - 1;
         this.init();
     }
 
     next(){
-        if(this._$locations === null || this._$locations.length < this._$amount)
-            return;
-
         this._$currentPage = this._$currentPage + 1;
         this.init();
     }
@@ -175,7 +175,7 @@ class PaginatorComponent extends BaseComponent {
     }
 
     static get observedAttributes() {
-        return ["url", "fields", "updateUrl", "createUrl"];
+        return ["url", "fields", "update_url", "create_url"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -196,12 +196,17 @@ class PaginatorComponent extends BaseComponent {
         });
     }
 
+    generateShowUrl(url, id){
+        url = url.split("{").join('');
+        url = url.split("}").join('');
+        return url.replace(/id/g, id);
+    }
+
     getCorrectUrl(url){
         url = url.split("{").join('');
         url = url.split("}").join('');
         url = url.replace(/page/g, this._$currentPage);
-        url = url.replace(/amount/g, this._$amount);
-        return url;
+        return url.replace(/amount/g, this._$amount);
     }
 }
 

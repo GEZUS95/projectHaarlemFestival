@@ -161,6 +161,9 @@ class BaseModel extends BaseComponent {
                 return false;
 
             const el = this.shadowRoot.querySelector(`input[name="${key}"]`);
+
+            console.log(data[key])
+            console.log(data)
             if(!data[key]) {
                 passed = false;
                 el.classList.add("failed")
