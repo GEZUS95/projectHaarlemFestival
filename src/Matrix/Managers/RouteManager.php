@@ -60,6 +60,10 @@ class RouteManager
 
     }
 
+    public static function getUrlWithOutFilledParameters($name){
+        return self::getUrl($name);
+    }
+
     private static function getUrl($name)
     {
         foreach (self::$routeList as $r) {

@@ -5,8 +5,11 @@ class PaginatorComponent extends BaseComponent {
         super();
 
         this._$url = null;
+        this._$updateUrl = null;
+        this._$createUrl = null;
         this._$fields = null;
         this._$currentPage = 0;
+        this._$amount = 10;
         this._$search = '';
     }
 
@@ -25,13 +28,13 @@ class PaginatorComponent extends BaseComponent {
                 .container {
                     height: 100%;
                     background-color: #BAC8CF;
+                    padding: 10px 20px;
                 }
                 
                 .paginator {
                     min-height: calc(45px * 11);
                     display: flex;
                     flex-direction: column;
-                    margin: 20px;
                     border: #000000 solid 1px;
                     background: #ECEFF1;
                 }
@@ -79,6 +82,25 @@ class PaginatorComponent extends BaseComponent {
                     align-items: center;
                     justify-content: center;
                 }
+                
+                .actions  {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                
+                .sub-actions {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+                
+                .actions-search {
+                    height: 40px;
+                    width: 270px;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
             </style>
         `;
     }
@@ -96,13 +118,13 @@ class PaginatorComponent extends BaseComponent {
             ${this.styleObject()}
             <div class="container">
                 <div class="actions">
-                    <input type="text" name="search" placeholder="search...">
-                    <div>Add location</div>
+                    <input class="actions-search" type="text" name="search" placeholder="search...">
+                    <a href="#">Add location</a>
                 </div>
                 <div class="sub-actions">
-                    <div>pref</div>    
-                    <input type="number" name="page">    
-                    <div>next</div>    
+                    <div class="sub-actions-pref">pref</div>    
+                    <input value="${this._$currentPage}" type="number" name="page">    
+                    <div class="sub-actions-next">next</div>    
                 </div>
                 <div class="paginator">
                     <div class="paginator-title">
@@ -118,35 +140,50 @@ class PaginatorComponent extends BaseComponent {
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
                                 return `<div class="paginator-con">${loc[field]}</div>`;
-                            }).join('')}<div class="paginator-actions">btn</div></div>`
+                            }).join('')}<a href="#" class="paginator-actions">btn</a></div>`
     
                         }).join('')}
                     </div>
                 </div>
             </div>
-        `
+        `;
+
+        this.shadowRoot.querySelector(".sub-actions-pref")
+        this.shadowRoot.querySelector(".sub-actions-next")
     }
 
     disconnectedCallback() {
 
     }
 
+    updateItem(){
+
+    }
+
     static get observedAttributes() {
-        return ["url", "fields"];
+        return ["url", "fields", "updateUrl", "createUrl"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
             this["_$"+name] = newValue;
 
-            const _this = this;
             if(this._$url === null)
                 return;
 
-            this.queryGet(this._$url).then(res => {
+            const _this = this;
+            this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
                 _this.initComponent(res);
             });
         }
+    }
+
+    getCorrectUrl(url){
+        url = url.split("{").join('');
+        url = url.split("}").join('');
+        url = url.replace(/page/g, this._$currentPage);
+        url = url.replace(/amount/g, this._$amount);
+        return url;
     }
 }
 
