@@ -27,7 +27,7 @@ class LoginController extends BaseController {
         $data = $request->request->all();
         $this->session = SessionManager::getSessionManager();
 
-        if($data["token"] != $session->get("login_form_csrf_token"))
+        if($data["token"] != $this->session->get("login_form_csrf_token"))
             return new Response('Unauthorized', 403);
 
         $validator = (new ValidatorFactory())->make(
