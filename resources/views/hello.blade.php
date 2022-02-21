@@ -1,9 +1,4 @@
-<h1>test</h1>
-
-{{$name}}
-{{$result->id}}
-
-<style>
-
-
-</style>
+@extends('admin.layout.main')
+@section('content')
+    <h1>Admin</h1>
+@endsection

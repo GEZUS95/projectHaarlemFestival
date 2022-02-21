@@ -37,20 +37,19 @@ class Framework
 
             return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $exception) {
-/*            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");*/
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             var_dump($exception);
             return new Response('Not Found', 404);
         } catch (UnauthorizedAccessException $exception) {
-/*            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");*/
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             var_dump($exception);
             return new Response('Unauthorized', 403);
         }catch (NotLoggedInException $exception) {
-/*            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");*/
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             var_dump($exception);
             return new RedirectResponse('/login', 303);
         } catch (\Exception $exception) {
-/*            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");*/
-            var_dump($exception);
+            highlight_string("<?php\n\$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('An error occurred', 500);
         }
     }
