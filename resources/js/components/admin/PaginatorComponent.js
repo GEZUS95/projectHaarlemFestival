@@ -108,9 +108,10 @@ class PaginatorComponent extends BaseComponent {
 
     initComponent(data) {
         console.log(data);
+        this._$locations = data.location;
         console.log(this._$url)
 
-        if(this._$fields !== null)
+        if(this._$fields !== null && typeof this._$fields === 'string')
             this._$fields = Array.from(this._$fields.split("|"));
 
         console.log(this._$fields)
@@ -123,9 +124,9 @@ class PaginatorComponent extends BaseComponent {
                     <a href="${this._$create_url}">Add location</a>
                 </div>
                 <div class="sub-actions">
-                    <div class="sub-actions-pref">pref</div>    
+                    <a class="sub-actions-pref">pref</a>    
                     <input value="${this._$currentPage}" type="number" name="page">    
-                    <div class="sub-actions-next">next</div>    
+                    <a class="sub-actions-next">next</a>    
                 </div>
                 <div class="paginator">
                     <div class="paginator-title">
@@ -149,8 +150,20 @@ class PaginatorComponent extends BaseComponent {
             </div>
         `;
 
-        this.shadowRoot.querySelector(".sub-actions-pref")
-        this.shadowRoot.querySelector(".sub-actions-next")
+        this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this))
+        this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this))
+    }
+
+    pref(){
+        if(this._$currentPage <= 0)return;
+
+        this._$currentPage = this._$currentPage - 1;
+        this.init();
+    }
+
+    next(){
+        this._$currentPage = this._$currentPage + 1;
+        this.init();
     }
 
     disconnectedCallback() {
@@ -172,8 +185,6 @@ class PaginatorComponent extends BaseComponent {
             if(this._$url === null)
                 return;
 
-            console.log(this._$create_url);
-            console.log(this._$update_url);
             this.init();
         }
     }
