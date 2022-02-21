@@ -60,8 +60,9 @@ class RouteManager
 
     }
 
-    public static function getUrlWithOutFilledParameters($name){
-        return self::getUrl($name);
+    public static function getUrlWithOutFilledParameters($name): string
+    {
+        return "http://" . $_SERVER['SERVER_NAME'] . self::getUrl($name);
     }
 
     private static function getUrl($name)

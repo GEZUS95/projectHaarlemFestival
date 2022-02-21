@@ -163,6 +163,8 @@ class EventOverviewPage extends HTMLElement {
         if(data)
             this._$eventId = data.id;
 
+        console.log(this._$eventId)
+        console.log(data)
         const schedule = this.getSchedule(data)
         let displayHours = [];
         for (let hours = 0; hours < 24; hours++) {

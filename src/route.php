@@ -36,6 +36,12 @@ $routes = [
     ["name" => "admin_locations", "url" => "/admin/locations", "controller" => [new AdminLocationsController(), 'index'], "method" => "GET"],
     ["name" => "admin_locations_paginator", "url" => "/admin/location/{page}/{amount}", "controller" => [new AdminLocationsController(), 'show'], "method" => "GET"],
 
+    ["name" => "admin_locations_create", "url" => "/admin/location/create", "controller" => [new AdminLocationsController(), 'create'], "method" => "GET"],
+    ["name" => "admin_locations_save", "url" => "/admin/location/create", "controller" => [new AdminLocationsController(), 'save'], "method" => "POST"],
+    ["name" => "admin_locations_single", "url" => "/admin/location_update/{id}", "controller" => [new AdminLocationsController(), 'single'], "method" => "GET"],
+    ["name" => "admin_locations_update", "url" => "/admin/location_update/{id}", "controller" => [new AdminLocationsController(), 'update'], "method" => "POST"],
+    ["name" => "admin_locations_delete", "url" => "/admin/location_delete/{id}", "controller" => [new AdminLocationsController(), 'delete'], "method" => "POST"],
+
     ["name" => "admin_restaurants", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantController(), 'index'], "method" => "GET"],
     ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminRolesController(), 'index'], "method" => "GET"],
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
@@ -44,6 +50,7 @@ $routes = [
 
     ["name" => "admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
     ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
+
     ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
 
     // Test routes

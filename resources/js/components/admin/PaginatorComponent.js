@@ -5,8 +5,9 @@ class PaginatorComponent extends BaseComponent {
         super();
 
         this._$url = null;
-        this._$updateUrl = null;
-        this._$createUrl = null;
+        this._$locations = null;
+        this._$create_url = null;
+        this._$update_url = null;
         this._$fields = null;
         this._$currentPage = 0;
         this._$amount = 10;
@@ -119,7 +120,7 @@ class PaginatorComponent extends BaseComponent {
             <div class="container">
                 <div class="actions">
                     <input class="actions-search" type="text" name="search" placeholder="search...">
-                    <a href="#">Add location</a>
+                    <a href="${this._$create_url}">Add location</a>
                 </div>
                 <div class="sub-actions">
                     <div class="sub-actions-pref">pref</div>    
@@ -140,7 +141,7 @@ class PaginatorComponent extends BaseComponent {
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
                                 return `<div class="paginator-con">${loc[field]}</div>`;
-                            }).join('')}<a href="#" class="paginator-actions">btn</a></div>`
+                            }).join('')}<a href="${this.generateShowUrl(this._$update_url, loc["id"])}" class="paginator-actions">btn</a></div>`
     
                         }).join('')}
                     </div>
@@ -161,7 +162,7 @@ class PaginatorComponent extends BaseComponent {
     }
 
     static get observedAttributes() {
-        return ["url", "fields", "updateUrl", "createUrl"];
+        return ["url", "fields", "update_url", "create_url"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -171,19 +172,30 @@ class PaginatorComponent extends BaseComponent {
             if(this._$url === null)
                 return;
 
-            const _this = this;
-            this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
-                _this.initComponent(res);
-            });
+            console.log(this._$create_url);
+            console.log(this._$update_url);
+            this.init();
         }
+    }
+
+    init(){
+        const _this = this;
+        this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
+            _this.initComponent(res);
+        });
+    }
+
+    generateShowUrl(url, id){
+        url = url.split("{").join('');
+        url = url.split("}").join('');
+        return url.replace(/id/g, id);
     }
 
     getCorrectUrl(url){
         url = url.split("{").join('');
         url = url.split("}").join('');
         url = url.replace(/page/g, this._$currentPage);
-        url = url.replace(/amount/g, this._$amount);
-        return url;
+        return url.replace(/amount/g, this._$amount);
     }
 }
 
