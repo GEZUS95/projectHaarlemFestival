@@ -5,6 +5,7 @@ class PaginatorComponent extends BaseComponent {
         super();
 
         this._$url = null;
+        this._$locations = null;
         this._$updateUrl = null;
         this._$createUrl = null;
         this._$fields = null;
@@ -106,13 +107,10 @@ class PaginatorComponent extends BaseComponent {
     }
 
     initComponent(data) {
-        console.log(data);
-        console.log(this._$url)
+        this._$locations = data.location;
 
-        if(this._$fields !== null)
+        if(this._$fields !== null && typeof this._$fields === "string")
             this._$fields = Array.from(this._$fields.split("|"));
-
-        console.log(this._$fields)
 
         this.shadowRoot.innerHTML = `
             ${this.styleObject()}
@@ -134,7 +132,7 @@ class PaginatorComponent extends BaseComponent {
                         <div class="paginator-actions">Actions</div>
                     </div>
                     <div class="paginator-data">
-                        ${data.location.map((loc) => {
+                        ${this._$locations.map((loc) => {
                             if(this._$fields === null) 
                                 return `<div>No data found</div>`;
                             
@@ -148,8 +146,24 @@ class PaginatorComponent extends BaseComponent {
             </div>
         `;
 
-        this.shadowRoot.querySelector(".sub-actions-pref")
-        this.shadowRoot.querySelector(".sub-actions-next")
+        this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this));
+        this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this));
+    }
+
+    pref(){
+        if(this._$locations === null || this._$currentPage === 0)
+            return;
+
+        this._$currentPage = this._$currentPage - 1;
+        this.init();
+    }
+
+    next(){
+        if(this._$locations === null || this._$locations.length < this._$amount)
+            return;
+
+        this._$currentPage = this._$currentPage + 1;
+        this.init();
     }
 
     disconnectedCallback() {
@@ -171,11 +185,15 @@ class PaginatorComponent extends BaseComponent {
             if(this._$url === null)
                 return;
 
-            const _this = this;
-            this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
-                _this.initComponent(res);
-            });
+            this.init();
         }
+    }
+
+    init(){
+        const _this = this;
+        this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
+            _this.initComponent(res);
+        });
     }
 
     getCorrectUrl(url){

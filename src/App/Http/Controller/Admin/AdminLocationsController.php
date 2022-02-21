@@ -23,7 +23,7 @@ class AdminLocationsController extends BaseController
         return $this->render('partials.admin.partials.locations.overview', []);
     }
 
-    public function show(Request $request, $page, $amount): Response
+    public function paginator(Request $request, $page, $amount): Response
     {
         GuardManager::guard(Permissions::__VIEW_LOCATION_PAGE__);
 
@@ -31,6 +31,26 @@ class AdminLocationsController extends BaseController
         $location = Location::query()->skip($skip)->take($amount)->get();
 
         return $this->json(["location" => $location]);
+    }
+
+    public function create(Request $request){
+
+    }
+
+    public function save(Request $request){
+
+    }
+
+    public function show(Request $request){
+
+    }
+
+    public function update(Request $request){
+
+    }
+
+    public function delete(Request $request){
+
     }
 
 }
