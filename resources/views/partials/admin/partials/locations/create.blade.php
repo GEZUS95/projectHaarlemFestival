@@ -1,4 +1,6 @@
 @extends('partials.admin.layout.main')
 @section('content')
-    <h1>Create</h1>
+    <admin-sub-navigation title="Locations"></admin-sub-navigation>
+
+    <create-location-form></create-location-form>
 @endsection

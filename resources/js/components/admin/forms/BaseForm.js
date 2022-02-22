@@ -1,6 +1,6 @@
 import BaseComponent from "../../BaseComponent";
 
-class BaseModel extends BaseComponent {
+class BaseForm extends BaseComponent {
     constructor() {
         super();
 
@@ -26,64 +26,21 @@ class BaseModel extends BaseComponent {
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
-                    box-sizing: border-box;
-                    position: absolute;
-                    z-index: 100;
-                    background: rgba(55,71,79,0.5);
-                    top: 0;
-                    left: 0;
                     height: 100%;
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
                 }
-                
+            
                 .container {
-                    background-color: #ECEFF1;
-                    width: 1000px;
-                    height: 600px;
-                    border-radius: 10px;
+                    height: 100%;
+                    background-color: #BAC8CF;
                     display: flex;
                     flex-direction: column;
                 }
                 
-                .nav {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 10px;
-                    height: 80px;
-                    background-color: #B0BEC5;
-                    border: solid 1px #64660E;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 12px -5px rgba(0,0,0,0.44);
-                }
-                
-                .nav-title {
-                    font-size: 46px;
-                    color: #5A5D61;
-                    font-weight: bold;
-                }
-                
-                .footer {
-                    margin-top: auto;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-end;
-                    padding: 10px;
-                    height: 80px;
-                    background-color: #B0BEC5;
-                    border: solid 1px #64660E;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 12px -5px rgba(0,0,0,0.44);
-                }
-                
                 .btn {
                     color: #ffffff;
-                    font-size: 30px;
+                    font-size: 24px;
                     cursor: pointer;
-                    padding: 12px;
+                    padding: 8px;
                     line-height: 1.5;
                     border-radius: 0.3rem;
                     user-select: none;
@@ -116,27 +73,30 @@ class BaseModel extends BaseComponent {
                 .btn-delete {
                     background-color: #D22222;
                 }
+                
+                .footer {
+                    margin-top: auto;
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
             </style>
             ${this.style()}
 
             
             <div class="container">
-                <div class="nav">
-                    <div class="nav-title">${this._$title}</div>
-                    <div>Cancel Btn</div>
-                </div>
                     ${this.content()}
-                <div class="footer">
                     
-                    ${this._$update === true ? 
+                <div class="footer">
+                    ${this._$update === true ?
                         `<div class="btn btn-update">Update</div>
                         <div class="btn btn-cancel">Cancel</div>
                         <div class="btn btn-delete">Delete</div>`
-                    : 
+                    :
                         `<div class="btn btn-create">Create</div>
                         <div class="btn btn-cancel">Cancel</div>`
                     }
-                    
                 </div>
             </div>
         `;
@@ -151,11 +111,6 @@ class BaseModel extends BaseComponent {
         if(btnUpdate) btnUpdate.addEventListener("click", this.handleUpdateBtnClick.bind(this));
         if(btnDelete) btnDelete.addEventListener("click", this.handleDeleteBtnClick.bind(this));
         if(btnCancel) btnCancel.addEventListener("click", this.handleCancelBtnClick.bind(this));
-    }
-
-    updateModalTitle(title){
-        const navTitle = this.shadowRoot.querySelector(".nav-title");
-        navTitle.innerHTML = title
     }
 
     handleCreateBtnClick(){
@@ -191,4 +146,4 @@ class BaseModel extends BaseComponent {
     }
 }
 
-export default BaseModel;
+export default BaseForm;

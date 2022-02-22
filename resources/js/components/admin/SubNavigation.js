@@ -29,7 +29,7 @@ class SubNavigation extends BaseComponent {
                 }
             </style>
             <div class="navigation">
-                <div class="title">${this.title} - Programs overview</div>
+                <div class="title">${this.title}</div>
             </div>
         `;
 

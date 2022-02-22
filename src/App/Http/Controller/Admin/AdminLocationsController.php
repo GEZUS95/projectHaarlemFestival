@@ -53,9 +53,11 @@ class AdminLocationsController extends BaseController
      */
     public function single(Request $request, $id): Response
     {
-        var_dump($id);
         $this->session->set("locations_update_form_csrf_token",  bin2hex(random_bytes(24)));
-        return $this->render('partials.admin.partials.locations.single', []);
+
+        $location = Location::findOrFail($id);
+
+        return $this->render('partials.admin.partials.locations.single', ["location" => $location]);
     }
 
     public function update(Request $request, $id){
