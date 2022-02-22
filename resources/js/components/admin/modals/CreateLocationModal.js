@@ -1,6 +1,7 @@
-import BaseForm from "./BaseForm";
 
-class CreateLocationForm extends BaseForm {
+import BaseModal from "./BaseModal";
+
+class CreateLocationModal extends BaseModal {
     constructor() {
         super();
 
@@ -61,7 +62,7 @@ class CreateLocationForm extends BaseForm {
             .image-label {
                 background-color: #ffffff;
                 width: 45%;
-                height: 320px;
+                height: 200px;
             }
             
             .image-cloud {
@@ -125,25 +126,27 @@ class CreateLocationForm extends BaseForm {
     }
 
     connectedCallback(){
-        this.renderContent();
-
         const _this = this;
-        _this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const img = _this.shadowRoot.querySelector('.placeholder-image');
-                img.onload = () => {
-                    URL.revokeObjectURL(img.src);
+        window.addEventListener("modal-create-location", (() => {
+            _this.renderContent();
+
+            _this.updateModalTitle("Create Location");
+            _this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const img = _this.shadowRoot.querySelector('.placeholder-image');
+                    img.onload = () => {
+                        URL.revokeObjectURL(img.src);
+                    }
+
+                    img.src = URL.createObjectURL(this.files[0]);
                 }
+            });
 
-                img.src = URL.createObjectURL(this.files[0]);
-            }
-        });
-
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        const this_ = this
-        Array.from(elements).forEach(function(element) {
-            element.addEventListener('change', this_.updateData.bind(this_) );
-        });
+            const elements = _this.shadowRoot.querySelectorAll(".input");
+            Array.from(elements).forEach(function(element) {
+                element.addEventListener('change', _this.updateData.bind(_this) );
+            });
+        }));
     }
 
     updateData(e){
@@ -153,16 +156,9 @@ class CreateLocationForm extends BaseForm {
     handleCreateBtnClick(e){
         const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
 
-        // if(!this.formDataIsFilled(this._$formData))
-        //     return;
-
         let formData = this.createFormData(this._$formData)
         formData.append("file", image)
         formData.append("token", this._$token)
-
-        console.log(image);
-
-        console.log("sending")
 
         const xhr = new XMLHttpRequest();
 
@@ -174,8 +170,6 @@ class CreateLocationForm extends BaseForm {
 
         xhr.open('POST', this._$url, true);
         xhr.send(formData);
-
-        console.log("should have sended!")
     }
 
     disconnectedCallback() {
@@ -193,4 +187,4 @@ class CreateLocationForm extends BaseForm {
     }
 }
 
-export default CreateLocationForm;
+export default CreateLocationModal;

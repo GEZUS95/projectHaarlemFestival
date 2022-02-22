@@ -4,10 +4,11 @@ class PaginatorComponent extends BaseComponent {
     constructor() {
         super();
 
+        this._$title = null;
         this._$url = null;
         this._$locations = null;
-        this._$create_url = null;
-        this._$update_url = null;
+        this._$update_event = null;
+        this._$create_event = null;
         this._$fields = null;
         this._$currentPage = 0;
         this._$amount = 10;
@@ -102,6 +103,10 @@ class PaginatorComponent extends BaseComponent {
                     font-size: 20px;
                     font-weight: bold;
                 }
+                
+                .action-add-item {
+                
+                }
             </style>
         `;
     }
@@ -121,7 +126,7 @@ class PaginatorComponent extends BaseComponent {
             <div class="container">
                 <div class="actions">
                     <input class="actions-search" type="text" name="search" placeholder="search...">
-                    <a href="${this._$create_url}">Add location</a>
+                    <div class="action-add-item"">Add ${this._$title}</div>
                 </div>
                 <div class="sub-actions">
                     <a class="sub-actions-pref">pref</a>    
@@ -142,7 +147,7 @@ class PaginatorComponent extends BaseComponent {
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
                                 return `<div class="paginator-con">${loc[field]}</div>`;
-                            }).join('')}<a href="${this.generateShowUrl(this._$update_url, loc["id"])}" class="paginator-actions">btn</a></div>`
+                            }).join('')}<div id="${loc["id"]}" class="paginator-actions">btn</div></div>`
     
                         }).join('')}
                     </div>
@@ -152,6 +157,11 @@ class PaginatorComponent extends BaseComponent {
 
         this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this))
         this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this))
+        this.shadowRoot.querySelector(".action-add-item").addEventListener("click", this.addItem.bind(this))
+    }
+
+    addItem(){
+        window.dispatchEvent(new CustomEvent(this._$create_event, {detail: true}))
     }
 
     pref(){
@@ -170,12 +180,8 @@ class PaginatorComponent extends BaseComponent {
 
     }
 
-    updateItem(){
-
-    }
-
     static get observedAttributes() {
-        return ["url", "fields", "update_url", "create_url"];
+        return ["url", "fields", "update_event", "create_event" ,"title"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -194,12 +200,6 @@ class PaginatorComponent extends BaseComponent {
         this.queryGet(this.getCorrectUrl(this._$url)).then(res => {
             _this.initComponent(res);
         });
-    }
-
-    generateShowUrl(url, id){
-        url = url.split("{").join('');
-        url = url.split("}").join('');
-        return url.replace(/id/g, id);
     }
 
     getCorrectUrl(url){

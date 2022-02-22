@@ -29,6 +29,11 @@ class Image extends Model {
         return $this->morphedByMany(Performer::class, 'image_ables');
     }
 
+    public static function getImagePath($model): string
+    {
+        return dirname(__DIR__, 3) . "\\resources\\uploads\\".$model->images[0]->file_location;
+    }
+
     /**
      * @throws Exception
      */

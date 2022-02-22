@@ -37,4 +37,3 @@ class SideNavigationLink extends HTMLElement {
 }
 
 export default SideNavigationLink;
-// customElements.define("confirm-link", ConfirmLink);

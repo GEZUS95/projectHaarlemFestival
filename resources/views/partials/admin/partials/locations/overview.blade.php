@@ -4,7 +4,13 @@
     <paginator-component
             fields='city|address|name|seats'
             url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_paginator")}}"
-            create_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_create")}}"
-            update_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_update")}}"
+            update_event="modal-update-location"
+            create_event="modal-create-location"
+            title="Location"
     ></paginator-component>
+
+    <create-location-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("locations_create_form_csrf_token")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_save")}}"
+    ></create-location-modal>
 @endsection

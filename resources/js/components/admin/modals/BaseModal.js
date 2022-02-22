@@ -42,7 +42,7 @@ class BaseModel extends BaseComponent {
                 .container {
                     background-color: #ECEFF1;
                     width: 1000px;
-                    height: 600px;
+                    min-height: 600px;
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;

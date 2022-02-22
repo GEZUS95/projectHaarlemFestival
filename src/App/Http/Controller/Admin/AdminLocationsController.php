@@ -36,17 +36,6 @@ class AdminLocationsController extends BaseController
         return $this->json(["location" => $location]);
     }
 
-
-    /**
-     * @throws Exception
-     */
-    public function create(Request $request): Response
-    {
-        $this->session->set("locations_create_form_csrf_token",  bin2hex(random_bytes(24)));
-
-        return $this->render('partials.admin.partials.locations.create', []);
-    }
-
     /**
      * @throws Exception
      */
@@ -65,9 +54,6 @@ class AdminLocationsController extends BaseController
                 'color' => 'required',
             ]
         );
-
-//        if($data["token"] != $this->session->get("locations_create_form_csrf_token"))
-//            return new Response('Unauthorized', 403);
 
         if ($validator->fails()) {
             return $this->json(json_encode(print_r($validator->errors())));
@@ -97,8 +83,9 @@ class AdminLocationsController extends BaseController
         $this->session->set("locations_update_form_csrf_token",  bin2hex(random_bytes(24)));
 
         $location = Location::findOrFail($id);
+        $location["file"] = Image::getImagePath($location);
 
-        return $this->render('partials.admin.partials.locations.single', ["location" => $location]);
+        return $this->render('partials.admin.partials.locations.single', ["loc" => json_encode($location)]);
     }
 
     public function update(Request $request, $id){
