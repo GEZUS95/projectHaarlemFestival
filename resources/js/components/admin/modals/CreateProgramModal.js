@@ -38,36 +38,11 @@ class CreateProgramModal extends BaseModal {
     style(){
         return `
         <style>
-            .failed {
-                border: solid red 3px !important;
-            }
-            
-            .label {
-                color: #37474F;
-                font-size: 21px;
-            }
-            
-            .input {
-                box-sizing: border-box;
-                background-color: #BAC8CF;
-                width: 100%;
-                max-height: 40px;
-                min-height: 40px;
-                color: #37474F;
-                font-size: 21px;
-            }
-            
             .form-control {
                 width: 30%;
                 margin: 15px;
                 display: flex;
                 flex-direction: column;
-            }
-            
-            .form {
-                display: flex;
-                flex-wrap: wrap;
-                padding: 30px;
             }
         </style>
        `;
@@ -139,18 +114,8 @@ class CreateProgramModal extends BaseModal {
 
     }
 
-    disconnectedCallback() {
-
-    }
-
     static get observedAttributes() {
         return ["url"];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this._$url = newValue;
-        }
     }
 }
 

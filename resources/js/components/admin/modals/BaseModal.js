@@ -116,6 +116,31 @@ class BaseModel extends BaseComponent {
                 .btn-delete {
                     background-color: #D22222;
                 }
+                
+                .failed {
+                    border: solid red 3px !important;
+                }
+                
+                .label {
+                    color: #37474F;
+                    font-size: 21px;
+                }
+                
+                .input {
+                    box-sizing: border-box;
+                    background-color: #BAC8CF;
+                    width: 100%;
+                    max-height: 40px;
+                    min-height: 40px;
+                    color: #37474F;
+                    font-size: 21px;
+                }
+                
+                .form {
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 30px;
+                }
             </style>
             ${this.style()}
 
@@ -187,7 +212,9 @@ class BaseModel extends BaseComponent {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-
+        if (oldValue !== newValue) {
+            this["_$"+ name] = newValue;
+        }
     }
 }
 

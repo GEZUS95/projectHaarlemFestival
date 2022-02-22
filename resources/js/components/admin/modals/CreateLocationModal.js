@@ -19,26 +19,7 @@ class CreateLocationModal extends BaseModal {
 
     style(){
         return `
-        <style>
-            .failed {
-                border: solid red 3px !important;
-            }
-            
-            .label {
-                color: #37474F;
-                font-size: 21px;
-            }
-            
-            .input {
-                box-sizing: border-box;
-                background-color: #ffffff;
-                width: 100%;
-                max-height: 40px;
-                min-height: 40px;
-                color: #37474F;
-                font-size: 21px;
-            }
-            
+        <style>      
             .form-control {
                 margin-right: 30px;
                 margin-bottom: 30px;
@@ -52,13 +33,7 @@ class CreateLocationModal extends BaseModal {
                 display: flex;
                 flex-direction: row;
             }
-            
-            .form {
-                display: flex;
-                flex-wrap: wrap;
-                padding: 30px;
-            }
-            
+                     
             .image-label {
                 background-color: #ffffff;
                 width: 45%;
@@ -172,18 +147,8 @@ class CreateLocationModal extends BaseModal {
         xhr.send(formData);
     }
 
-    disconnectedCallback() {
-
-    }
-
     static get observedAttributes() {
         return ["url", "token"];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this["_$"+ name] = newValue;
-        }
     }
 }
 
