@@ -6,3 +6,5 @@ node_modules
 public/views
 public/main.js
 public/main.css
+
+resources/uploads/*

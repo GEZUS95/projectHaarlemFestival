@@ -3,10 +3,13 @@
 
 namespace App\Http\Controller\Admin;
 
+use App\Model\Image;
 use App\Model\Location;
 use App\Model\Permissions;
+use Carbon\Carbon;
 use Exception;
 use Matrix\BaseController;
+use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,8 +47,46 @@ class AdminLocationsController extends BaseController
         return $this->render('partials.admin.partials.locations.create', []);
     }
 
-    public function save(Request $request){
+    /**
+     * @throws Exception
+     */
+    public function save(Request $request): Response
+    {
+        $data = $request->request->all();
 
+        $validator = (new ValidatorFactory())->make(
+            $data,
+            [
+                'token' => 'required',
+                'name' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'seats' => 'required',
+                'color' => 'required',
+            ]
+        );
+
+//        if($data["token"] != $this->session->get("locations_create_form_csrf_token"))
+//            return new Response('Unauthorized', 403);
+
+        if ($validator->fails()) {
+            return $this->json(json_encode(print_r($validator->errors())));
+        }
+
+        $location = Location::create([
+            'name' => $data["name"],
+            'city' => $data["city"],
+            'address' => $data["address"],
+            'stage' => $data["stage"],
+            'color' => $data["color"],
+            'seats' => $data["seats"],
+        ]);
+
+        Image::uploadFile($_FILES["file"], $location);
+
+        return $this->json(
+            ["Success" => "Successfully added the location"]
+        );
     }
 
     /**
