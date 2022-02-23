@@ -136,10 +136,11 @@ class CreateLocationModal extends BaseModal {
         formData.append("token", this._$token)
 
         const xhr = new XMLHttpRequest();
-
+        const _this = this;
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                console.log(xhr.response);
+                _this._$formData = _this.clearFormData(_this._$formData)
+                _this.closeForm();
             }
         }
 

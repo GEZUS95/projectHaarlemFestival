@@ -192,6 +192,7 @@ class BaseModel extends BaseComponent {
     }
 
     handleCancelBtnClick(){
+        this._$formData = this.clearFormData(this._$formData)
         this.closeForm();
     }
 
@@ -216,6 +217,46 @@ class BaseModel extends BaseComponent {
             this["_$"+ name] = newValue;
         }
     }
+
+    formDataIsFilled(data){
+        let passed = true;
+        for (const key in data) {
+
+            if (!data.hasOwnProperty(key))
+                return false;
+
+            const el = this.shadowRoot.querySelector(`input[name="${key}"]`);
+
+            if(!data[key]) {
+                passed = false;
+                el.classList.add("failed")
+            }
+        }
+
+        return passed;
+    }
+
+    createFormData(data){
+        let formData = new FormData();
+        for (const key in data) {
+            if (!data.hasOwnProperty(key))
+                return;
+            formData.append(key, data[key])
+        }
+        return formData;
+    }
+
+    clearFormData(data){
+        for (const key in data) {
+
+            if (!data.hasOwnProperty(key))
+                return;
+            data[key] = '';
+        }
+        return data;
+    }
+
+
 }
 
 export default BaseModel;
