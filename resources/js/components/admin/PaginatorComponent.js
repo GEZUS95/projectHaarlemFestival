@@ -159,7 +159,7 @@ class PaginatorComponent extends BaseComponent {
 
     updateItem(event){
         const el = event.path[0];
-        console.log(el.id);
+        window.dispatchEvent(new CustomEvent(this._$update_event, {detail: el.id}))
     }
 
     addItem(){

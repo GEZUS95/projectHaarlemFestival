@@ -14,4 +14,10 @@
             token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("locations_create_form_csrf_token")}}"
             url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_save")}}"
     ></create-location-modal>
+
+    <update-location-modal
+        token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("locations_update_form_csrf_token")}}"
+        url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_update")}}"
+        query_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_single")}}"
+    ></update-location-modal>
 @endsection

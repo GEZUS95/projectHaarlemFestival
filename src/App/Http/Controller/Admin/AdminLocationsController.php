@@ -23,9 +23,16 @@ class AdminLocationsController extends BaseController
     public function index(): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_LOCATION_OVERVIEW_PAGE__);
+
+        $this->session->set("locations_create_form_csrf_token",  bin2hex(random_bytes(24)));
+        $this->session->set("locations_update_form_csrf_token",  bin2hex(random_bytes(24)));
+
         return $this->render('partials.admin.partials.locations.overview', []);
     }
 
+    /**
+     * @throws Exception
+     */
     public function show(Request $request, $page, $amount): Response
     {
         GuardManager::guard(Permissions::__VIEW_LOCATION_PAGE__);
@@ -80,12 +87,10 @@ class AdminLocationsController extends BaseController
      */
     public function single(Request $request, $id): Response
     {
-        $this->session->set("locations_update_form_csrf_token",  bin2hex(random_bytes(24)));
-
         $location = Location::findOrFail($id);
         $location["file"] = Image::getImagePath($location);
 
-        return $this->render('partials.admin.partials.locations.single', ["loc" => json_encode($location)]);
+        return $this->json(["location" => $location]);
     }
 
     public function update(Request $request, $id){

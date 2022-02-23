@@ -1,4 +1,3 @@
-
 import BaseModal from "./BaseModal";
 
 class CreateLocationModal extends BaseModal {
