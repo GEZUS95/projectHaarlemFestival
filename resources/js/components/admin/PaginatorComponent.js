@@ -6,7 +6,7 @@ class PaginatorComponent extends BaseComponent {
 
         this._$title = null;
         this._$url = null;
-        this._$locations = null;
+        this._$object_name = null;
         this._$update_event = null;
         this._$create_event = null;
         this._$fields = null;
@@ -112,14 +112,8 @@ class PaginatorComponent extends BaseComponent {
     }
 
     initComponent(data) {
-        console.log(data);
-        this._$locations = data.location;
-        console.log(this._$url)
-
         if(this._$fields !== null && typeof this._$fields === 'string')
             this._$fields = Array.from(this._$fields.split("|"));
-
-        console.log(this._$fields)
 
         this.shadowRoot.innerHTML = `
             ${this.styleObject()}
@@ -141,13 +135,13 @@ class PaginatorComponent extends BaseComponent {
                         <div class="paginator-actions">Actions</div>
                     </div>
                     <div class="paginator-data">
-                        ${data.location.map((loc) => {
+                        ${data[this._$object_name].map((i) => {
                             if(this._$fields === null) 
                                 return `<div>No data found</div>`;
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
-                                return `<div class="paginator-con">${loc[field]}</div>`;
-                            }).join('')}<div id="${loc["id"]}" class="paginator-actions">btn</div></div>`
+                                return `<div class="paginator-con">${i[field]}</div>`;
+                            }).join('')}<div id="${i["id"]}" class="paginator-actions paginator-update-btn">btn</div></div>`
     
                         }).join('')}
                     </div>
@@ -158,6 +152,14 @@ class PaginatorComponent extends BaseComponent {
         this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this))
         this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this))
         this.shadowRoot.querySelector(".action-add-item").addEventListener("click", this.addItem.bind(this))
+        Array.from(this.shadowRoot.querySelectorAll(".paginator-update-btn")).forEach(el => {
+            el.addEventListener("click", this.updateItem.bind(this))
+        })
+    }
+
+    updateItem(event){
+        const el = event.path[0];
+        console.log(el.id);
     }
 
     addItem(){
@@ -181,7 +183,7 @@ class PaginatorComponent extends BaseComponent {
     }
 
     static get observedAttributes() {
-        return ["url", "fields", "update_event", "create_event" ,"title"];
+        return ["url", "fields", "update_event", "create_event" ,"title", "object_name"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

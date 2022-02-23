@@ -7,6 +7,7 @@
             update_event="modal-update-location"
             create_event="modal-create-location"
             title="Location"
+            object_name="location"
     ></paginator-component>
 
     <create-location-modal
