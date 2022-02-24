@@ -123,10 +123,6 @@ class CreateLocationModal extends BaseModal {
         }));
     }
 
-    updateData(e){
-        this._$formData[e.path[0].name] = e.path[0].value;
-    }
-
     handleCreateBtnClick(e){
         const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
 

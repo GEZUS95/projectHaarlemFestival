@@ -87,8 +87,9 @@ class AdminLocationsController extends BaseController
      */
     public function single(Request $request, $id): Response
     {
-        $location = Location::findOrFail($id);
-        $location["file"] = Image::getImagePath($location);
+        $location = Location::query()->where('id', '=', $id)->first();
+        $location["images"] = $location->images;
+//        $location["file"] = Image::getImagePath($location);
 
         return $this->json(["location" => $location]);
     }

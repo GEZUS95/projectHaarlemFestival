@@ -183,11 +183,19 @@ class BaseModel extends BaseComponent {
         navTitle.innerHTML = title
     }
 
+    updateData(e){
+        this._$formData[e.path[0].name] = e.path[0].value;
+    }
+
     handleCreateBtnClick(){
 
     }
 
     handleUpdateBtnClick(){
+
+    }
+
+    handleDeleteBtnClick(){
 
     }
 
@@ -198,10 +206,6 @@ class BaseModel extends BaseComponent {
 
     closeForm(){
         this.shadowRoot.innerHTML = '';
-    }
-
-    handleDeleteBtnClick(){
-
     }
 
     disconnectedCallback() {

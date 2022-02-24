@@ -33,4 +33,13 @@ class FrontendController extends BaseController
         return $response;
     }
 
+    public function images(Request $request, $slug): BinaryFileResponse
+    {
+        $file = dirname(__DIR__, 4).'/resources/uploads/'.$slug;
+        $response = new BinaryFileResponse($file);
+        $response->setPublic();
+        $response->setMaxAge(1);
+        return $response;
+    }
+
 }

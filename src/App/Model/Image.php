@@ -14,6 +14,13 @@ class Image extends Model {
         'file_location',
     ];
 
+    protected $hidden = [
+        'pivot',
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
     public function events(): MorphToMany
     {
         return $this->morphedByMany(Event::class, 'image_ables');
@@ -29,7 +36,7 @@ class Image extends Model {
         return $this->morphedByMany(Performer::class, 'image_ables');
     }
 
-    public static function getImagePath($model): string
+    public static function getImagePath($model): ?string
     {
         return dirname(__DIR__, 3) . "\\resources\\uploads\\".$model->images[0]->file_location;
     }
