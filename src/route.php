@@ -26,8 +26,8 @@ $routes = [
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
     
     // Food routes
-    ["name" => "restaurant", "url" => "/restaurant", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
-    ["name" => "restaurant_single", "url" => "/restaurant/{id}", "controller" => [new RestaurantController(), 'single'], "method" => "GET"],
+    ["name" => "restaurant", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
+    ["name" => "restaurant_single", "url" => "/food/restaurant/{id}", "controller" => [new RestaurantController(), 'single'], "method" => "GET"],
 
     // Admin routes
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
