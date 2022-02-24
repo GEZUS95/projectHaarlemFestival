@@ -20,11 +20,9 @@ symfony server:start --port=4321 --passthru=front.php
 11. start xamp DB & webserver en ga naar admin voor MySQL
 12. maak database aan
 13. .env file in root van project zetten met database gegevens
-14. php ./commands/DropAllTables.php
-15. php ./commands/runmigrations.php
-16. php ./commands/rundatabaseseeder.php
-17. npm run dev
-18. Open another terminal
-19. symfony server:start --port=4321 --passthru=front.php
-20. bij errors neem contact op met merlijn.
-21. https://stackoverflow.com/questions/48588120/browser-loads-old-bundle-js-from-webpack front end error how to solve when page not refreshing
+14. php ./commands/DoMigrations.php
+15. npm run dev
+16. Open another terminal
+17. symfony server:start --port=4321 --passthru=front.php
+18. bij errors neem contact op met merlijn.
+19. https://stackoverflow.com/questions/48588120/browser-loads-old-bundle-js-from-webpack front end error how to solve when page not refreshing
