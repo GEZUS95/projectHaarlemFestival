@@ -30,9 +30,11 @@ class RestaurantSeeder
         $restaurant = Restaurant::create([
             'name' => 'Ratatouille',
             'location_id' => $location->id,
+            'description' => 'Ratatouille is The culinary Michelin restaurant in Haarlem. Chef Jozua Jaring is, just like ratatouille, a mixture of the French kitchen in the reality of today with an outstanding price-quality ratio in a low profile environment. We have started in 2013 at de lange veerstraat en we continued after we moved in 2015 at our unique monumental location at het Spaarne in Haarlem.',
             'stars' => 4,
             'seats' => 50,
             'price' => 44.00,
+            'price_child' => 22.50,
             'accessibility' => 1,
         ]);
 

@@ -15,9 +15,11 @@ class Restaurant extends Model {
         'name',
         'location_id',
         'type_id',
+        'description',
         'stars',
         'seats',
         'price',
+        'price_child',
         'accessibility',
     ];
 
