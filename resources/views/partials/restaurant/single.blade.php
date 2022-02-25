@@ -1,11 +1,24 @@
 @extends('layout.main')
 @section('content')
-    <h1>Restaurant</h1>
+    <h1>{{$restaurant->name}}</h1>
 
-    {{$restaurant->name}}
 
+
+
+{{--    cuisines    --}}
+    <h3>Cuisines of this restaurant: </h3>
+    <p>
     @foreach($restaurant->types as $type)
-        <br> type: {{$type->type}}
+         {{$type->type}},
     @endforeach
+    </p>
 
+{{--    pricing     --}}
+    <h3>Pricing: </h3>
+    <p>
+        Regular ticket is &euro {{$restaurant->price}}* and a Childrens Ticket (under 12 years) {{$restaurant->price_child}}*
+    </p>
+    <p class="note">
+        * A reservation fee of €10,- per person wil be charged when a reservation is made on the Haarlem Festival site. This fee will be deducted from the final check on visiting the restaurant.
+    </p>
 @endsection
