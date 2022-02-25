@@ -49,14 +49,15 @@ class Image extends Model {
         if(!self::validateFile($file))
             return false;
 
-        $oldName = dirname(__DIR__, 3) . "\\resources\\uploads\\".$model->images[0]->file_location;
+        $oldName = $model->images[0]->file_location;
         $name = bin2hex(random_bytes(24)) . "." . explode(".",$file["name"])[1];
         $uploadFolder = dirname(__DIR__, 3) . "\\resources\\uploads\\".$name;
 
         if(!move_uploaded_file( $file['tmp_name'], $uploadFolder ))
             return false;
 
-        unlink($oldName);
+        var_dump($name, $oldName, $uploadFolder);
+        unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $oldName);
 
         Image::query()->where('file_location', '=', $oldName)->update([
             'file_location' => $name,
