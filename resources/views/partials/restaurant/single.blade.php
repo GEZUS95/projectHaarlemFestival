@@ -2,8 +2,13 @@
 @section('content')
     <h1>{{$restaurant->name}}</h1>
 
+{{--    TODO: logo --}}
 
-
+{{--    description     --}}
+    <h2>About the restaurant</h2>
+    <p>
+        {{$restaurant->description}}
+    </p>
 
 {{--    cuisines    --}}
     <h3>Cuisines of this restaurant: </h3>
