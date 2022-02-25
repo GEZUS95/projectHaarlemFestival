@@ -44,6 +44,34 @@ class Image extends Model {
     /**
      * @throws Exception
      */
+    public static function updateFiles($file, $model): bool
+    {
+        if(!self::validateFile($file))
+            return false;
+
+        $oldName = dirname(__DIR__, 3) . "\\resources\\uploads\\".$model->images[0]->file_location;
+        $name = bin2hex(random_bytes(24)) . "." . explode(".",$file["name"])[1];
+        $uploadFolder = dirname(__DIR__, 3) . "\\resources\\uploads\\".$name;
+
+        if(!move_uploaded_file( $file['tmp_name'], $uploadFolder ))
+            return false;
+
+        unlink($oldName);
+
+        Image::query()->where('file_location', '=', $oldName)->update([
+            'file_location' => $name,
+        ]);
+
+        return true;
+    }
+
+    public static function deleteFile($fileName){
+
+    }
+
+    /**
+     * @throws Exception
+     */
     public static function uploadFile($file, $model): bool
     {
         if(!self::validateFile($file))

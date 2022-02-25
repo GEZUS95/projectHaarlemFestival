@@ -8,12 +8,12 @@ class UpdateLocationModal extends CreateLocationModal {
         this._$query_url = '';
         this._$update = true;
         this._$formData = {
-            title: "Untitled",
-            total_price_program: '',
-            start_time: null,
-            end_time: null,
-            color: '#ffffff',
-            event_id: null,
+            name: '',
+            city: '',
+            address: '',
+            stage: '',
+            color: '',
+            seats: '',
         };
     }
 
@@ -43,7 +43,6 @@ class UpdateLocationModal extends CreateLocationModal {
 
         this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', function() {
             if (this.files && this.files[0]) {
-                const img = this.shadowRoot.querySelector('.placeholder-image');
                 img.onload = () => {
                     URL.revokeObjectURL(img.src);
                 }
@@ -60,7 +59,27 @@ class UpdateLocationModal extends CreateLocationModal {
     }
 
     handleUpdateBtnClick(){
-        console.log("update")
+        const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
+
+        let formData = this.createFormData(this._$formData)
+        formData.append("file", image)
+        formData.append("token", this._$token)
+
+        const xhr = new XMLHttpRequest();
+        const _this = this;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log(xhr.response)
+                // _this._$formData = _this.clearFormData(_this._$formData)
+                // _this.closeForm();
+            }
+        }
+
+        let url = this._$url.replace('{', '');
+        url = url.replace('}', '');
+        url = url.replace('id', this._$formData.id);
+        xhr.open('POST', url, true);
+        xhr.send(formData);
     }
 
     handleDeleteBtnClick(){

@@ -89,13 +89,47 @@ class AdminLocationsController extends BaseController
     {
         $location = Location::query()->where('id', '=', $id)->first();
         $location["images"] = $location->images;
-//        $location["file"] = Image::getImagePath($location);
 
         return $this->json(["location" => $location]);
     }
 
-    public function update(Request $request, $id){
+    /**
+     * @throws Exception
+     */
+    public function update(Request $request, $id): Response
+    {
+        $data = $request->request->all();
 
+        $validator = (new ValidatorFactory())->make(
+            $data,
+            [
+                'token' => 'required',
+                'name' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'seats' => 'required',
+                'color' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return $this->json(json_encode(print_r($validator->errors())));
+        }
+
+        $model = Location::findOrFail($id);
+        $model->name = $data["name"];
+        $model->city = $data["city"];
+        $model->address = $data["address"];
+        $model->stage = $data["stage"];
+        $model->color = $data["color"];
+        $model->seats = $data["seats"];
+        $model->save();
+
+        Image::updateFiles($_FILES["file"], $model);
+
+        return $this->json(
+            ["Success" => "Successfully updated the location"]
+        );
     }
 
     public function delete(Request $request, $id){
