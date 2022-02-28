@@ -6,6 +6,7 @@ use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\EmailManager;
+use Matrix\Managers\RouteManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -45,7 +46,8 @@ class EmailController extends BaseController
 
         EmailManager::sendEmail($data["email"], $data["subject"], $data["message"]);
 
-        return $this->json(["success" => "email successfully send"]);
+
+        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
     }
 
 }
