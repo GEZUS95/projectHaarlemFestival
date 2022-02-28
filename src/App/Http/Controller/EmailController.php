@@ -22,6 +22,9 @@ class EmailController extends BaseController
         return $this->render("partials.tests.test_email", []);
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function sendEmail(Request $request)
     {
         $data = $request->request->all();
@@ -44,10 +47,10 @@ class EmailController extends BaseController
             return $this->Redirect($referer);
         }
 
-        EmailManager::sendEmail($data["email"], $data["subject"], $data["message"]);
+        new EmailManager($data["email"], $data["subject"], "emails.signup", ["name" => "Floris"]);
 
-
-        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
+        return $this->json(["t"=>"t"]);
+//        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
     }
 
 }

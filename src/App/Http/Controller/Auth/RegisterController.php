@@ -6,6 +6,7 @@ use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\AuthManager;
+use Matrix\Managers\EmailManager;
 use Matrix\Managers\RouteManager;
 use Matrix\Managers\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,9 @@ class RegisterController extends BaseController {
         return $this->render('auth.register', []);
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function register(Request $request) {
         $data = $request->request->all();
 
@@ -57,6 +61,8 @@ class RegisterController extends BaseController {
             'password' => password_hash($data['password'], PASSWORD_BCRYPT),
             'role_id' => 1,
         ]);
+
+        new EmailManager($data["email"], "Welcome to the Haarlem Festival", "emails.signup");
 
         if(!AuthManager::login($user->email, $user->password)){
             $referer = RouteManager::getUrlByRouteName("login");
