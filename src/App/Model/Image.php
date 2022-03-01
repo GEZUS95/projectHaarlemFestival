@@ -56,7 +56,6 @@ class Image extends Model {
         if(!move_uploaded_file( $file['tmp_name'], $uploadFolder ))
             return false;
 
-        var_dump($name, $oldName, $uploadFolder);
         unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $oldName);
 
         Image::query()->where('file_location', '=', $oldName)->update([
@@ -67,7 +66,7 @@ class Image extends Model {
     }
 
     public static function deleteFile($fileName){
-
+        unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $fileName);
     }
 
     /**

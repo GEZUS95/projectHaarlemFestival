@@ -19,5 +19,6 @@
         token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("locations_update_form_csrf_token")}}"
         url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_update")}}"
         query_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_single")}}"
+        delete_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_delete")}}"
     ></update-location-modal>
 @endsection

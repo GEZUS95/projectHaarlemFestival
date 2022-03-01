@@ -6,6 +6,7 @@ class UpdateLocationModal extends CreateLocationModal {
         super();
 
         this._$query_url = '';
+        this._$delete_url = '';
         this._$update = true;
         this._$formData = {
             name: '',
@@ -84,10 +85,26 @@ class UpdateLocationModal extends CreateLocationModal {
 
     handleDeleteBtnClick(){
         console.log("delete")
+
+        const xhr = new XMLHttpRequest();
+        const _this = this;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log(xhr.response)
+                // _this._$formData = _this.clearFormData(_this._$formData)
+                // _this.closeForm();
+            }
+        }
+
+        let url = this._$delete_url.replace('{', '');
+        url = url.replace('}', '');
+        url = url.replace('id', this._$formData.id);
+        xhr.open('POST', url, true);
+        xhr.send();
     }
 
     static get observedAttributes() {
-        return ["url", "token", "query_url"];
+        return ["url", "token", "query_url", "delete_url"];
     }
 }
 

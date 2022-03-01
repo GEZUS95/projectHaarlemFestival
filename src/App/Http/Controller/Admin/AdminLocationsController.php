@@ -132,8 +132,18 @@ class AdminLocationsController extends BaseController
         );
     }
 
-    public function delete(Request $request, $id){
+    public function delete(Request $request, $id): Response
+    {
+        var_dump($id);
+        $model = Location::findOrFail($id);
 
+        Image::deleteFile($model->images[0]->file_location);
+
+        $model->delete();
+
+        return $this->json(
+            ["Success" => "Successfully deleted the location"]
+        );
     }
 
 }
