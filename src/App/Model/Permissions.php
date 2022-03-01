@@ -32,4 +32,5 @@ class Permissions extends Model {
     public const __CREATE_NEW_PROGRAM__ = 'create_new_program';
 
     public const __VIEW_LOCATION_PAGE__ = 'view_location_page';
+    public const __WRITE_LOCATION_PAGE__ = 'write_location_page';
 }

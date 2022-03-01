@@ -61,6 +61,8 @@ class AdminLocationsController extends BaseController
      */
     public function save(Request $request): Response
     {
+        GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
+
         $data = $request->request->all();
 
         $validator = (new ValidatorFactory())->make(
@@ -100,6 +102,8 @@ class AdminLocationsController extends BaseController
      */
     public function single(Request $request, $id): Response
     {
+        GuardManager::guard(Permissions::__VIEW_LOCATION_PAGE__);
+
         $location = Location::query()->where('id', '=', $id)->first();
         $location["images"] = $location->images;
 
@@ -111,6 +115,8 @@ class AdminLocationsController extends BaseController
      */
     public function update(Request $request, $id): Response
     {
+        GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
+
         $data = $request->request->all();
 
         $validator = (new ValidatorFactory())->make(
@@ -147,7 +153,8 @@ class AdminLocationsController extends BaseController
 
     public function delete(Request $request, $id): Response
     {
-        var_dump($id);
+        GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
+
         $model = Location::findOrFail($id);
 
         Image::deleteFile($model->images[0]->file_location);
