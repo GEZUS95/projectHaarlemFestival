@@ -12,6 +12,7 @@ class PaginatorComponent extends BaseComponent {
         this._$fields = null;
         this._$currentPage = 0;
         this._$amount = 10;
+        this._$search_url = '';
         this._$search = '';
     }
 
@@ -107,6 +108,36 @@ class PaginatorComponent extends BaseComponent {
                 .action-add-item {
                 
                 }
+                
+                .sub-action-class {
+                        padding: 5px 20px;
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: blue;
+                        text-decoration: underline;
+                }
+                
+                .action-add-item {
+                    background-color: #007BFF;
+                    color: #ffffff;
+                    font-size: 24px;
+                    cursor: pointer;
+                    padding: 12px;
+                    line-height: 1.5;
+                    border-radius: 0.3rem;
+                    user-select: none;
+                    border: 1px solid transparent;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                    height: 50px;
+                    margin: 0 10px;
+                }
             </style>
         `;
     }
@@ -119,13 +150,12 @@ class PaginatorComponent extends BaseComponent {
             ${this.styleObject()}
             <div class="container">
                 <div class="actions">
-                    <input class="actions-search" type="text" name="search" placeholder="search...">
+                    <input class="actions-search" type="text" value="${this._$search}" name="search" placeholder="search...">
                     <div class="action-add-item"">Add ${this._$title}</div>
                 </div>
                 <div class="sub-actions">
-                    <a class="sub-actions-pref">pref</a>    
-                    <input value="${this._$currentPage}" type="number" name="page">    
-                    <a class="sub-actions-next">next</a>    
+                    <a class="sub-actions-pref sub-action-class">pref</a>    
+                    <a class="sub-actions-next sub-action-class">next</a>    
                 </div>
                 <div class="paginator">
                     <div class="paginator-title">
@@ -152,9 +182,26 @@ class PaginatorComponent extends BaseComponent {
         this.shadowRoot.querySelector(".sub-actions-pref").addEventListener("click", this.pref.bind(this))
         this.shadowRoot.querySelector(".sub-actions-next").addEventListener("click", this.next.bind(this))
         this.shadowRoot.querySelector(".action-add-item").addEventListener("click", this.addItem.bind(this))
+        this.shadowRoot.querySelector(".actions-search").addEventListener("change", this.search.bind(this))
         Array.from(this.shadowRoot.querySelectorAll(".paginator-update-btn")).forEach(el => {
             el.addEventListener("click", this.updateItem.bind(this))
         })
+    }
+
+    search(e){
+        const el = e.path[0];
+
+        if(el.value.length < 3)
+            return;
+
+        const _this = this;
+        let url = this._$search_url.split("{").join('');
+        url = url.split("}").join('');
+        url = url.replace(/search/g, el.value);
+        this._$search = el.value;
+        this.queryGet(url).then(res => {
+            _this.initComponent(res);
+        });
     }
 
     updateItem(event){
@@ -183,7 +230,7 @@ class PaginatorComponent extends BaseComponent {
     }
 
     static get observedAttributes() {
-        return ["url", "fields", "update_event", "create_event" ,"title", "object_name"];
+        return ["url", "fields", "update_event", "create_event" ,"title", "object_name", "search_url"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

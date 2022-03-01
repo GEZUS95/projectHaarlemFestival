@@ -30,6 +30,19 @@ class AdminLocationsController extends BaseController
         return $this->render('partials.admin.partials.locations.overview', []);
     }
 
+    public function search(Request $request, $search): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_LOCATION_PAGE__);
+
+        $location = Location::query()->where(function ($query) use($search) {
+            $query->where('city', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%')
+                ->orWhere('address', 'like', '%' . $search . '%');
+        })->get();
+
+        return $this->json(["location" => $location]);
+    }
+
     /**
      * @throws Exception
      */

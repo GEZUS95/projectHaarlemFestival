@@ -4,6 +4,7 @@
     <paginator-component
             fields='city|address|name|seats'
             url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_paginator")}}"
+            search_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_search")}}"
             update_event="modal-update-location"
             create_event="modal-create-location"
             title="Location"

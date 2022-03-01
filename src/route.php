@@ -34,7 +34,7 @@ $routes = [
     ["name" => "admin_performers", "url" => "/admin/performers", "controller" => [new AdminPerformerController(), 'index'], "method" => "GET"],
 
     ["name" => "admin_locations", "url" => "/admin/locations", "controller" => [new AdminLocationsController(), 'index'], "method" => "GET"],
-
+    ["name" => "admin_locations_search", "url" => "/admin/locations/{search}", "controller" => [new AdminLocationsController(), 'search'], "method" => "GET"],
     ["name" => "admin_locations_save", "url" => "/admin/location/create", "controller" => [new AdminLocationsController(), 'save'], "method" => "POST"],
     ["name" => "admin_locations_single", "url" => "/admin/location/update/{id}", "controller" => [new AdminLocationsController(), 'single'], "method" => "GET"],
     ["name" => "admin_locations_update", "url" => "/admin/location/update/{id}", "controller" => [new AdminLocationsController(), 'update'], "method" => "POST"],
