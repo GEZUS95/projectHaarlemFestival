@@ -134,6 +134,7 @@ class CreateLocationModal extends BaseModal {
         const _this = this;
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
+                window.dispatchEvent(new CustomEvent('paginator-force-reload', {detail: true}))
                 _this._$formData = _this.clearFormData(_this._$formData)
                 _this.closeForm();
             }

@@ -14,6 +14,10 @@ class PaginatorComponent extends BaseComponent {
         this._$amount = 10;
         this._$search_url = '';
         this._$search = '';
+
+        window.addEventListener("paginator-force-reload", (evt => {
+            this.init();
+        }));
     }
 
     styleObject(){
