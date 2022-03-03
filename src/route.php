@@ -31,7 +31,14 @@ $routes = [
 
     // Admin routes
     ["name" => "admin", "url" => "/admin", "controller" => [new AdminMainController(), 'index'], "method" => "GET"],
+
     ["name" => "admin_performers", "url" => "/admin/performers", "controller" => [new AdminPerformerController(), 'index'], "method" => "GET"],
+    ["name" => "admin_performers_search", "url" => "/admin/performers/{search}", "controller" => [new AdminPerformerController(), 'search'], "method" => "GET"],
+    ["name" => "admin_performers_save", "url" => "/admin/performer/create", "controller" => [new AdminPerformerController(), 'save'], "method" => "POST"],
+    ["name" => "admin_performers_single", "url" => "/admin/performer/update/{id}", "controller" => [new AdminPerformerController(), 'single'], "method" => "GET"],
+    ["name" => "admin_performers_update", "url" => "/admin/performer/update/{id}", "controller" => [new AdminPerformerController(), 'update'], "method" => "POST"],
+    ["name" => "admin_performers_delete", "url" => "/admin/performer/delete/{id}", "controller" => [new AdminPerformerController(), 'delete'], "method" => "POST"],
+    ["name" => "admin_performers_paginator", "url" => "/admin/performer/{page}/{amount}", "controller" => [new AdminPerformerController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_locations", "url" => "/admin/locations", "controller" => [new AdminLocationsController(), 'index'], "method" => "GET"],
     ["name" => "admin_locations_search", "url" => "/admin/locations/{search}", "controller" => [new AdminLocationsController(), 'search'], "method" => "GET"],
