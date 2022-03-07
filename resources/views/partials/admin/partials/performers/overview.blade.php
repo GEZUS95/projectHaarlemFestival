@@ -15,4 +15,11 @@
             token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("performer_create_form_csrf_token")}}"
             url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_save")}}"
     ></create-performer-modal>
+
+    <update-performer-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("performer_update_form_csrf_token")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_update")}}"
+            query_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_single")}}"
+            delete_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_delete")}}"
+    ></update-performer-modal>
 @endsection

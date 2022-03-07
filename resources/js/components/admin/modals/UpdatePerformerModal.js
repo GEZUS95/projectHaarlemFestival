@@ -1,7 +1,6 @@
+import CreatePerformerModal from "./CreatePerformerModal";
 
-import CreateLocationModal from "./CreateLocationModal";
-
-class UpdateLocationModal extends CreateLocationModal {
+class UpdatePerformerModal extends CreatePerformerModal {
     constructor() {
         super();
 
@@ -10,24 +9,21 @@ class UpdateLocationModal extends CreateLocationModal {
         this._$update = true;
         this._$formData = {
             name: '',
-            city: '',
-            address: '',
-            stage: '',
-            color: '',
-            seats: '',
+            description: '',
         };
     }
 
     connectedCallback(){
-        window.addEventListener("modal-update-location", this.initForm.bind(this));
+        console.log("connected")
+        window.addEventListener("modal-update-performer", this.initForm.bind(this));
     }
 
     async initForm(e){
         let url = this.queryUrlReplaceId(this._$query_url, e.detail);
 
-        const resFormData = await this.setFormData(url, "location")
+        const resFormData = await this.setFormData(url, "performer")
         this.renderContent();
-        const img = this.setImageAttribute(resFormData["location"].images[0]["file_location"],".placeholder-image")
+        const img = this.setImageAttribute(resFormData["performer"].images[0]["file_location"],".placeholder-image")
 
         this.updateModalTitle("Update Performer");
         this.updateImageOnChange(img)
@@ -62,4 +58,4 @@ class UpdateLocationModal extends CreateLocationModal {
     }
 }
 
-export default UpdateLocationModal;
+export default UpdatePerformerModal;

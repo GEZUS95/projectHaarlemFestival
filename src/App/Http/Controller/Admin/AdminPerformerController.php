@@ -106,6 +106,15 @@ class AdminPerformerController extends BaseController
 
     public function delete(Request $request, $id): Response
     {
+
+        GuardManager::guard(Permissions::__WRITE_PERFORMER_PAGE__);
+
+        $model = Performer::findOrFail($id);
+
+        Image::deleteFile($model->images[0]->file_location);
+
+        $model->delete();
+
         return $this->json(
             ["Success" => "Successfully deleted the Performer"]
         );

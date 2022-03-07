@@ -1,6 +1,6 @@
 import BaseModal from "./BaseModal";
 
-class CreateLocationModal extends BaseModal {
+class CreatePerformerModal extends BaseModal {
     constructor() {
         super();
 
@@ -75,7 +75,7 @@ class CreateLocationModal extends BaseModal {
                 <input style="display: none" id="file-upload" name="image" type='file' value="">
                     
                 <div class="form-control-textarea">
-                    <label class="label">City:</label>
+                    <label class="label">Description:</label>
                     <textarea class="input" style="min-height: 100px; max-height: 100px" name="description">${this._$formData.description}</textarea>
                 </div>
             </div>
@@ -121,4 +121,4 @@ class CreateLocationModal extends BaseModal {
     }
 }
 
-export default CreateLocationModal;
+export default CreatePerformerModal;

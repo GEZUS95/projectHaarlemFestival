@@ -274,6 +274,43 @@ class BaseModel extends BaseComponent {
         xhr.open('POST', url, true);
         xhr.send(sendData);
     }
+
+    queryUrlReplaceId(url, id){
+        url = url.replace('{', '');
+        url = url.replace('}', '');
+        return url.replace('id', id);
+    }
+
+    async setFormData(url, type){
+        const resFormData = await this.queryGet(url);
+
+        for (const key in resFormData[type]) {
+            if (!resFormData[type].hasOwnProperty(key) && this._$formData.hasOwnProperty(key))
+                return;
+            this._$formData[key] = resFormData[type][key]
+        }
+
+        return resFormData;
+    }
+
+    setImageAttribute(file_location, selector){
+        const imgUrl = location.protocol + '//' + location.host + '/images/' + file_location;
+        const img = this.shadowRoot.querySelector(selector);
+        img.src = imgUrl;
+        return img;
+    }
+
+    updateImageOnChange(img){
+        this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                img.onload = () => {
+                    URL.revokeObjectURL(img.src);
+                }
+
+                img.src = URL.createObjectURL(this.files[0]);
+            }
+        });
+    }
 }
 
 export default BaseModel;
