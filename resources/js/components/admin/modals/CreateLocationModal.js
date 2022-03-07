@@ -130,18 +130,7 @@ class CreateLocationModal extends BaseModal {
         formData.append("file", image)
         formData.append("token", this._$token)
 
-        const xhr = new XMLHttpRequest();
-        const _this = this;
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                window.dispatchEvent(new CustomEvent('paginator-force-reload', {detail: true}))
-                _this._$formData = _this.clearFormData(_this._$formData)
-                _this.closeForm();
-            }
-        }
-
-        xhr.open('POST', this._$url, true);
-        xhr.send(formData);
+        this.sendRequestForPaginator(this._$url, this, formData);
     }
 
     static get observedAttributes() {

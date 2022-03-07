@@ -260,7 +260,19 @@ class BaseModel extends BaseComponent {
         return data;
     }
 
+    sendRequestForPaginator(url, _this = this, sendData = null){
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                window.dispatchEvent(new CustomEvent('paginator-force-reload', {detail: true}))
+                _this._$formData = _this.clearFormData(_this._$formData)
+                _this.closeForm();
+            }
+        }
 
+        xhr.open('POST', url, true);
+        xhr.send(sendData);
+    }
 }
 
 export default BaseModel;

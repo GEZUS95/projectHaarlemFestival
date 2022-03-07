@@ -66,41 +66,21 @@ class UpdateLocationModal extends CreateLocationModal {
         formData.append("file", image)
         formData.append("token", this._$token)
 
-        const xhr = new XMLHttpRequest();
-        const _this = this;
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                window.dispatchEvent(new CustomEvent('paginator-force-reload', {detail: true}))
-                _this._$formData = _this.clearFormData(_this._$formData)
-                _this.closeForm();
-            }
-        }
-
         let url = this._$url.replace('{', '');
         url = url.replace('}', '');
         url = url.replace('id', this._$formData.id);
-        xhr.open('POST', url, true);
-        xhr.send(formData);
+
+        this.sendRequestForPaginator(url, this, formData);
     }
 
+
+
     handleDeleteBtnClick(){
-        console.log("delete")
-
-        const xhr = new XMLHttpRequest();
-        const _this = this;
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                window.dispatchEvent(new CustomEvent('paginator-force-reload', {detail: true}))
-                _this._$formData = _this.clearFormData(_this._$formData)
-                _this.closeForm();
-            }
-        }
-
         let url = this._$delete_url.replace('{', '');
         url = url.replace('}', '');
         url = url.replace('id', this._$formData.id);
-        xhr.open('POST', url, true);
-        xhr.send();
+
+        this.sendRequestForPaginator(url, this);
     }
 
     static get observedAttributes() {
