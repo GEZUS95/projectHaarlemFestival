@@ -8,6 +8,7 @@ import PaginatorComponent from "./components/admin/PaginatorComponent";
 import SubNavigation from "./components/admin/SubNavigation";
 import CreateLocationModal from "./components/admin/modals/CreateLocationModal";
 import UpdateLocationModal from "./components/admin/modals/UpdateLocationModal";
+import CreatePerformerModal from "./components/admin/modals/CreatePerformerModal";
 //
 window.customElements.define('side-navigation-link', SideNavigationLink);
 window.customElements.define('side-navigation-events', SideNavigationEvents);
@@ -18,6 +19,8 @@ window.customElements.define('paginator-component', PaginatorComponent);
 window.customElements.define('admin-sub-navigation', SubNavigation);
 window.customElements.define('create-location-modal', CreateLocationModal);
 window.customElements.define('update-location-modal', UpdateLocationModal);
+window.customElements.define('create-performer-modal', CreatePerformerModal);
+// window.customElements.define('update-performer-modal', CreateProgramModal);
 
 //npm i -g webpack
 //npm i -g webpack-cli

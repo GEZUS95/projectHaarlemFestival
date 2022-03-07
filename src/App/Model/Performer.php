@@ -11,9 +11,7 @@ class Performer extends Model {
 
     protected $fillable = [
         'name',
-        'type',
         'description',
-        'socials',
     ];
 
     public function items(): HasMany

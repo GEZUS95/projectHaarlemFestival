@@ -10,4 +10,9 @@
             title="Performer"
             object_name="performer"
     ></paginator-component>
+
+    <create-performer-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("performer_create_form_csrf_token")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_save")}}"
+    ></create-performer-modal>
 @endsection

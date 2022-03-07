@@ -14,9 +14,7 @@ class CreatePerformersTable
         Capsule::schema()->create('performers', function ($table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('type');
             $table->longText('description');
-            $table->longText('socials');
             $table->timestamps();
         });
     }

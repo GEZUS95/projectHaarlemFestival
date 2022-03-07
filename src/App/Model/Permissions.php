@@ -33,4 +33,7 @@ class Permissions extends Model {
 
     public const __VIEW_LOCATION_PAGE__ = 'view_location_page';
     public const __WRITE_LOCATION_PAGE__ = 'write_location_page';
+
+    public const __VIEW_PERFORMER_PAGE__ = 'view_performer_page';
+    public const __WRITE_PERFORMER_PAGE__ = 'write_performer_page';
 }

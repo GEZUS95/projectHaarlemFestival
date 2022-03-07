@@ -184,7 +184,8 @@ class BaseModel extends BaseComponent {
     }
 
     updateData(e){
-        this._$formData[e.path[0].name] = e.path[0].value;
+        const el = e.path[0];
+        this._$formData[el.name] = el.value;
     }
 
     handleCreateBtnClick(){
