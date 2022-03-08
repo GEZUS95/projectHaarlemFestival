@@ -1,4 +1,4 @@
 @extends('partials.admin.layout.main')
 @section('content')
-    <h1>Restaurants overview!</h1>
+    <admin-sub-navigation title="Restaurants"></admin-sub-navigation>
 @endsection

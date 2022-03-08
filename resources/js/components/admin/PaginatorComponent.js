@@ -15,7 +15,7 @@ class PaginatorComponent extends BaseComponent {
         this._$search_url = '';
         this._$search = '';
 
-        window.addEventListener("paginator-force-reload", (evt => {
+        window.addEventListener("paginator-force-reload", (() => {
             this.init();
         }));
     }
@@ -210,7 +210,6 @@ class PaginatorComponent extends BaseComponent {
 
     updateItem(event){
         const el = event.path[0];
-        console.log("el")
         window.dispatchEvent(new CustomEvent(this._$update_event, {detail: el.id}))
     }
 
@@ -228,10 +227,6 @@ class PaginatorComponent extends BaseComponent {
     next(){
         this._$currentPage = this._$currentPage + 1;
         this.init();
-    }
-
-    disconnectedCallback() {
-
     }
 
     static get observedAttributes() {
