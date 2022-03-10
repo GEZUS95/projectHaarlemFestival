@@ -20,6 +20,7 @@ use Matrix\Managers\RouteManager;
 $routes = [
     // basic routes
     ["name" => "home", "url" => "/", "controller" => [new HomeController(), 'index'], "method" => "GET"],
+    ["name" => "help", "url" => "/help", "controller" => [new HelpController(), 'help'], "method" => "GET"],
     ["name" => "login", "url" => "/login", "controller" => [new LoginController(), 'index'], "method" => "GET"],
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
     ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
