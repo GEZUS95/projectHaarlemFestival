@@ -47,13 +47,13 @@
                 </div>
                 <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
                     <side-navigation-link
-                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
+                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurant_types")}}"
                             link-name="Restaurants Types"
                     ></side-navigation-link>
                 </div>
                 <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
                     <side-navigation-link
-                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
+                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_sessions")}}"
                             link-name="Sessions"
                     ></side-navigation-link>
                 </div>

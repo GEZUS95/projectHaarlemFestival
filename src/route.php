@@ -6,6 +6,7 @@ use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
 use App\Http\Controller\Admin\AdminProgramController;
 use App\Http\Controller\Admin\AdminRestaurantController;
+use App\Http\Controller\Admin\AdminRestaurantTypesController;
 use App\Http\Controller\Admin\AdminSessionController;
 use App\Http\Controller\Admin\AdminUsersController;
 use App\Http\Controller\HomeController;
@@ -53,6 +54,9 @@ $routes = [
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
     ["name" => "admin_event", "url" => "/admin/event/{title}", "controller" => [new AdminEventController(), 'index'], "method" => "GET"],
     ["name" => "admin_event_edit", "url" => "/admin/event/{title}/edit", "controller" => [new AdminEventController(), 'edit'], "method" => "GET"],
+
+    ["name" => "admin_sessions", "url" => "/admin/restaurants", "controller" => [new AdminSessionController(), 'index'], "method" => "GET"],
+    ["name" => "admin_restaurant_types", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantTypesController(), 'index'], "method" => "GET"],
 
     ["name" => "admin_event_titles", "url" => "/admin/get/event/titles", "controller" => [new AdminMainController(), "getEventTitles"], "method" => "GET"],
     ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
