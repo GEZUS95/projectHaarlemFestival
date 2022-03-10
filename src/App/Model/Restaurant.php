@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -13,8 +14,8 @@ class Restaurant extends Model {
 
     protected $fillable = [
         'name',
+        'event_id',
         'location_id',
-        'type_id',
         'description',
         'stars',
         'seats',
@@ -26,6 +27,13 @@ class Restaurant extends Model {
     protected $casts = [
 
     ];
+
+    public function events(): BelongsTo
+    {
+
+        return $this->belongsTo(Event::class);
+
+    }
 
     public function types(): BelongsToMany
     {

@@ -23,6 +23,13 @@ class Event extends Model {
 
     }
 
+    public function restaurants(): HasMany
+    {
+
+        return $this->hasMany(Restaurant::class, 'event_id');
+
+    }
+
     public function images(): MorphToMany
     {
         return $this->morphToMany(Image::class, 'image_ables');
