@@ -47,7 +47,7 @@ class EmailController extends BaseController
             return $this->Redirect($referer);
         }
 
-        new EmailManager($data["email"], $data["subject"], "emails.signup", ["name" => "Floris"]);
+        new EmailManager($data["email"], "Oulleh", "emails.ad", ["name" => "Floris"]);
 
         return $this->json(["t"=>"t"]);
 //        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
