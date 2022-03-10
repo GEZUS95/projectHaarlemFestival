@@ -19,7 +19,7 @@ class RegisterController extends BaseController {
      */
     public function index(Request $request): Response
     {
-        
+
         $this->session->set("register_form_csrf_token",  bin2hex(random_bytes(24)));
 
         return $this->render('auth.register', []);
@@ -35,6 +35,7 @@ class RegisterController extends BaseController {
             $data,
             [
                 'token' => 'required',
+                'name' => 'required',
                 'email' => 'required|confirmed',
                 'password' => 'required|confirmed|min:8',
             ]
@@ -51,8 +52,9 @@ class RegisterController extends BaseController {
         if($userExist){
             return $this->json(['error' => "user already exist"]);
         }
-            
+
         $user = User::create([
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => password_hash($data['password'], PASSWORD_BCRYPT),
             'role_id' => 1,

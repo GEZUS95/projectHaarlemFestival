@@ -164,5 +164,4 @@ class AdminLocationsController extends BaseController
             ["Success" => "Successfully deleted the location"]
         );
     }
-
 }

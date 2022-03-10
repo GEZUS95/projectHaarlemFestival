@@ -10,16 +10,21 @@ use App\Model\Program;
 use App\Model\Restaurant;
 use App\Model\Role;
 use App\Model\User;
+use Faker\Factory;
 
 class OrderSeeder
 {
     public function seed()
     {
+        $faker = Factory::create();
+
         Role::create([
+            'name' => "visitor",
             'permissions' => json_encode(array()),
         ]);
 
         User::create([
+            'name'=> $faker->name,
             'email' => 'order@example.com',
             'password' => password_hash('password', PASSWORD_BCRYPT),
             'role_id' => 1,
