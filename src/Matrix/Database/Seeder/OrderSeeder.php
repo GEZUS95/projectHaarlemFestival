@@ -19,6 +19,7 @@ class OrderSeeder
         $faker = Factory::create();
 
         Role::create([
+            'name' => "visitor",
             'permissions' => json_encode(array()),
         ]);
 
