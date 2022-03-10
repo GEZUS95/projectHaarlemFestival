@@ -76,3 +76,17 @@
   font-size: 20px;
   height: 40px;
 }
+
+.partials-admin-layout-sidenav-dropdown-content {
+  display: none;
+  background-color: #f9f9f9;
+  z-index: 1;
+}
+
+.partials-admin-layout-sidenav-dropdown:hover .partials-admin-layout-sidenav-dropdown-content {
+  display: block;
+}
+
+.partials-admin-layout-sidenav-dropdown-content-inner {
+  padding-left: 40px;
+}
