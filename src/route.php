@@ -6,7 +6,7 @@ use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
 use App\Http\Controller\Admin\AdminProgramController;
 use App\Http\Controller\Admin\AdminRestaurantController;
-use App\Http\Controller\Admin\AdminRolesController;
+use App\Http\Controller\Admin\AdminSessionController;
 use App\Http\Controller\Admin\AdminUsersController;
 use App\Http\Controller\HomeController;
 use App\Http\Controller\Auth\LoginController;
@@ -24,7 +24,7 @@ $routes = [
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
     ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
-    
+
     // Food routes
     ["name" => "restaurant", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
     ["name" => "restaurant_single", "url" => "/food/restaurant/{id}", "controller" => [new RestaurantController(), 'single'], "method" => "GET"],
@@ -49,7 +49,7 @@ $routes = [
     ["name" => "admin_locations_paginator", "url" => "/admin/location/{page}/{amount}", "controller" => [new AdminLocationsController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_restaurants", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantController(), 'index'], "method" => "GET"],
-    ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminRolesController(), 'index'], "method" => "GET"],
+    ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminSessionController(), 'index'], "method" => "GET"],
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
     ["name" => "admin_event", "url" => "/admin/event/{title}", "controller" => [new AdminEventController(), 'index'], "method" => "GET"],
     ["name" => "admin_event_edit", "url" => "/admin/event/{title}/edit", "controller" => [new AdminEventController(), 'edit'], "method" => "GET"],
