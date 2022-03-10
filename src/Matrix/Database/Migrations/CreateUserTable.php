@@ -13,6 +13,7 @@ class CreateUserTable
 
         Capsule::schema()->create('users', function ($table) {
             $table->bigIncrements('id');
+            $table->string("name");
             $table->string("email")->unique();
             $table->string("password");
             $table->unsignedBigInteger("role_id");

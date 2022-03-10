@@ -11,8 +11,6 @@ class RestaurantSeeder
 {
     public function seed()
     {
-        $faker = Factory::create();
-
         $cuisines = ['European', 'Dutch', 'Modern', 'Fish and seafood', 'French', 'Asian', 'International', 'Steakhouse', 'Argentinian'];
         // Create restaurant types
         foreach($cuisines as $c){
