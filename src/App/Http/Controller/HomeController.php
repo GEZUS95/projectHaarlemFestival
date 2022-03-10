@@ -18,4 +18,7 @@ class HomeController extends BaseController {
 
         return $this->render('partials.home', []);
     }
+    public function sendMessage(Request $request){
+        //Hier code voor naar database
+    }
 }

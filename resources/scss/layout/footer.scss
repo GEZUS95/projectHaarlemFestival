@@ -1,0 +1,55 @@
+footer {
+  background-color: #ECEFF1;
+  display: inline-flex;
+  float: left;
+}
+
+h1.footer-header {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+div.about-us {
+  width: 22.5%;
+  padding-left: 2.5%;
+}
+
+div.our-contacts {
+  width: 22.5%;
+  padding-left: 2.5%;
+}
+
+div.links {
+  width: 12.5%;
+  padding-left: 2.5%;
+}
+
+ul.footer {
+  float: left;
+  font-size: 14px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 3%;
+}
+
+p.footer-p {
+  margin-top: 2%;
+}
+
+form.footer-contact-form {
+  float: left;
+
+}
+
+#footer-name, #footer-email{
+  width: 95%;
+  margin-bottom: 1%;
+}
+
+#footer-message{
+  width: 95%;
+  height: 55px;
+  resize: none;
+
+}
