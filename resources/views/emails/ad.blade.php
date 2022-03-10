@@ -22,7 +22,7 @@
         tile with festival info
     </div>
 </div>
-<p style="font-size: x-small;background-color:#ECEFF1;text-align:center;padding:2%">This email was sent to you to inform about the festival.<br>The email-address that this email has been sent from cannot receive replies.<br>Don't want automated emails? Click <a href="www.haarlemfestival.com/opt_out">here</a> to opt out<br>For help, visit: www.haarlemfestival.com/help</p>
+<p style="font-size: x-small;background-color:#ECEFF1;text-align:center;padding:2%">This email was sent to you to inform about the festival.<br>The email-address that this email has been sent from cannot receive replies.<br>Don't want automated emails? Click <a href="www.haarlemfestival.com/opt_out">here</a> to opt out<br>For help, visit: www.haarlemfestival.com/contact</p>
 </body>
 </html>
 
