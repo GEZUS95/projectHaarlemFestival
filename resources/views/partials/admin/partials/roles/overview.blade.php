@@ -1,4 +1,4 @@
 @extends('partials.admin.layout.main')
 @section('content')
-    <h1>Roles overview!</h1>
+    <admin-sub-navigation title="Roles"></admin-sub-navigation>
 @endsection

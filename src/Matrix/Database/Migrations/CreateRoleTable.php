@@ -13,6 +13,7 @@ class CreateRoleTable
 
         Capsule::schema()->create('roles', function ($table) {
             $table->bigIncrements('id');
+            $table->string("name")->unique();
             $table->longText("permissions");
             $table->timestamps();
         });

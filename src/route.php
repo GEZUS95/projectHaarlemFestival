@@ -7,6 +7,7 @@ use App\Http\Controller\Admin\AdminPerformerController;
 use App\Http\Controller\Admin\AdminProgramController;
 use App\Http\Controller\Admin\AdminRestaurantController;
 use App\Http\Controller\Admin\AdminRestaurantTypesController;
+use App\Http\Controller\Admin\AdminRolesController;
 use App\Http\Controller\Admin\AdminSessionController;
 use App\Http\Controller\Admin\AdminUsersController;
 use App\Http\Controller\HomeController;
@@ -50,8 +51,23 @@ $routes = [
     ["name" => "admin_locations_paginator", "url" => "/admin/location/{page}/{amount}", "controller" => [new AdminLocationsController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_restaurants", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantController(), 'index'], "method" => "GET"],
-    ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminSessionController(), 'index'], "method" => "GET"],
+
+    ["name" => "admin_roles", "url" => "/admin/roles", "controller" => [new AdminRolesController(), 'index'], "method" => "GET"],
+    ["name" => "admin_roles_search", "url" => "/admin/roles/{search}", "controller" => [new AdminRolesController(), 'search'], "method" => "GET"],
+    ["name" => "admin_roles_save", "url" => "/admin/roles/create", "controller" => [new AdminRolesController(), 'save'], "method" => "POST"],
+    ["name" => "admin_roles_single", "url" => "/admin/roles/update/{id}", "controller" => [new AdminRolesController(), 'single'], "method" => "GET"],
+    ["name" => "admin_roles_update", "url" => "/admin/roles/update/{id}", "controller" => [new AdminRolesController(), 'update'], "method" => "POST"],
+    ["name" => "admin_roles_delete", "url" => "/admin/roles/delete/{id}", "controller" => [new AdminRolesController(), 'delete'], "method" => "POST"],
+    ["name" => "admin_roles_paginator", "url" => "/admin/roles/{page}/{amount}", "controller" => [new AdminRolesController(), 'show'], "method" => "GET"],
+
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
+    ["name" => "admin_users_search", "url" => "/admin/users/{search}", "controller" => [new AdminUsersController(), 'search'], "method" => "GET"],
+    ["name" => "admin_users_save", "url" => "/admin/users/create", "controller" => [new AdminUsersController(), 'save'], "method" => "POST"],
+    ["name" => "admin_users_single", "url" => "/admin/users/update/{id}", "controller" => [new AdminUsersController(), 'single'], "method" => "GET"],
+    ["name" => "admin_users_update", "url" => "/admin/users/update/{id}", "controller" => [new AdminUsersController(), 'update'], "method" => "POST"],
+    ["name" => "admin_users_delete", "url" => "/admin/users/delete/{id}", "controller" => [new AdminUsersController(), 'delete'], "method" => "POST"],
+    ["name" => "admin_users_paginator", "url" => "/admin/users/{page}/{amount}", "controller" => [new AdminUsersController(), 'show'], "method" => "GET"],
+
     ["name" => "admin_event", "url" => "/admin/event/{title}", "controller" => [new AdminEventController(), 'index'], "method" => "GET"],
     ["name" => "admin_event_edit", "url" => "/admin/event/{title}/edit", "controller" => [new AdminEventController(), 'edit'], "method" => "GET"],
 
