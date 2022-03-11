@@ -5,6 +5,8 @@ namespace Matrix\Database\Seeder;
 use App\Model\Location;
 use App\Model\Restaurant;
 use App\Model\RestaurantType;
+use App\Model\Session;
+use Carbon\Carbon;
 use Faker\Factory;
 
 class RestaurantSeeder
@@ -38,5 +40,22 @@ class RestaurantSeeder
         ]);
 
         $restaurant->types()->attach([5,1,4]);
+
+        Session::create([
+           'id' => 1,
+           'restaurant_id' => 1,
+           'duration' =>  120,
+            'start_time' => Carbon::now()->startOfDay()->addHours(12),
+        ]);Session::create([
+           'id' => 2,
+           'restaurant_id' => 1,
+           'duration' =>  120,
+            'start_time' => Carbon::now()->startOfDay()->addHours(14),
+        ]);Session::create([
+           'id' => 3,
+           'restaurant_id' => 1,
+           'duration' =>  120,
+            'start_time' => Carbon::now()->startOfDay()->addHours(16),
+        ]);
     }
 }

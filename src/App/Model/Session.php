@@ -11,7 +11,6 @@ class Session extends Model {
 
     protected $fillable = [
         'restaurant_id',
-        'sessions_amount',
         'duration',
         'start_time',
     ];

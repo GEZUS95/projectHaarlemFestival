@@ -14,7 +14,6 @@ class CreateSessionsTable
         Capsule::schema()->create('sessions', function ($table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('restaurant_id');
-            $table->unsignedInteger('sessions_amount');
             $table->unsignedInteger('duration');
             $table->date('start_time');
             $table->timestamps();
