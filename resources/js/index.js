@@ -11,7 +11,12 @@ import UpdateLocationModal from "./components/admin/modals/UpdateLocationModal";
 import CreatePerformerModal from "./components/admin/modals/CreatePerformerModal";
 import UpdatePerformerModal from "./components/admin/modals/UpdatePerformerModal";
 import CreateRolesModal from "./components/admin/modals/CreateRolesModal";
-//
+import MultiSelect from "./components/Helpers/MultiSelect";
+
+
+/**
+ * View Components
+ */
 window.customElements.define('side-navigation-link', SideNavigationLink);
 window.customElements.define('side-navigation-events', SideNavigationEvents);
 window.customElements.define('event-sub-navigation', EventSubNavigation);
@@ -24,6 +29,12 @@ window.customElements.define('update-location-modal', UpdateLocationModal);
 window.customElements.define('create-performer-modal', CreatePerformerModal);
 window.customElements.define('update-performer-modal', UpdatePerformerModal);
 window.customElements.define('create-role-modal', CreateRolesModal);
+
+
+/**
+ * Helper Components
+ */
+window.customElements.define('multi-select', MultiSelect);
 
 //npm i -g webpack
 //npm i -g webpack-cli

@@ -19,7 +19,7 @@ class CreateRolesModal extends BaseModal {
             .form-control {
                 margin-right: 30px;
                 margin-bottom: 30px;
-                width: 45%;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
             }
@@ -36,18 +36,14 @@ class CreateRolesModal extends BaseModal {
                 </div>
                 
                 <div class="form-control">
-                    <label class="label">Name:</label>
-                    <select name="cars" id="cars" multiple>
-                           ${this._$perms.map((perm) => {
-                                return `<option value="volvo">${perm}</option>`;
-                           }).join('')}
-                    </select>
+                    <multi-select 
+                        id="multi-select"
+                        title="Select Permissions"
+                        items="${this._$perms}"
+                    ></multi-select>
                 </div>
-               
             </div>
         `
-
-
     }
 
     connectedCallback(){
@@ -66,7 +62,7 @@ class CreateRolesModal extends BaseModal {
         window.addEventListener("modal-create-roles", (() => {
             _this.renderContent();
 
-            _this.updateModalTitle("Create Roles");
+            _this.updateModalTitle("Create Role");
 
             const elements = _this.shadowRoot.querySelectorAll(".input");
             Array.from(elements).forEach(function(element) {
@@ -76,10 +72,12 @@ class CreateRolesModal extends BaseModal {
     }
 
     handleCreateBtnClick(e){
-        let formData = this.createFormData(this._$formData)
-        formData.append("token", this._$token)
-
-        this.sendRequestForPaginator(this._$url, this, formData);
+        const multiSelect = this.shadowRoot.querySelector("#multi-select");
+        console.log(multiSelect.value)
+        // let formData = this.createFormData(this._$formData)
+        // formData.append("token", this._$token)
+        //
+        // this.sendRequestForPaginator(this._$url, this, formData);
     }
 
     static get observedAttributes() {
