@@ -192,6 +192,7 @@ class PaginatorComponent extends BaseComponent {
         })
     }
 
+    //@todo if search is empty just do the normal query!!!
     search(e){
         const el = e.path[0];
 
