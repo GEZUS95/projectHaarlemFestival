@@ -11,7 +11,6 @@ use App\Rules\TokenValidation;
 use App\Rules\UserEmailAlreadyExistValidation;
 use Exception;
 use Matrix\BaseController;
-use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\AuthManager;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;

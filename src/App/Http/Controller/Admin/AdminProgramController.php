@@ -3,16 +3,13 @@
 
 namespace App\Http\Controller\Admin;
 
-use App\Model\Event;
 use App\Model\Permissions;
 use App\Model\Program;
 use App\Rules\ColorValidation;
 use App\Rules\EventExistValidation;
-use App\Rules\TokenValidation;
 use Carbon\Carbon;
 use Exception;
 use Matrix\BaseController;
-use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,12 +3,10 @@
 
 namespace App\Http\Controller\Admin;
 
-use App\Model\Image;
 use App\Model\Permissions;
 use App\Model\Restaurant;
 use Exception;
 use Matrix\BaseController;
-use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

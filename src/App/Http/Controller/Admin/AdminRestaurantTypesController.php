@@ -2,9 +2,7 @@
 
 namespace App\Http\Controller\Admin;
 
-use App\Model\Permissions;
 use Matrix\BaseController;
-use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminRestaurantTypesController extends BaseController
