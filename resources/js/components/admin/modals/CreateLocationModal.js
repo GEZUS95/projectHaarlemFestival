@@ -98,29 +98,20 @@ class CreateLocationModal extends BaseModal {
             </div>
         `
     }
-
     connectedCallback(){
-        const _this = this;
-        window.addEventListener("modal-create-location", (() => {
-            _this.renderContent();
+        window.addEventListener("modal-create-performer", this.initForm.bind(this));
+    }
 
-            _this.updateModalTitle("Create Location");
-            _this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const img = _this.shadowRoot.querySelector('.placeholder-image');
-                    img.onload = () => {
-                        URL.revokeObjectURL(img.src);
-                    }
+    initForm(e){
+        this.renderContent();
 
-                    img.src = URL.createObjectURL(this.files[0]);
-                }
-            });
+        this.updateModalTitle("Create Location");
+        this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', this.handleImageObjectUrl.bind(this));
 
-            const elements = _this.shadowRoot.querySelectorAll(".input");
-            Array.from(elements).forEach(function(element) {
-                element.addEventListener('change', _this.updateData.bind(_this) );
-            });
-        }));
+        const elements = this.shadowRoot.querySelectorAll(".input");
+        Array.from(elements).forEach((element) => {
+            element.addEventListener('change', this.updateData.bind(this) );
+        });
     }
 
     handleCreateBtnClick(e){

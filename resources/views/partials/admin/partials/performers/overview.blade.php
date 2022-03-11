@@ -2,7 +2,7 @@
 @section('content')
     <admin-sub-navigation title="Performer"></admin-sub-navigation>
     <paginator-component
-            fields='name|type'
+            fields='name'
             url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_paginator")}}"
             search_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_performers_search")}}"
             update_event="modal-update-performer"

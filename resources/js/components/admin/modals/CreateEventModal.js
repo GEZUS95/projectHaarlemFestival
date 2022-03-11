@@ -1,13 +1,14 @@
 import BaseModal from "./BaseModal";
 
-class CreatePerformerModal extends BaseModal {
+class CreateEventModal extends BaseModal {
     constructor() {
         super();
 
         this._$url = null;
         this._$token = null;
         this._$formData = {
-            name: '',
+            title: '',
+            total_price_event: '',
             description: '',
         };
     }
@@ -18,44 +19,10 @@ class CreatePerformerModal extends BaseModal {
             .form-control {
                 margin-right: 30px;
                 margin-bottom: 30px;
-                width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .form-image {
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-            }
-                     
-            .image-label {
-                background-color: #ffffff;
-                width: 45%;
-                height: 200px;
-            }
-            
-            .image-cloud {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 30px; 
-                margin-bottom: 30px;
-            } 
-            
-            .image-cloud-svg {
-                height: 200px;
-                width: 200px;
-            }
-            
-            .form-control-textarea {
-                margin-right: 30px;
-                margin-bottom: 30px;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
             }
-           
         </style>
        `;
     }
@@ -64,8 +31,18 @@ class CreatePerformerModal extends BaseModal {
         return `
             <div class="form">
                 <div class="form-control">
-                    <label class="label">Name:</label>
-                    <input class="input" name="name" value="${this._$formData.name}">
+                    <label class="label">Stage:</label>
+                    <input class="input" name="stage" value="${this._$formData.stage}">
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">Color:</label>
+                    <input class="input" name="color" type="color" value="${this._$formData.color}">
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">Seats:</label>
+                    <input class="input" name="seats" type="number" value="${this._$formData.seats}">
                 </div>
                 
                 <div class="form-image">
@@ -73,23 +50,18 @@ class CreatePerformerModal extends BaseModal {
                     <img alt="uploaded-image" class="image-label placeholder-image" id="myImg" src="#">
                 </div>
                 <input style="display: none" id="file-upload" name="image" type='file' value="">
-                    
-                <div class="form-control-textarea">
-                    <label class="label">Description:</label>
-                    <textarea class="input" style="min-height: 100px; max-height: 100px" name="description">${this._$formData.description}</textarea>
-                </div>
             </div>
         `
     }
 
     connectedCallback(){
-        window.addEventListener("modal-create-performer", this.initForm.bind(this));
+        window.addEventListener("modal-create-event", this.initForm.bind(this));
     }
 
     initForm(e){
         this.renderContent();
 
-        this.updateModalTitle("Create Performer");
+        this.updateModalTitle("Create Event");
         this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', this.handleImageObjectUrl.bind(this));
 
         const elements = this.shadowRoot.querySelectorAll(".input");
@@ -98,13 +70,8 @@ class CreatePerformerModal extends BaseModal {
         });
     }
 
-
-
     handleCreateBtnClick(e){
-        const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
-
         let formData = this.createFormData(this._$formData)
-        formData.append("file", image)
         formData.append("token", this._$token)
 
         this.sendRequestForPaginator(this._$url, this, formData);
@@ -115,4 +82,4 @@ class CreatePerformerModal extends BaseModal {
     }
 }
 
-export default CreatePerformerModal;
+export default CreateEventModal;

@@ -311,6 +311,16 @@ class BaseModel extends BaseComponent {
             }
         });
     }
+
+    handleImageObjectUrl(e){
+        const el = e.path[0]
+        if (!(el.files && el.files[0])) return;
+
+        const img = this.shadowRoot.querySelector('.placeholder-image');
+
+        img.onload = () => URL.revokeObjectURL(img.src);
+        img.src = URL.createObjectURL(el.files[0]);
+    }
 }
 
 export default BaseModel;
