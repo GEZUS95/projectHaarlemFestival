@@ -2,15 +2,14 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Response;
 
-class Permissions extends Model {
+class Permissions {
 
-    public function getAllPermissions() {
+    public static function getAllPermissions() {
         try {
-            $reflectionClass = new ReflectionClass($this);
+            $reflectionClass = new ReflectionClass(self::class);
             return $reflectionClass->getConstants();
         } catch (\ReflectionException $e) {
             return new Response('An error occurred', 500);

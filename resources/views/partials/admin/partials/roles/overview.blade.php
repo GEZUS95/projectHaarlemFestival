@@ -10,4 +10,10 @@
             title="Roles"
             object_name="roles"
     ></paginator-component>
+
+    <create-role-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("roles_create_form_csrf_token")}}"
+            perms="{{json_encode(\App\Model\Permissions::getAllPermissions())}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_roles_save")}}"
+    ></create-role-modal>
 @endsection

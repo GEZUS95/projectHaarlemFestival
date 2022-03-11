@@ -21,6 +21,10 @@ class AdminRolesController extends BaseController
     public function index(): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_ROLES_OVERVIEW_PAGE__);
+
+        $this->session->set("roles_create_form_csrf_token",  bin2hex(random_bytes(24)));
+        $this->session->set("roles_update_form_csrf_token",  bin2hex(random_bytes(24)));
+
         return $this->render('partials.admin.partials.roles.overview', []);
     }
 
@@ -80,9 +84,9 @@ class AdminRolesController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_ROLES_PAGE__);
 
-        $user = Role::query()->where('id', '=', $id)->first();
+        $role = Role::query()->where('id', '=', $id)->first();
 
-        return $this->json(["location" => $user]);
+        return $this->json(["roles" => $role]);
     }
 
     /**
