@@ -73,11 +73,11 @@ class CreateRolesModal extends BaseModal {
 
     handleCreateBtnClick(e){
         const multiSelect = this.shadowRoot.querySelector("#multi-select");
-        console.log(multiSelect.value)
-        // let formData = this.createFormData(this._$formData)
-        // formData.append("token", this._$token)
-        //
-        // this.sendRequestForPaginator(this._$url, this, formData);
+        this._$formData.permissions = multiSelect.value;
+        let formData = this.createFormData(this._$formData)
+        formData.append("token", this._$token)
+
+        this.sendRequestForPaginator(this._$url, this, formData);
     }
 
     static get observedAttributes() {

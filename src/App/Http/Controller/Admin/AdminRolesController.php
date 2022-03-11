@@ -5,6 +5,7 @@ namespace App\Http\Controller\Admin;
 
 use App\Model\Permissions;
 use App\Model\Role;
+use App\Rules\PermissionExist;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -58,19 +59,32 @@ class AdminRolesController extends BaseController
     public function save(Request $request): Response
     {
         GuardManager::guard(Permissions::__WRITE_ROLES_PAGE__);
-
         $data = $request->request->all();
 
         $validator = (new ValidatorFactory())->make(
             $data,
             [
                 'token' => 'required',
+                'name' => 'required',
+                'permissions' => [new PermissionExist],
             ]
         );
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return $this->json(json_encode(print_r($validator->errors())));
+
+        if($data["token"] != $this->session->get("roles_create_form_csrf_token"))
+            return new Response('Unauthorized', 403);
+
+        $perms = [];
+        foreach (explode(",", $data["permissions"]) as $perm){
+            array_push($perms, $perm);
         }
+
+        Role::create([
+            'name' => $data["name"],
+            'permissions' => json_encode($perms)
+        ]);
 
         return $this->json(
             ["Success" => "Successfully added the location"]
@@ -108,6 +122,8 @@ class AdminRolesController extends BaseController
         if ($validator->fails()) {
             return $this->json(json_encode(print_r($validator->errors())));
         }
+
+
 
 
         return $this->json(
