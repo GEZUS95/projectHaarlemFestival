@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("css")}}">
-    <title>Document</title>
+    <title>Haarlem Festival</title>
 </head>
 <body>
 @include("layout.nav")
