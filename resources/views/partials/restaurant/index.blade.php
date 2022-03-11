@@ -3,7 +3,7 @@
     <h1>Food</h1>
 
     @foreach($restaurant as $res)
-        <article class="card">
+        <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("restaurant_single", ["id" => $res->id])}}" class="card">
             <div class="card-body">
             <h3>{{$res->name}}</h3>
             <p>{{$res->stars}}</p>
@@ -14,7 +14,7 @@
             </p>
             <p>Tickets left: {{$res->seats}}</p>
             </div>
-        </article>
+        </a>
     @endforeach
 
 @endsection
