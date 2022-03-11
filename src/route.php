@@ -29,7 +29,7 @@ $routes = [
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
 
     // Food routes
-    ["name" => "restaurant", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
+    ["name" => "food", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
     ["name" => "restaurant_single", "url" => "/food/restaurant/{id}", "controller" => [new RestaurantController(), 'single'], "method" => "GET"],
 
     // Admin routes

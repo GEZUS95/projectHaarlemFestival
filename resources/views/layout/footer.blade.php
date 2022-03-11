@@ -18,7 +18,7 @@
                 <li><a href="/">Home Page</a></li>
                 <li><a href="/emailtest">Jazz Event</a></li>
                  <li><a href="/emailtest">Dance Event</a></li>
-                 <li><a href="/emailtest">Food Event</a></li>
+                 <li><a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("food")}}">Food Event</a></li>
                  <li><a href="/login">Login</a></li>
                  <li><a href="/register">Register</a></li>
                  <li><a href="/contact">Contact</a></li>
