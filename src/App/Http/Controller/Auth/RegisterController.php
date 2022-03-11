@@ -32,7 +32,7 @@ class RegisterController extends BaseController {
         $rules = [
             'token' => ['required', new TokenValidation("register_form_csrf_token")],
             'name' => 'required',
-            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation],
+            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation, 'email'],
             'password' => 'required|confirmed|min:8',
         ];
 

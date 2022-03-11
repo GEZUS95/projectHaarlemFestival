@@ -29,7 +29,7 @@ class LoginController extends BaseController {
         $data = $request->request->all();
         $rules = [
             'token' => ['required', new TokenValidation("login_form_csrf_token")],
-            'email' => 'required',
+            'email' => ['required', 'email'],
             'password' => 'required',
         ];
 

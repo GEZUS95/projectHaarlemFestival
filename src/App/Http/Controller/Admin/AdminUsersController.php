@@ -12,6 +12,7 @@ use App\Rules\UserEmailAlreadyExistValidation;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
+use Matrix\Managers\AuthManager;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +78,7 @@ class AdminUsersController extends BaseController
         $rules = [
             'token' => ['required', new TokenValidation("users_create_form_csrf_token")],
             'name' => 'required',
-            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation],
+            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation,'email'],
             'password' => 'required|confirmed|min:8',
             'role_id' => ['required', new RoleExistValidation],
         ];
@@ -89,10 +90,10 @@ class AdminUsersController extends BaseController
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => password_hash($data['password'], PASSWORD_BCRYPT),
-            'role_id' => $data['name'],
+            'role_id' => $data['role_id'],
         ]);
 
-        return $this->json(["Success" => "Successfully added the location"]);
+        return $this->json(["Success" => "Successfully added the user"]);
     }
 
     /**
@@ -104,7 +105,7 @@ class AdminUsersController extends BaseController
 
         $user = User::query()->where('id', '=', $id)->first();
 
-        return $this->json(["location" => $user]);
+        return $this->json(["user" => $user]);
     }
 
     /**
@@ -115,33 +116,35 @@ class AdminUsersController extends BaseController
         GuardManager::guard(Permissions::__WRITE_USER_PAGE__);
 
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("users_update_form_csrf_token")],
+            'name' => 'required',
+            'email' => ['required', 'email'],
+            'role_id' => ['required', new RoleExistValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-            ]
-        );
+        $this->validate($data, $rules);
 
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
-        }
+        User::query()->find($id)->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'role_id' => $data['role_id'],
+        ]);
 
-
-        return $this->json(
-            ["Success" => "Successfully updated the location"]
-        );
+        return $this->json(["Success" => "Successfully updated the user"]);
     }
 
     public function delete(Request $request, $id): Response
     {
         GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
 
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
 
-        return $this->json(
-            ["Success" => "Successfully deleted the location"]
-        );
+        if($user->id === AuthManager::getCurrentUser()->id)
+            return $this->json(["Error" => "cant delete your self"]);
+
+        $user->delete();
+        return $this->json(["Success" => "Successfully deleted the user"]);
     }
 
 }

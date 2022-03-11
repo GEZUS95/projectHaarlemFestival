@@ -8,11 +8,13 @@ class UpdateRolesModal extends CreateRolesModal {
         this._$token = null;
         this._$perms = null;
         this._$selected = null;
+        this._$roles = [];
         this._$update = true;
+        this._$roleId = null;
         this._$formData = {
-            id: null,
             name: '',
-            permissions: '',
+            email: '',
+            role_id: '',
         };
     }
 
@@ -25,12 +27,17 @@ class UpdateRolesModal extends CreateRolesModal {
                 </div>
                 
                 <div class="form-control">
-                    <multi-select 
-                        id="multi-select"
-                        title="Select Permissions"
-                        selected="${this._$selected}"
-                        items="${this._$perms}"
-                    ></multi-select>
+                    <label class="label">Email:</label>
+                    <input class="input" name="email" value="${this._$formData.email}">
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">Role:</label>
+                    <select class="input" name="roles" id="roles">
+                       ${this._$roles.map((role) => {
+                            return `<option value="${role.id}">${role.name}</option>`;
+                        }).join('')}
+                    </select>
                 </div>
             </div>
         `
@@ -38,20 +45,20 @@ class UpdateRolesModal extends CreateRolesModal {
 
     connectedCallback(){
         console.log("test")
-        window.addEventListener("modal-update-roles", this.initForm.bind(this));
+        window.addEventListener("modal-update-user", this.initForm.bind(this));
     }
 
     async initForm(e){
         let url = this.queryUrlReplaceId(this._$query_url, e.detail);
+        this._$roles = await this.queryGet(this._$roles_url);
+        const resFormData = await this.setFormData(url, "user")
 
-        const resFormData = await this.queryGet(url)
-        this._$perms = this.generateArrFromPerms(this._$perms);
-        this._$formData.name = resFormData["roles"].name;
-        this._$formData.id = resFormData["roles"].id;
-        this._$selected = JSON.parse(resFormData["roles"].permissions);
         this.renderContent();
 
-        this.updateModalTitle("Update Roles");
+        const el = this.shadowRoot.querySelector("#roles");
+        el.value = resFormData["user"].role_id;
+
+        this.updateModalTitle("Update User");
 
         const elements = this.shadowRoot.querySelectorAll(".input");
         const _this = this;
@@ -61,8 +68,8 @@ class UpdateRolesModal extends CreateRolesModal {
     }
 
     handleUpdateBtnClick(){
-        const multiSelect = this.shadowRoot.querySelector("#multi-select");
-        this._$formData.permissions = multiSelect.value;
+        const select = this.shadowRoot.querySelector("#roles");
+        this._$formData.role_id = select.value;
 
         let formData = this.createFormData(this._$formData)
         formData.append("token", this._$token)
@@ -78,7 +85,7 @@ class UpdateRolesModal extends CreateRolesModal {
     }
 
     static get observedAttributes() {
-        return ["url", "token", "query_url", "delete_url", "perms"];
+        return ["url", "token", "query_url", "delete_url", "roles_url"];
     }
 }
 
