@@ -12,4 +12,10 @@
             object_name="users"
     ></paginator-component>
 
+    <create-user-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("users_create_form_csrf_token")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_users_save")}}"
+            roles_url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_users_roles")}}"
+    ></create-user-modal>
+
 @endsection

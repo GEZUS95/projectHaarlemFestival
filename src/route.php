@@ -62,6 +62,7 @@ $routes = [
     ["name" => "admin_roles_paginator", "url" => "/admin/roles/{page}/{amount}", "controller" => [new AdminRolesController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_users", "url" => "/admin/users", "controller" => [new AdminUsersController(), 'index'], "method" => "GET"],
+    ["name" => "admin_users_roles", "url" => "/admin/users/roles", "controller" => [new AdminUsersController(), 'roles'], "method" => "GET"],
     ["name" => "admin_users_search", "url" => "/admin/users/{search}", "controller" => [new AdminUsersController(), 'search'], "method" => "GET"],
     ["name" => "admin_users_save", "url" => "/admin/users/create", "controller" => [new AdminUsersController(), 'save'], "method" => "POST"],
     ["name" => "admin_users_single", "url" => "/admin/users/update/{id}", "controller" => [new AdminUsersController(), 'single'], "method" => "GET"],

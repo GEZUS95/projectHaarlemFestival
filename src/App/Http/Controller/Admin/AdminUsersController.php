@@ -4,7 +4,11 @@
 namespace App\Http\Controller\Admin;
 
 use App\Model\Permissions;
+use App\Model\Role;
 use App\Model\User;
+use App\Rules\RoleExistValidation;
+use App\Rules\TokenValidation;
+use App\Rules\UserEmailAlreadyExistValidation;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -21,7 +25,20 @@ class AdminUsersController extends BaseController
     public function index(): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_USERS_OVERVIEW_PAGE__);
+
+        $this->session->set("users_create_form_csrf_token", bin2hex(random_bytes(24)));
+        $this->session->set("users_update_form_csrf_token", bin2hex(random_bytes(24)));
+
         return $this->render('partials.admin.partials.users.overview', []);
+    }
+
+    public function roles(): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_USER_PAGE__);
+
+        $roles = Role::query()->select('name','id')->get();
+
+        return $this->json($roles);
     }
 
     public function search(Request $request, $search): Response
@@ -57,21 +74,24 @@ class AdminUsersController extends BaseController
         GuardManager::guard(Permissions::__WRITE_USER_PAGE__);
 
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("users_create_form_csrf_token")],
+            'name' => 'required',
+            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation],
+            'password' => 'required|confirmed|min:8',
+            'role_id' => ['required', new RoleExistValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-            ]
-        );
+        $this->validate($data, $rules);
 
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
-        }
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => password_hash($data['password'], PASSWORD_BCRYPT),
+            'role_id' => $data['name'],
+        ]);
 
-        return $this->json(
-            ["Success" => "Successfully added the location"]
-        );
+        return $this->json(["Success" => "Successfully added the location"]);
     }
 
     /**
