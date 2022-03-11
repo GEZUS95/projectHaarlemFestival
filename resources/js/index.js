@@ -12,6 +12,7 @@ import CreatePerformerModal from "./components/admin/modals/CreatePerformerModal
 import UpdatePerformerModal from "./components/admin/modals/UpdatePerformerModal";
 import CreateRolesModal from "./components/admin/modals/CreateRolesModal";
 import MultiSelect from "./components/Helpers/MultiSelect";
+import UpdateRolesModal from "./components/admin/modals/UpdateRolesModal";
 
 
 /**
@@ -29,6 +30,7 @@ window.customElements.define('update-location-modal', UpdateLocationModal);
 window.customElements.define('create-performer-modal', CreatePerformerModal);
 window.customElements.define('update-performer-modal', UpdatePerformerModal);
 window.customElements.define('create-role-modal', CreateRolesModal);
+window.customElements.define('update-role-modal', UpdateRolesModal);
 
 
 /**

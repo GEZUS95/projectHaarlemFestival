@@ -6,6 +6,9 @@ namespace App\Http\Controller\Admin;
 use App\Model\Event;
 use App\Model\Permissions;
 use App\Model\Program;
+use App\Rules\ColorValidation;
+use App\Rules\EventExistValidation;
+use App\Rules\TokenValidation;
 use Carbon\Carbon;
 use Exception;
 use Matrix\BaseController;
@@ -25,25 +28,16 @@ class AdminProgramController extends BaseController
         GuardManager::guard(Permissions::__CREATE_NEW_PROGRAM__);
 
         $data = $request->request->all();
+        $rules = [
+            'color' => ['required','string', new ColorValidation],
+            'end_time' => 'required',
+            'start_time' => 'required',
+            'event_id' => ['required', 'integer', new EventExistValidation],
+            'title' => 'required|string',
+            'total_price_program' => 'required|integer',
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'color' => 'required|string',
-                'end_time' => 'required',
-                'start_time' => 'required',
-                'event_id' => 'required|integer',
-                'title' => 'required|string',
-                'total_price_program' => 'required|integer',
-            ]
-        );
-
-        if ($validator->fails())
-            return $this->json(['Error' => $validator->errors()]);
-
-        $event = Event::find($data["event_id"]);
-        if($event == null)
-            return $this->json(['error' => "Event not found"]);
+        $this->validate($data, $rules);
 
         $startTime = Carbon::parse($data["start_time"])->addHour();
         $endTime = Carbon::parse($data["end_time"])->addHour();

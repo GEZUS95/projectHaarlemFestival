@@ -59,6 +59,7 @@ class MultiSelect extends HTMLElement {
         select.addEventListener('change', (event) => {
             const perm = event.target.value;
             select.querySelector('option[value='+perm+']').remove();
+            if(!Array.isArray(this._$selected)) this._$selected = [];
             this._$selected.push(perm);
             selectItemsContainer.innerHTML += `<div class="selected-item" id='${perm}'>${perm}</div>`
             this.initClickEvents();

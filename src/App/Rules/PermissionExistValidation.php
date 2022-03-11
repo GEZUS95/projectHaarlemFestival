@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Model\Permissions;
 use Illuminate\Contracts\Validation\Rule;
 
-class PermissionExist implements Rule
+class PermissionExistValidation implements Rule
 {
     /**
      * Determine if the validation rule passes.

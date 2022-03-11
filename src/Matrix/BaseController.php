@@ -3,6 +3,7 @@ namespace Matrix;
 
 use eftec\bladeone\BladeOne;
 use Exception;
+use Matrix\Factory\ValidatorFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,5 +37,17 @@ class BaseController
     protected function Redirect($url): RedirectResponse
     {
         return new RedirectResponse($url);
+    }
+
+    protected function validate($data, $rules): void
+    {
+        $validator = (new ValidatorFactory())->make(
+            $data,
+            $rules,
+        );
+
+        if ($validator->fails()) {
+            $this->json(json_encode(print_r($validator->errors())));
+        }
     }
 }

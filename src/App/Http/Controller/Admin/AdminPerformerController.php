@@ -4,12 +4,11 @@
 namespace App\Http\Controller\Admin;
 
 use App\Model\Image;
-use App\Model\Location;
 use App\Model\Performer;
 use App\Model\Permissions;
+use App\Rules\TokenValidation;
 use Exception;
 use Matrix\BaseController;
-use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,20 +59,13 @@ class AdminPerformerController extends BaseController
         GuardManager::guard(Permissions::__WRITE_PERFORMER_PAGE__);
 
         $data = $request->request->all();
-        var_dump($data);
+        $rules = [
+            'token' => ['required', new TokenValidation("performer_create_form_csrf_token")],
+            'name' => 'required',
+            'description' => 'required',
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'name' => 'required',
-                'description' => 'required',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
-        }
+        $this->validate($data, $rules);
 
         $model = Performer::create([
             'name' => $data["name"],

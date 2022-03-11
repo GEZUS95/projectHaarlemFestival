@@ -46,18 +46,24 @@ class CreateRolesModal extends BaseModal {
         `
     }
 
-    connectedCallback(){
-        const _this = this;
-        if(this._$perms == null)
-            return;
+    generateArrFromPerms(perms){
+        if(Array.isArray(perms)) return perms;
 
-        const data = JSON.parse(this._$perms);
+        const data = JSON.parse(perms);
         let tmpArr = [];
         for(const key in data)
             if (data.hasOwnProperty(key))
                 tmpArr.push(data[key]);
 
-        this._$perms = tmpArr;
+        return tmpArr
+    }
+
+    connectedCallback(){
+        const _this = this;
+        if(this._$perms == null)
+            return;
+
+        this._$perms = this.generateArrFromPerms(this._$perms);
 
         window.addEventListener("modal-create-roles", (() => {
             _this.renderContent();

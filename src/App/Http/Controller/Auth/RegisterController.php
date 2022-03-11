@@ -2,6 +2,8 @@
 
 namespace  App\Http\Controller\Auth;
 
+use App\Rules\TokenValidation;
+use App\Rules\UserEmailAlreadyExistValidation;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -27,31 +29,14 @@ class RegisterController extends BaseController {
 
     public function register(Request $request) {
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("register_form_csrf_token")],
+            'name' => 'required',
+            'email' => ['required','confirmed', new UserEmailAlreadyExistValidation],
+            'password' => 'required|confirmed|min:8',
+        ];
 
-        if($data["token"] != $this->session->get("register_form_csrf_token"))
-            return new Response('Unauthorized', 403);
-
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'name' => 'required',
-                'email' => 'required|confirmed',
-                'password' => 'required|confirmed|min:8',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->json(['result' => $validator->errors()]);
-        }
-
-        $userExist = (User::query()
-            ->where('email','=',$data["email"])
-            ->first());
-
-        if($userExist){
-            return $this->json(['error' => "user already exist"]);
-        }
+        $this->validate($data, $rules);
 
         $user = User::create([
             'name' => $data['name'],

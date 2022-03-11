@@ -5,7 +5,9 @@ namespace App\Http\Controller\Admin;
 
 use App\Model\Permissions;
 use App\Model\Role;
-use App\Rules\PermissionExist;
+use App\Rules\EventExistValidation;
+use App\Rules\PermissionExistValidation;
+use App\Rules\TokenValidation;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -23,8 +25,8 @@ class AdminRolesController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_CMS_ROLES_OVERVIEW_PAGE__);
 
-        $this->session->set("roles_create_form_csrf_token",  bin2hex(random_bytes(24)));
-        $this->session->set("roles_update_form_csrf_token",  bin2hex(random_bytes(24)));
+        $this->session->set("roles_create_form_csrf_token", bin2hex(random_bytes(24)));
+        $this->session->set("roles_update_form_csrf_token", bin2hex(random_bytes(24)));
 
         return $this->render('partials.admin.partials.roles.overview', []);
     }
@@ -33,7 +35,7 @@ class AdminRolesController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_ROLES_PAGE__);
 
-        $roles = Role::query()->where(function ($query) use($search) {
+        $roles = Role::query()->where(function ($query) use ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         })->get();
 
@@ -59,25 +61,18 @@ class AdminRolesController extends BaseController
     public function save(Request $request): Response
     {
         GuardManager::guard(Permissions::__WRITE_ROLES_PAGE__);
+
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("roles_create_form_csrf_token")],
+            'name' => 'required',
+            'permissions' => [new PermissionExistValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'name' => 'required',
-                'permissions' => [new PermissionExist],
-            ]
-        );
-
-        if ($validator->fails())
-            return $this->json(json_encode(print_r($validator->errors())));
-
-        if($data["token"] != $this->session->get("roles_create_form_csrf_token"))
-            return new Response('Unauthorized', 403);
+        $this->validate($data, $rules);
 
         $perms = [];
-        foreach (explode(",", $data["permissions"]) as $perm){
+        foreach (explode(",", $data["permissions"]) as $perm) {
             array_push($perms, $perm);
         }
 
@@ -111,35 +106,36 @@ class AdminRolesController extends BaseController
         GuardManager::guard(Permissions::__WRITE_ROLES_PAGE__);
 
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("roles_update_form_csrf_token")],
+            'name' => 'required',
+            'permissions' => [new PermissionExistValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-            ]
-        );
+        $this->validate($data, $rules);
 
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
+        $perms = [];
+        foreach (explode(",", $data["permissions"]) as $perm) {
+            array_push($perms, $perm);
         }
 
+        Role::findOrFail($id)->update([
+            'name' => $data["name"],
+            'permissions' => json_encode($perms)
+        ]);
 
-
-
-        return $this->json(
-            ["Success" => "Successfully updated the location"]
-        );
+        return $this->json(["Success" => "Successfully updated the role"]);
     }
 
     public function delete(Request $request, $id): Response
     {
         GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
 
+        //@todo check current user role and if a role get deleted make sure there is a fallback role for those users!
         Role::findOrFail($id)->delete();
 
         return $this->json(
             ["Success" => "Successfully deleted the location"]
         );
     }
-
 }

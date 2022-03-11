@@ -6,9 +6,10 @@ namespace App\Http\Controller\Admin;
 use App\Model\Image;
 use App\Model\Location;
 use App\Model\Permissions;
+use App\Rules\ColorValidation;
+use App\Rules\TokenValidation;
 use Exception;
 use Matrix\BaseController;
-use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\GuardManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,22 +64,16 @@ class AdminLocationsController extends BaseController
         GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
 
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("locations_create_form_csrf_token")],
+            'name' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'seats' => 'required',
+            'color' => ['required','string', new ColorValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'name' => 'required',
-                'city' => 'required',
-                'address' => 'required',
-                'seats' => 'required',
-                'color' => 'required',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
-        }
+        $this->validate($data, $rules);
 
         $location = Location::create([
             'name' => $data["name"],
@@ -117,31 +112,25 @@ class AdminLocationsController extends BaseController
         GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
 
         $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("locations_update_form_csrf_token")],
+            'name' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'seats' => 'required',
+            'color' => ['required','string', new ColorValidation],
+        ];
 
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'name' => 'required',
-                'city' => 'required',
-                'address' => 'required',
-                'seats' => 'required',
-                'color' => 'required',
-            ]
-        );
+        $this->validate($data, $rules);
 
-        if ($validator->fails()) {
-            return $this->json(json_encode(print_r($validator->errors())));
-        }
-
-        $model = Location::findOrFail($id);
-        $model->name = $data["name"];
-        $model->city = $data["city"];
-        $model->address = $data["address"];
-        $model->stage = $data["stage"];
-        $model->color = $data["color"];
-        $model->seats = $data["seats"];
-        $model->save();
+        $model = Location::findOrFail($id)->update([
+            'name' => $data["name"],
+            'city' => $data["city"],
+            'address' => $data["address"],
+            'stage' => $data["stage"],
+            'seats' => $data["seats"],
+            'color' => $data["color"],
+        ]);
 
         Image::updateFiles($_FILES["file"], $model);
 
