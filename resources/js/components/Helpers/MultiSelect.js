@@ -97,6 +97,7 @@ class MultiSelect extends HTMLElement {
         return this._$selected;
     }
 
+    // noinspection JSUnusedGlobalSymbols
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
             this["_$"+ name] = newValue;
