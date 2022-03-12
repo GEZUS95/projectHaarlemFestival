@@ -15,39 +15,7 @@ class CreateEventModal extends BaseModal {
 
     style(){
         return `
-        <style>      
-            .form-control {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .form-image {
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-            }
-                     
-            .image-label {
-                background-color: #ffffff;
-                width: 45%;
-                height: 200px;
-            }
-            
-            .image-cloud {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 30px; 
-                margin-bottom: 30px;
-            } 
-            
-            .image-cloud-svg {
-                height: 200px;
-                width: 200px;
-            }
+        <style>       
         </style>
        `;
     }
@@ -56,18 +24,13 @@ class CreateEventModal extends BaseModal {
         return `
             <div class="form">
                 <div class="form-control">
-                    <label class="label">Stage:</label>
-                    <input class="input" name="stage" value="${this._$formData.stage}">
+                    <label class="label">Title:</label>
+                    <input class="input" name="title" value="${this._$formData.title}">
                 </div>
                 
                 <div class="form-control">
-                    <label class="label">Color:</label>
-                    <input class="input" name="color" type="color" value="${this._$formData.color}">
-                </div>
-                
-                <div class="form-control">
-                    <label class="label">Seats:</label>
-                    <input class="input" name="seats" type="number" value="${this._$formData.seats}">
+                    <label class="label">Total price for the event:</label>
+                    <input class="input" name="total_price_event" value="${this._$formData.total_price_event}">
                 </div>
                 
                 <div class="form-image">
@@ -75,6 +38,12 @@ class CreateEventModal extends BaseModal {
                     <img alt="uploaded-image" class="image-label placeholder-image" id="myImg" src="#">
                 </div>
                 <input style="display: none" id="file-upload" name="image" type='file' value="">
+                
+                <div class="form-control-textarea">
+                    <label class="label">Description:</label>
+                    <textarea class="textarea-input" name="description">${this._$formData.description}</textarea>
+                </div>
+                
             </div>
         `
     }

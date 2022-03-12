@@ -15,47 +15,6 @@ class CreatePerformerModal extends BaseModal {
     style(){
         return `
         <style>      
-            .form-control {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .form-image {
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-            }
-                     
-            .image-label {
-                background-color: #ffffff;
-                width: 45%;
-                height: 200px;
-            }
-            
-            .image-cloud {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 30px; 
-                margin-bottom: 30px;
-            } 
-            
-            .image-cloud-svg {
-                height: 200px;
-                width: 200px;
-            }
-            
-            .form-control-textarea {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-            }
-           
         </style>
        `;
     }
@@ -76,7 +35,7 @@ class CreatePerformerModal extends BaseModal {
                     
                 <div class="form-control-textarea">
                     <label class="label">Description:</label>
-                    <textarea class="input" style="min-height: 100px; max-height: 100px" name="description">${this._$formData.description}</textarea>
+                    <textarea class="textarea-input" style="min-height: 100px; max-height: 100px" name="description">${this._$formData.description}</textarea>
                 </div>
             </div>
         `

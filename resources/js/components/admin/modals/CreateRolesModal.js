@@ -16,13 +16,6 @@ class CreateRolesModal extends BaseModal {
     style(){
         return `
         <style>      
-            .form-control {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-            }
         </style>
        `;
     }
@@ -35,7 +28,7 @@ class CreateRolesModal extends BaseModal {
                     <input class="input" name="name" value="${this._$formData.name}">
                 </div>
                 
-                <div class="form-control">
+                <div class="form-control-multi-select">
                     <multi-select 
                         id="multi-select"
                         title="Select Permissions"

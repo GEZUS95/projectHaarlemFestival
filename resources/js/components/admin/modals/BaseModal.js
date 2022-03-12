@@ -141,6 +141,67 @@ class BaseModel extends BaseComponent {
                     flex-wrap: wrap;
                     padding: 30px;
                 }
+                
+                .form-control {
+                    padding: 15px 10px;
+                    width: 50%;
+                    display: flex;
+                    box-sizing: border-box;
+                    flex-direction: column;
+                }
+                
+                .form-control-multi-select {
+                    padding: 15px 10px;
+                    width: 100%;
+                    display: flex;
+                    box-sizing: border-box;
+                    flex-direction: column;
+                }
+                
+                .form-image {
+                    box-sizing: border-box;
+                    padding: 10px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                }
+                         
+                .image-label {
+                    background-color: #ffffff;
+                    width: 50%;
+                    height: 200px;
+                }
+                
+                .image-cloud {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 20px;
+                } 
+                
+                .image-cloud-svg {
+                    height: 200px;
+                    width: 200px;
+                }
+                
+                .form-control-textarea {
+                    box-sizing: border-box;
+                    padding: 15px 10px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .textarea-input {
+                    box-sizing: border-box;
+                    background-color: #BAC8CF;
+                    width: 100%;
+                    max-height: 100px;
+                    min-height: 100px;
+                    color: #37474F;
+                    font-size: 21px;
+                }
+            
             </style>
             ${this.style()}
 

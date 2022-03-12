@@ -38,12 +38,7 @@ class CreateProgramModal extends BaseModal {
     style(){
         return `
         <style>
-            .form-control {
-                width: 30%;
-                margin: 15px;
-                display: flex;
-                flex-direction: column;
-            }
+        
         </style>
        `;
     }

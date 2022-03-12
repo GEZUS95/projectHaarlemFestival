@@ -19,39 +19,7 @@ class CreateLocationModal extends BaseModal {
     style(){
         return `
         <style>      
-            .form-control {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .form-image {
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-            }
-                     
-            .image-label {
-                background-color: #ffffff;
-                width: 45%;
-                height: 200px;
-            }
-            
-            .image-cloud {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 30px; 
-                margin-bottom: 30px;
-            } 
-            
-            .image-cloud-svg {
-                height: 200px;
-                width: 200px;
-            }
-           
+
         </style>
        `;
     }
@@ -99,7 +67,7 @@ class CreateLocationModal extends BaseModal {
         `
     }
     connectedCallback(){
-        window.addEventListener("modal-create-performer", this.initForm.bind(this));
+        window.addEventListener("modal-create-location", this.initForm.bind(this));
     }
 
     initForm(e){

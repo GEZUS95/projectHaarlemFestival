@@ -19,13 +19,6 @@ class CreateUsersModal extends BaseModal {
     style(){
         return `
         <style>      
-            .form-control {
-                margin-right: 30px;
-                margin-bottom: 30px;
-                width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
         </style>
        `;
     }
