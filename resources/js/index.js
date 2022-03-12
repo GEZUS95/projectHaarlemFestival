@@ -11,11 +11,12 @@ import UpdateLocationModal from "./components/admin/modals/UpdateLocationModal";
 import CreatePerformerModal from "./components/admin/modals/CreatePerformerModal";
 import UpdatePerformerModal from "./components/admin/modals/UpdatePerformerModal";
 import CreateRolesModal from "./components/admin/modals/CreateRolesModal";
-import MultiSelect from "./components/Helpers/MultiSelect";
+import MultiSelect from "./components/admin/helpers/MultiSelect";
 import UpdateRolesModal from "./components/admin/modals/UpdateRolesModal";
 import CreateUsersModal from "./components/admin/modals/CreateUserModal";
 import UpdateUserModal from "./components/admin/modals/UpdateUserModal";
-
+import CreateEventModal from "./components/admin/modals/CreateEventModal";
+import initAddEventBtn from "./components/admin/scripts/HandleSideNavigation";
 
 /**
  * View Components
@@ -35,12 +36,17 @@ window.customElements.define('create-role-modal', CreateRolesModal);
 window.customElements.define('update-role-modal', UpdateRolesModal);
 window.customElements.define('create-user-modal', CreateUsersModal);
 window.customElements.define('update-user-modal', UpdateUserModal);
-
+window.customElements.define('create-event-modal', CreateEventModal)
 
 /**
  * Helper Components
  */
 window.customElements.define('multi-select', MultiSelect);
+
+/**
+ * Scripts!
+ */
+initAddEventBtn()
 
 //npm i -g webpack
 //npm i -g webpack-cli

@@ -25,7 +25,10 @@
     </div>
 </main>
 
-
+<create-event-modal
+        token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("event_create_form_csrf_token")}}"
+        url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_locations_save")}}"
+></create-event-modal>
 
 <script type="text/javascript" src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("js")}}"></script>
 </body>

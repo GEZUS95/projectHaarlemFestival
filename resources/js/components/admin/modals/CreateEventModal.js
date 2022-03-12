@@ -19,9 +19,34 @@ class CreateEventModal extends BaseModal {
             .form-control {
                 margin-right: 30px;
                 margin-bottom: 30px;
-                width: 100%;
+                width: 45%;
                 display: flex;
                 flex-direction: column;
+            }
+            
+            .form-image {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+            }
+                     
+            .image-label {
+                background-color: #ffffff;
+                width: 45%;
+                height: 200px;
+            }
+            
+            .image-cloud {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 30px; 
+                margin-bottom: 30px;
+            } 
+            
+            .image-cloud-svg {
+                height: 200px;
+                width: 200px;
             }
         </style>
        `;
@@ -58,7 +83,7 @@ class CreateEventModal extends BaseModal {
         window.addEventListener("modal-create-event", this.initForm.bind(this));
     }
 
-    initForm(e){
+    initForm(){
         this.renderContent();
 
         this.updateModalTitle("Create Event");

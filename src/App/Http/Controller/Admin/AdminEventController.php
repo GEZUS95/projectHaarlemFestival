@@ -4,7 +4,9 @@
 namespace App\Http\Controller\Admin;
 
 use App\Model\Event;
+use App\Model\Image;
 use App\Model\Permissions;
+use App\Rules\TokenValidation;
 use Carbon\Carbon;
 use Exception;
 use Matrix\BaseController;
@@ -21,6 +23,10 @@ class AdminEventController extends BaseController
     public function index($title): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
+
+        $this->session->set("event_create_form_csrf_token",  bin2hex(random_bytes(24)));
+        $this->session->set("event_update_form_csrf_token",  bin2hex(random_bytes(24)));
+
         return $this->render('partials.admin.partials.events.overview', ["event_title" => $title]);
     }
 
@@ -52,9 +58,68 @@ class AdminEventController extends BaseController
     /**
      * @throws Exception
      */
-    public function edit($title): Response
+    public function save(Request $request): Response
     {
-        GuardManager::guard(Permissions::__VIEW_CMS_VIEW_EVENT_PAGE__);
-        return $this->render('partials.admin.partials.events.single', []);
+        GuardManager::guard(Permissions::__WRITE_EVENT_PAGE__);
+
+        $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("locations_create_form_csrf_token")],
+        ];
+
+        $this->validate($data, $rules);
+
+
+        return $this->json(
+            ["Success" => "Successfully added the location"]
+        );
     }
+
+    /**
+     * @throws Exception
+     */
+    public function single(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_EVENT_PAGE__);
+
+
+        return $this->json(["location" => "test"]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__WRITE_EVENT_PAGE__);
+
+        $data = $request->request->all();
+        $rules = [
+            'token' => ['required', new TokenValidation("locations_update_form_csrf_token")],
+        ];
+
+        $this->validate($data, $rules);
+
+//        Image::updateFiles($_FILES["file"], $model);
+
+        return $this->json(
+            ["Success" => "Successfully updated the location"]
+        );
+    }
+
+    public function delete(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__WRITE_EVENT_PAGE__);
+
+        $model = Event::findOrFail($id);
+
+        Image::deleteFile($model->images[0]->file_location);
+
+        $model->delete();
+
+        return $this->json(
+            ["Success" => "Successfully deleted the location"]
+        );
+    }
+
 }
