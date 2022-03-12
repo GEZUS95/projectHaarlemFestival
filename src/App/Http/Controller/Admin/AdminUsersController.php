@@ -29,7 +29,7 @@ class AdminUsersController extends BaseController
         $this->session->set("users_create_form_csrf_token", bin2hex(random_bytes(24)));
         $this->session->set("users_update_form_csrf_token", bin2hex(random_bytes(24)));
 
-        return $this->render('partials.admin.partials.users.overview', []);
+        return $this->render('partials.admin.partials.users', []);
     }
 
     public function roles(): Response

@@ -26,7 +26,7 @@ class AdminRolesController extends BaseController
         $this->session->set("roles_create_form_csrf_token", bin2hex(random_bytes(24)));
         $this->session->set("roles_update_form_csrf_token", bin2hex(random_bytes(24)));
 
-        return $this->render('partials.admin.partials.roles.overview', []);
+        return $this->render('partials.admin.partials.roles', []);
     }
 
     public function search(Request $request, $search): Response

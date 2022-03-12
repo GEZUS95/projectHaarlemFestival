@@ -27,7 +27,7 @@ class AdminLocationsController extends BaseController
         $this->session->set("locations_create_form_csrf_token",  bin2hex(random_bytes(24)));
         $this->session->set("locations_update_form_csrf_token",  bin2hex(random_bytes(24)));
 
-        return $this->render('partials.admin.partials.locations.overview', []);
+        return $this->render('partials.admin.partials.locations', []);
     }
 
     public function search(Request $request, $search): Response

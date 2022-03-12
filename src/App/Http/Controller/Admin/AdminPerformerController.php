@@ -26,7 +26,7 @@ class AdminPerformerController extends BaseController
         $this->session->set("performer_create_form_csrf_token",  bin2hex(random_bytes(24)));
         $this->session->set("performer_update_form_csrf_token",  bin2hex(random_bytes(24)));
 
-        return $this->render('partials.admin.partials.performers.overview', []);
+        return $this->render('partials.admin.partials.performers', []);
     }
 
     public function search(Request $request, $search): Response

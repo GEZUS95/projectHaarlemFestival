@@ -1,0 +1,8 @@
+event-overview-page {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+event-overview-page::-webkit-scrollbar {
+  width: 0; /* For Chrome, Safari, and Opera */
+}

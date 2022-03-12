@@ -20,7 +20,7 @@ class AdminRestaurantController extends BaseController
     public function index(): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_RESTAURANT_OVERVIEW_PAGE__);
-        return $this->render('partials.admin.partials.restaurants.overview', []);
+        return $this->render('partials.admin.partials.restaurants', []);
     }
 
     public function search(Request $request, $search): Response
