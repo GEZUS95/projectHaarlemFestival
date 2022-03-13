@@ -32,11 +32,7 @@ class UpdateLocationModal extends CreateLocationModal {
         this.updateModalTitle("Update Performer");
         this.updateImageOnChange(img)
 
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        const _this = this;
-        Array.from(elements).forEach(function(element) {
-            element.addEventListener('change', _this.updateData.bind(_this) );
-        });
+        this.watchFieldsOnChange();
     }
 
     handleUpdateBtnClick(){

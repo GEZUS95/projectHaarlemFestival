@@ -58,16 +58,15 @@ class CreateRolesModal extends BaseModal {
 
         this._$perms = this.generateArrFromPerms(this._$perms);
 
-        window.addEventListener("modal-create-roles", (() => {
-            _this.renderContent();
+        window.addEventListener("modal-create-roles", this.initForm.bind(this));
+    }
 
-            _this.updateModalTitle("Create Role");
+    async initForm(){
+        this.renderContent();
 
-            const elements = _this.shadowRoot.querySelectorAll(".input");
-            Array.from(elements).forEach(function(element) {
-                element.addEventListener('change', _this.updateData.bind(_this) );
-            });
-        }));
+        this.updateModalTitle("Create Role");
+
+        this.watchFieldsOnChange();
     }
 
     handleCreateBtnClick(e){

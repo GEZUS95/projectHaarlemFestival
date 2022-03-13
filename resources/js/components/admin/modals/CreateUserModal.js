@@ -54,19 +54,17 @@ class CreateUsersModal extends BaseModal {
     }
 
     async connectedCallback(){
-        const _this = this;
         this._$roles = await this.queryGet(this._$roles_url);
 
-        window.addEventListener("modal-create-user", (() => {
-            _this.renderContent();
+        window.addEventListener("modal-create-user", this.initForm.bind(this));
+    }
 
-            _this.updateModalTitle("Create User");
+    async initForm(){
+        this.renderContent();
 
-            const elements = _this.shadowRoot.querySelectorAll(".input");
-            Array.from(elements).forEach(function(element) {
-                element.addEventListener('change', _this.updateData.bind(_this) );
-            });
-        }));
+        this.updateModalTitle("Create User");
+
+        this.watchFieldsOnChange();
     }
 
     handleCreateBtnClick(e){

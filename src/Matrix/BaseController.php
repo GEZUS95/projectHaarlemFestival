@@ -3,6 +3,7 @@ namespace Matrix;
 
 use eftec\bladeone\BladeOne;
 use Exception;
+use Matrix\Exception\DataIsNotCorrectlyValidated;
 use Matrix\Factory\ValidatorFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +48,7 @@ class BaseController
         );
 
         if ($validator->fails()) {
-            $this->json(json_encode(print_r($validator->errors())));
+            throw new DataIsNotCorrectlyValidated($validator->errors());
         }
     }
 }

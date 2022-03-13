@@ -14,7 +14,6 @@ class UpdatePerformerModal extends CreatePerformerModal {
     }
 
     connectedCallback(){
-        console.log("connected")
         window.addEventListener("modal-update-performer", this.initForm.bind(this));
     }
 
@@ -28,11 +27,7 @@ class UpdatePerformerModal extends CreatePerformerModal {
         this.updateModalTitle("Update Performer");
         this.updateImageOnChange(img)
 
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        const _this = this;
-        Array.from(elements).forEach(function(element) {
-            element.addEventListener('change', _this.updateData.bind(_this) );
-        });
+        this.watchFieldsOnChange();
     }
 
     handleUpdateBtnClick(){

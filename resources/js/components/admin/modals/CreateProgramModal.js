@@ -76,7 +76,6 @@ class CreateProgramModal extends BaseModal {
 
     handleCancelBtnClick() {
         super.handleCancelBtnClick();
-        console.log(this._$formData.start_time);
         window.dispatchEvent(new CustomEvent('force-refresh', {detail: this._$formData.start_time}))
     }
 

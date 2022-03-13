@@ -60,11 +60,7 @@ class UpdateRolesModal extends CreateRolesModal {
 
         this.updateModalTitle("Update User");
 
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        const _this = this;
-        Array.from(elements).forEach(function(element) {
-            element.addEventListener('change', _this.updateData.bind(_this) );
-        });
+        this.watchFieldsOnChange();
     }
 
     handleUpdateBtnClick(){

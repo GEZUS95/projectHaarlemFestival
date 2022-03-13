@@ -5,6 +5,7 @@ namespace App\Http\Controller\Admin;
 
 use App\Model\Event;
 use App\Model\Image;
+use App\Model\Location;
 use App\Model\Permissions;
 use App\Rules\TokenValidation;
 use Carbon\Carbon;
@@ -23,9 +24,6 @@ class AdminEventController extends BaseController
     public function index($title): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
-
-        $this->session->set("event_create_form_csrf_token",  bin2hex(random_bytes(24)));
-        $this->session->set("event_update_form_csrf_token",  bin2hex(random_bytes(24)));
 
         return $this->render('partials.admin.partials.event', ["event_title" => $title]);
     }
@@ -63,12 +61,23 @@ class AdminEventController extends BaseController
         GuardManager::guard(Permissions::__WRITE_EVENT_PAGE__);
 
         $data = $request->request->all();
+
         $rules = [
-            'token' => ['required', new TokenValidation("locations_create_form_csrf_token")],
+            'token' => ['required', new TokenValidation("event_create_form_csrf_token")],
+            'title' => ['required'],
+            'description' => ['required'],
+            'total_price_event' => ['required', 'integer'],
         ];
 
         $this->validate($data, $rules);
 
+        $event = Event::create([
+            'title' => $data["title"],
+            'description' => $data["description"],
+            'total_price_event' => $data["total_price_event"],
+        ]);
+
+        Image::uploadFile($_FILES["file"], $event);
 
         return $this->json(
             ["Success" => "Successfully added the location"]

@@ -71,7 +71,10 @@ $routes = [
     ["name" => "admin_users_paginator", "url" => "/admin/users/{page}/{amount}", "controller" => [new AdminUsersController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_event", "url" => "/admin/event/{title}", "controller" => [new AdminEventController(), 'index'], "method" => "GET"],
-    ["name" => "admin_event_edit", "url" => "/admin/event/{title}/edit", "controller" => [new AdminEventController(), 'edit'], "method" => "GET"],
+    ["name" => "admin_event_save", "url" => "/admin/event/create", "controller" => [new AdminEventController(), 'save'], "method" => "POST"],
+    ["name" => "admin_event_single", "url" => "/admin/event/update/{id}", "controller" => [new AdminEventController(), 'single'], "method" => "GET"],
+    ["name" => "admin_event_update", "url" => "/admin/event/update/{id}", "controller" => [new AdminEventController(), 'update'], "method" => "POST"],
+    ["name" => "admin_event_delete", "url" => "/admin/event/delete/{id}", "controller" => [new AdminEventController(), 'delete'], "method" => "POST"],
 
     ["name" => "admin_sessions", "url" => "/admin/restaurants", "controller" => [new AdminSessionController(), 'index'], "method" => "GET"],
     ["name" => "admin_restaurant_types", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantTypesController(), 'index'], "method" => "GET"],

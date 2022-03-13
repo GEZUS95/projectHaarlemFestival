@@ -76,10 +76,7 @@ class CreateLocationModal extends BaseModal {
         this.updateModalTitle("Create Location");
         this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', this.handleImageObjectUrl.bind(this));
 
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        Array.from(elements).forEach((element) => {
-            element.addEventListener('change', this.updateData.bind(this) );
-        });
+        this.watchFieldsOnChange();
     }
 
     handleCreateBtnClick(e){

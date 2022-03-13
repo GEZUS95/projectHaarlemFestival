@@ -382,6 +382,13 @@ class BaseModel extends BaseComponent {
         img.onload = () => URL.revokeObjectURL(img.src);
         img.src = URL.createObjectURL(el.files[0]);
     }
+
+    watchFieldsOnChange(){
+        const elements = this.shadowRoot.querySelectorAll(".input, .textarea-input");
+        Array.from(elements).forEach((element) => {
+            element.addEventListener('change', this.updateData.bind(this) );
+        });
+    }
 }
 
 export default BaseModel;

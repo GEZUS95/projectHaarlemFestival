@@ -58,14 +58,14 @@ class CreateEventModal extends BaseModal {
         this.updateModalTitle("Create Event");
         this.shadowRoot.querySelector('input[type="file"]').addEventListener('change', this.handleImageObjectUrl.bind(this));
 
-        const elements = this.shadowRoot.querySelectorAll(".input");
-        Array.from(elements).forEach((element) => {
-            element.addEventListener('change', this.updateData.bind(this) );
-        });
+        this.watchFieldsOnChange();
     }
 
     handleCreateBtnClick(e){
+        const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
+
         let formData = this.createFormData(this._$formData)
+        formData.append("file", image)
         formData.append("token", this._$token)
 
         this.sendRequestForPaginator(this._$url, this, formData);
