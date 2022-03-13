@@ -27,7 +27,7 @@ class AdminEventController extends BaseController
         $this->session->set("event_create_form_csrf_token",  bin2hex(random_bytes(24)));
         $this->session->set("event_update_form_csrf_token",  bin2hex(random_bytes(24)));
 
-        return $this->render('partials.admin.partials.events', ["event_title" => $title]);
+        return $this->render('partials.admin.partials.event', ["event_title" => $title]);
     }
 
     /**
