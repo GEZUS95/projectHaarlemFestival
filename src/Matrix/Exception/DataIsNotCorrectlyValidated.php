@@ -7,15 +7,14 @@ use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Throwable;
 
 /**
- * Throw this if the user is not logged in
- * thrown from the GuardManager::class && AuthManager::class
- * caught in the Framework::class
+ * Throw this if the data is not validated correctly
  */
 class DataIsNotCorrectlyValidated extends \RuntimeException implements ExceptionInterface {
 
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        //Make a nicer data validator! prob!
+        //@TODO Make a nicer data validator! prob! with a json response and read
+        //@TODO out the data so that the we can make an error class that can handle "errors and display them"
 
         parent::__construct($message, $code, $previous);
     }
