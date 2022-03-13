@@ -2,10 +2,21 @@ class SideNavigationEvents extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+
+        this._$event_link = null;
+        this._$url = null;
     }
-    initComponent(data) {
-        const _this = this;
-        const titles = data["titles"];
+
+    async connectedCallback(){
+        if(!this._$url)
+            return;
+
+        const res = await fetch(this._$url)
+        const events = await res.json()
+        this.initComponent(events)
+    }
+
+    initComponent(events) {
         this.shadowRoot.innerHTML = `
             <style>
                 .tab-container {
@@ -52,37 +63,37 @@ class SideNavigationEvents extends HTMLElement {
             </style>
 
             <div id="main">
-            ${titles.map((links) => {
-            return _this.getTabElement(links.title)
-        }).join('')}
+                ${events.map((event) => {
+                    return `
+                        <div class="tab-container">
+                            <a href="${this.queryUrlReplaceId(this._$event_link, event.id)}" class="tab-container-title">${event.title}</a>
+                            <div id="${event.id}" class="tab-container-edit">Edit</div>
+                        </div>`;
+                }).join('')}
             </div>
         `;
+
+        Array.from(this.shadowRoot.querySelectorAll(".tab-container-edit")).forEach(el => {
+            el.addEventListener("click", (e) => {
+                const element = e.path[0];
+                window.dispatchEvent(new CustomEvent("modal-update-event", {detail: element.id}))
+            })
+        })
     }
 
 
-    static get observedAttributes() { return ["titles"]; }
+    static get observedAttributes() { return ["url", "event_link"]; }
+    
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            const _this = this;
-
-            fetch(newValue)
-                .then(response => response.json())
-                .then((data) => {
-                    _this.initComponent(data);
-                })
+            this["_$"+ name] = newValue;
         }
     }
 
-
-    getTabElement(title){
-        const eventLink = window.location.protocol + "//" + window.location.host + "/admin/event/" + title;
-        const eventEditLink = window.location.protocol + "//" + window.location.host + "/admin/event/" + title + "/edit";
-        return `
-        <div class="tab-container">
-            <a href="${eventLink}" class="tab-container-title">${title}</a>
-            <a href="${eventEditLink}" class="tab-container-edit">Edit</a>
-        </div>
-        `;
+    queryUrlReplaceId(url, id){
+        url = url.replace('{', '');
+        url = url.replace('}', '');
+        return url.replace('id', id);
     }
 }
 

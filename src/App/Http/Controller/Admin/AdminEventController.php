@@ -18,14 +18,25 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminEventController extends BaseController
 {
 
+    public function index(): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
+
+        $events = Event::query()->get()->map->only(['title', 'id']);
+
+        return $this->json($events);
+    }
+
     /**
      * @throws Exception
      */
-    public function index($title): Response
+    public function show($id): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
 
-        return $this->render('partials.admin.partials.event', ["event_title" => $title]);
+        $event = Event::find($id);
+
+        return $this->render('partials.admin.partials.event', ["event_title" => $event->title]);
     }
 
     /**

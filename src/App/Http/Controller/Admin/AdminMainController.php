@@ -25,15 +25,6 @@ class AdminMainController extends BaseController
         return $this->render('partials.admin.index', []);
     }
 
-    public function getEventTitles(): Response
-    {
-        GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
-
-        $eventTitles = Event::query()->get()->map->only(['title']);
-
-        return $this->json(["titles" => $eventTitles]);
-    }
-
     /**
      * @throws Exception
      */
