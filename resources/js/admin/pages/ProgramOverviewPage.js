@@ -116,10 +116,10 @@ class ProgramOverviewPage extends BaseComponent {
                         <div class="sidenav-title-underline"></div>
                     </div>
                     <div class="sidenav-items">
-                        <div class="sidenav-items-item">Program item title</div>
-                        <div class="sidenav-items-item">Program item title</div>
-                        <div class="sidenav-items-item">Program item title</div>
-                        <div class="sidenav-items-item">Program item title</div>
+                        <div class="sidenav-items-item">Artist Name</div>
+                        <div class="sidenav-items-item">Artist Name</div>
+                        <div class="sidenav-items-item">Artist Name</div>
+                        <div class="sidenav-items-item">Artist Name</div>
                     </div>
                     <div class="sidenav-action">
                         <div class="sidenav-action-add">Add item</div>

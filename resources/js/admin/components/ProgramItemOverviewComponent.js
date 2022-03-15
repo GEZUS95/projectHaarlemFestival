@@ -20,7 +20,6 @@ class ProgramItemOverviewComponent extends BaseComponent {
             .time-container {
                 display: flex;
                 align-items: center;
-                min-width: 125px;
             }
             
             .time {
@@ -29,15 +28,13 @@ class ProgramItemOverviewComponent extends BaseComponent {
             }
             
             .time-hours {
-                font-size: 32px;
+                font-size: 20px;
                 font-weight: bold;
             }
             
             .time-minutes {
-                font-size: 16px;
+                font-size: 12px;
                 font-weight: bold;
-                margin-left: 5px;
-                margin-top: 5px;
             }
             
             .time-line {
@@ -49,23 +46,23 @@ class ProgramItemOverviewComponent extends BaseComponent {
             
             .artist {
                 background: #00A9F4;
-                padding-left: 10px;
+                padding: 8px;
                 box-sizing: border-box;
                 border-radius: 1px 1px 0 0;
                 width: 100%;
-                color: #035D86;
+                color: #fff;
                 font-weight: bold;
                 font-size: 20px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                border: #0E4966 2px solid;
             }
             
             .container-top {
                 margin-top: 10px;
                 display: flex;
                 flex-direction: row;
+                box-shadow: 0 0 5px 0 rgb(0, 0, 0, / 92%);
             }
             
             .container-bottom {
@@ -76,9 +73,9 @@ class ProgramItemOverviewComponent extends BaseComponent {
             }
             
             .head {
-                border-bottom: #7C2C4E 2px solid;
+                border-bottom: rgb(186 200 207) 2px solid;
                 padding: 5px;
-                background-color: #728B97;
+                background-color: #fff;
                 display: flex;
                 flex-direction: row;
             }
@@ -87,7 +84,7 @@ class ProgramItemOverviewComponent extends BaseComponent {
                 padding: 5px;
                 display: flex;
                 flex-direction: row;
-                background-color: #8BB0C1;
+                background-color: #fff;
             }
             
             .item-info {
