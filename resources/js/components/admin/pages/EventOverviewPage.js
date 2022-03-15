@@ -5,7 +5,7 @@ class EventOverviewPage extends HTMLElement {
 
         this._$date = this.getMonday(new Date())
         this._$url = null;
-        this._$eventId = null;
+        this._$event_id = null;
 
         window.addEventListener("schedule-next-week", (() => {
             this._$date = this.getMonday(new Date(new Date(this._$date).setDate(new Date(this._$date).getDate() + 7)))
@@ -161,10 +161,8 @@ class EventOverviewPage extends HTMLElement {
 
     initComponent(data) {
         if(data)
-            this._$eventId = data.id;
+            this._$event_id = data.id;
 
-        console.log(this._$eventId)
-        console.log(data)
         const schedule = this.getSchedule(data)
         let displayHours = [];
         for (let hours = 0; hours < 24; hours++) {
@@ -178,12 +176,13 @@ class EventOverviewPage extends HTMLElement {
                 <div class="schedule-days-title"></div>
                 <div class="schedule-hours-display">
                     ${displayHours.map((hours) => {
-                        return `<div class="schedule-hours-display-holder">
-                                    <div class="schedule-hours-display-holder-hours">${hours.toLocaleString('en-US', {
-                                        minimumIntegerDigits: 2,
-                                        useGrouping: false
-                                    })}</div>
-                                    <div class="schedule-hours-display-holder-minutes">00</div>
+                        return `
+                             <div class="schedule-hours-display-holder">
+                                <div class="schedule-hours-display-holder-hours">${hours.toLocaleString('en-US', {
+                                    minimumIntegerDigits: 2,
+                                    useGrouping: false
+                                })}</div>
+                                <div class="schedule-hours-display-holder-minutes">00</div>
                             </div>`
                     }).join('')}
                 </div>
@@ -293,7 +292,7 @@ class EventOverviewPage extends HTMLElement {
 
             const firstPlaced = this._$firstPlacedItemId;
             const lastPlaced = this._$lastPlacedItemId;
-            const eventId = this._$eventId;
+            const eventId = this._$event_id;
             setTimeout(() => {
                 let startTime = this.getMonday(new Date(this._$date));
 
@@ -338,10 +337,6 @@ class EventOverviewPage extends HTMLElement {
         const last = first + 6;
 
         return new Date(today.setDate(last));
-    }
-
-    disconnectedCallback() {
-
     }
 
     getSchedule(data) {
@@ -430,26 +425,27 @@ class EventOverviewPage extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ["link"];
+        return ["url", "event_id"];
     }
 
     fetchData() {
         const _this = this;
 
-        if (this._$date == null || this._$url == null)
-            return;
-
         let formData = new FormData();
         formData.append('date', this._$date);
 
         this.postFormData(this._$url, formData).then(data => {
-            _this.initComponent(JSON.parse(data["events"]));
+            _this.initComponent(data["events"]);
         });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            this._$url = newValue;
+            this["_$"+ name] = newValue;
+
+            if(this._$url == null)
+                return;
+
             this.fetchData();
         }
     }

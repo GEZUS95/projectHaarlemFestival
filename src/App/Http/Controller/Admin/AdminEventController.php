@@ -5,7 +5,6 @@ namespace App\Http\Controller\Admin;
 
 use App\Model\Event;
 use App\Model\Image;
-use App\Model\Location;
 use App\Model\Permissions;
 use App\Rules\TokenValidation;
 use Carbon\Carbon;
@@ -36,13 +35,13 @@ class AdminEventController extends BaseController
 
         $event = Event::find($id);
 
-        return $this->render('partials.admin.partials.event', ["event_title" => $event->title]);
+        return $this->render('partials.admin.partials.event', ["event" => $event]);
     }
 
     /**
      * @throws Exception
      */
-    public function overview(Request $request, $title): Response
+    public function overview(Request $request, $id): Response
     {
         GuardManager::guard(Permissions::__VIEW_CMS_EVENT_OVERVIEW_PAGE__);
 
@@ -53,7 +52,7 @@ class AdminEventController extends BaseController
         $endOfWeek = $parsedDate->copy()->endOfWeek()->format('Y-m-d H:i');
 
         $event = Event::query()
-            ->where("title", "=", $title)
+            ->where("id", "=", $id)
             ->whereRelation('programs', 'start_time', '>=', $startOfWeek)
             ->whereRelation('programs', 'end_time', '<=', $endOfWeek)
             ->with("programs.items")
@@ -61,7 +60,7 @@ class AdminEventController extends BaseController
             ->with("programs.items.performer")
             ->first();
 
-        return $this->json(["events" => json_encode($event)]);
+        return $this->json(["events" => $event, "start" => $startOfWeek, "end" => $endOfWeek]);
     }
 
     /**

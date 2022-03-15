@@ -45,10 +45,10 @@ class AdminProgramController extends BaseController
             'start_time' => $startTime,
             'end_time' => $endTime,
             'color' => $data["color"],
-            'event_id' => $event->id,
+            'event_id' => $data["event_id"],
         ]);
 
-        return $this->json(json_encode(["success" => "successfully created item!"]));
+        return $this->json(["success" => "successfully created item!"]);
     }
 
 }

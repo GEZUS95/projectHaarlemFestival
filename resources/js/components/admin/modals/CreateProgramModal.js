@@ -6,39 +6,18 @@ class CreateProgramModal extends BaseModal {
 
         this._$url = null;
         this._$formData = {
-            title: "Untitled",
+            title: '',
             total_price_program: '',
             start_time: null,
             end_time: null,
             color: '#ffffff',
             event_id: null,
         };
-
-        window.addEventListener("init-create-program-modal", ((e) => {
-            //parse it to current local date time for amsterdam! who doesnt love timezones and utc dates :D
-            let startTime = e.detail.startTime;
-            startTime.setTime(startTime.getTime() + (60*60*1000));
-            let endTime = e.detail.endTime;
-            endTime.setTime(endTime.getTime() + (60*60*1000));
-
-            this._$formData.start_time = startTime;
-            this._$formData.end_time = endTime;
-            this._$formData.event_id = e.detail.eventId;
-
-            this.renderContent()
-
-            const elements = this.shadowRoot.querySelectorAll(".input");
-            const this_ = this
-            Array.from(elements).forEach(function(element) {
-                element.addEventListener('change', this_.updateData.bind(this_) );
-            });
-        }));
     }
 
     style(){
         return `
         <style>
-        
         </style>
        `;
     }
@@ -71,7 +50,22 @@ class CreateProgramModal extends BaseModal {
     }
 
     connectedCallback(){
+        window.addEventListener("init-create-program-modal", this.initForm.bind(this));
+    }
 
+    async initForm(e){
+        let startTime = e.detail.startTime;
+        startTime.setTime(startTime.getTime() + (60*60*1000));
+        let endTime = e.detail.endTime;
+        endTime.setTime(endTime.getTime() + (60*60*1000));
+
+        this._$formData.start_time = startTime;
+        this._$formData.end_time = endTime;
+        this._$formData.event_id = e.detail.eventId;
+
+        this.renderContent();
+        this.updateModalTitle("Create Program");
+        this.watchFieldsOnChange();
     }
 
     handleCancelBtnClick() {
@@ -79,19 +73,15 @@ class CreateProgramModal extends BaseModal {
         window.dispatchEvent(new CustomEvent('force-refresh', {detail: this._$formData.start_time}))
     }
 
-    updateData(e){
-        this._$formData[e.path[0].name] = e.path[0].value;
-        this.updateModalTitle(this._$formData.title);
+    setDate(date){
+        let time = new Date(date)
+        time.setTime(time.getTime() - (60*60*1000));
+        return new Date(time).toUTCString();
     }
 
     handleCreateBtnClick(e){
-        let startTime = new Date(this._$formData.start_time)
-        startTime.setTime(startTime.getTime() - (60*60*1000));
-        this._$formData.start_time = new Date(startTime).toUTCString();
-
-        let endTime = new Date(this._$formData.end_time)
-        endTime.setTime(endTime.getTime() - (60*60*1000));
-        this._$formData.end_time = new Date(endTime).toUTCString();
+        this._$formData.start_time = this.setDate(this._$formData.start_time)
+        this._$formData.end_time = this.setDate(this._$formData.end_time)
 
         if(!this.formDataIsFilled(this._$formData))
             return;
@@ -99,10 +89,10 @@ class CreateProgramModal extends BaseModal {
         let formData = this.createFormData(this._$formData)
 
         this.query(this._$url, formData, "POST").then(data => {
-            if(data.Error){
+            if(data.Error)
                 return;
-            }
-            window.dispatchEvent(new CustomEvent('force-refresh', {detail: startTime}))
+
+            window.dispatchEvent(new CustomEvent('force-refresh', {detail: this._$formData.start_time}))
             super.closeForm();
         });
 

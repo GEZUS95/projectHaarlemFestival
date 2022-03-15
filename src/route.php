@@ -71,6 +71,7 @@ $routes = [
     ["name" => "admin_users_paginator", "url" => "/admin/users/{page}/{amount}", "controller" => [new AdminUsersController(), 'show'], "method" => "GET"],
 
     ["name" => "admin_event", "url" => "/admin/events", "controller" => [new AdminEventController(), "index"], "method" => "GET"],
+    ["name" => "admin_event_overview", "url" => "/admin/event/overview/{id}", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
     ["name" => "admin_event_show", "url" => "/admin/event/{id}", "controller" => [new AdminEventController(), 'show'], "method" => "GET"],
     ["name" => "admin_event_save", "url" => "/admin/event/create", "controller" => [new AdminEventController(), 'save'], "method" => "POST"],
     ["name" => "admin_event_single", "url" => "/admin/event/update/{id}", "controller" => [new AdminEventController(), 'single'], "method" => "GET"],
@@ -81,7 +82,6 @@ $routes = [
     ["name" => "admin_restaurant_types", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantTypesController(), 'index'], "method" => "GET"],
 
 
-    ["name" => "admin_event_overview", "url" => "/admin/event/{title}/json", "controller" => [new AdminEventController(), 'overview'], "method" => "POST"],
     ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
 
     // Test routes
