@@ -1,13 +1,16 @@
 @extends('partials.admin.layout.main')
 @section('content')
-    <event-sub-navigation title="{{$event->title}}"></event-sub-navigation>
+{{--    <event-sub-navigation title="{{$event->title}}"></event-sub-navigation>--}}
 
-    {{$event->id}}
+{{--    <event-overview-page--}}
+{{--            url="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_overview", ["id" => $event->id])}}"--}}
+{{--            event_id="{{$event->id}}"--}}
+{{--            style="overflow-y: scroll">--}}
+{{--    </event-overview-page>--}}
 
-    <event-overview-page
-            url="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_overview", ["id" => $event->id])}}"
-            event_id="{{$event->id}}"
-            style="overflow-y: scroll"></event-overview-page>
+    <program-overview-page>
+
+    </program-overview-page>
 
 {{--    @todo add token to create program form--}}
     <create-program-modal

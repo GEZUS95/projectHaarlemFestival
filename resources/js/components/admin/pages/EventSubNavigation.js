@@ -3,7 +3,6 @@ class EventSubNavigation extends HTMLElement {
         super();
         this.attachShadow({mode: "open"});
 
-        this._$currentTime = new Date()
         this._$root = null;
         this._$btn = null;
         this._$time = null;

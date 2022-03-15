@@ -435,6 +435,7 @@ class EventOverviewPage extends HTMLElement {
         formData.append('date', this._$date);
 
         this.postFormData(this._$url, formData).then(data => {
+            console.log(data)
             _this.initComponent(data["events"]);
         });
     }
