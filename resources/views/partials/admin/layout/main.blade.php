@@ -17,7 +17,7 @@
     <meta http-equiv="pragma" content="no-cache" />
 </head>
 <body>
-@include("partials.admin.layout.nav")
+<nav-bar></nav-bar>
 <main class="partials-admin-layout-main">
     @include("partials.admin.layout.sidenav")
     <div class="partials-admin-layout-main-content">

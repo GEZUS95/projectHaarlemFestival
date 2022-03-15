@@ -18,6 +18,7 @@ import UpdateUserModal from "./components/admin/modals/UpdateUserModal";
 import CreateEventModal from "./components/admin/modals/CreateEventModal";
 import initAddEventBtn from "./components/admin/scripts/HandleSideNavigation";
 import UpdateEventModal from "./components/admin/modals/UpdateEventModal";
+import Navbar from "./components/admin/layout/Navbar";
 
 /**
  * View Components
@@ -39,6 +40,7 @@ window.customElements.define('create-user-modal', CreateUsersModal);
 window.customElements.define('update-user-modal', UpdateUserModal);
 window.customElements.define('create-event-modal', CreateEventModal)
 window.customElements.define('update-event-modal', UpdateEventModal)
+window.customElements.define('nav-bar', Navbar)
 
 /**
  * Helper Components
