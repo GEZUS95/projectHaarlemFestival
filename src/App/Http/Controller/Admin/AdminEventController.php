@@ -102,8 +102,10 @@ class AdminEventController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_EVENT_PAGE__);
 
+        $event = Event::query()->where('id', '=', $id)->first();
+        $event["images"] = $event->images;
 
-        return $this->json(["location" => "test"]);
+        return $this->json(["event" => $event]);
     }
 
     /**
@@ -116,11 +118,20 @@ class AdminEventController extends BaseController
         $data = $request->request->all();
         $rules = [
             'token' => ['required', new TokenValidation("locations_update_form_csrf_token")],
+            'title' => ['required'],
+            'description' => ['required'],
+            'total_price_event' => ['required', 'integer'],
         ];
 
         $this->validate($data, $rules);
 
-//        Image::updateFiles($_FILES["file"], $model);
+        $event = Event::findOrFail($id)->update([
+            'title' => $data["title"],
+            'description' => $data["description"],
+            'total_price_event' => $data["total_price_event"],
+        ]);
+
+        Image::updateFiles($_FILES["file"], $event);
 
         return $this->json(
             ["Success" => "Successfully updated the location"]

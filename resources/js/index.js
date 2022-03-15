@@ -1,11 +1,11 @@
 // import _ from 'lodash';
 import SideNavigationLink from "./components/admin/SideNavigationLink";
 import SideNavigationEvents from "./components/admin/SideNavigationEvents";
-import EventSubNavigation from "./components/admin/EventSubNavigation";
-import EventOverviewPage from "./components/admin/EventOverviewPage";
+import EventSubNavigation from "./components/admin/pages/EventSubNavigation";
+import EventOverviewPage from "./components/admin/pages/EventOverviewPage";
 import CreateProgramModal from "./components/admin/modals/CreateProgramModal";
-import PaginatorComponent from "./components/admin/PaginatorComponent";
-import SubNavigation from "./components/admin/SubNavigation";
+import PaginatorComponent from "./components/admin/pages/PaginatorComponent";
+import SubNavigation from "./components/admin/pages/SubNavigation";
 import CreateLocationModal from "./components/admin/modals/CreateLocationModal";
 import UpdateLocationModal from "./components/admin/modals/UpdateLocationModal";
 import CreatePerformerModal from "./components/admin/modals/CreatePerformerModal";
@@ -17,6 +17,7 @@ import CreateUsersModal from "./components/admin/modals/CreateUserModal";
 import UpdateUserModal from "./components/admin/modals/UpdateUserModal";
 import CreateEventModal from "./components/admin/modals/CreateEventModal";
 import initAddEventBtn from "./components/admin/scripts/HandleSideNavigation";
+import UpdateEventModal from "./components/admin/modals/UpdateEventModal";
 
 /**
  * View Components
@@ -37,6 +38,7 @@ window.customElements.define('update-role-modal', UpdateRolesModal);
 window.customElements.define('create-user-modal', CreateUsersModal);
 window.customElements.define('update-user-modal', UpdateUserModal);
 window.customElements.define('create-event-modal', CreateEventModal)
+window.customElements.define('update-event-modal', UpdateEventModal)
 
 /**
  * Helper Components
