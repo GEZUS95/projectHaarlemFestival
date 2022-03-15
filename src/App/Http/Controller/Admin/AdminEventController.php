@@ -47,20 +47,23 @@ class AdminEventController extends BaseController
 
         $data = $request->request->all();
 
+        //@todo carbon doesnt look at second week now but gets correct query
+
         $parsedDate = Carbon::parse(strtotime($data["date"]));
         $startOfWeek = $parsedDate->format('Y-m-d H:i');
         $endOfWeek = $parsedDate->copy()->endOfWeek()->format('Y-m-d H:i');
 
         $event = Event::query()
             ->where("id", "=", $id)
-            ->whereRelation('programs', 'start_time', '>=', $startOfWeek)
-            ->whereRelation('programs', 'end_time', '<=', $endOfWeek)
-            ->with("programs.items")
-            ->with("programs.items.location")
-            ->with("programs.items.performer")
-            ->first();
+            ->with(['programs' => function ($query) use ($endOfWeek, $startOfWeek) {
+                $query->where('start_time', '>=', $startOfWeek);
+                $query->where('end_time', '<=', $endOfWeek);
+                $query->with("items");
+                $query->with("items.location");
+                $query->with("items.performer");
+            }])->first();
 
-        return $this->json(["events" => $event, "start" => $startOfWeek, "end" => $endOfWeek]);
+        return $this->json(["events" => $event, "start" => $startOfWeek, "end" => $endOfWeek, "date" =>$data["date"]]);
     }
 
     /**
