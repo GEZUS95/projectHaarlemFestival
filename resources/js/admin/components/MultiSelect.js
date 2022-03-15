@@ -18,8 +18,7 @@ class MultiSelect extends HTMLElement {
                     box-sizing: border-box;
                     background-color: #BAC8CF;
                     width: 100%;
-                    border-width: 2px;
-                    border-style: inset;
+                    border-width: 2px;                    border-style: inset;
                     border-color: rgb(118, 118, 118);
                     min-height: 40px;
                 }

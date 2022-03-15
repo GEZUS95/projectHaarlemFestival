@@ -11,7 +11,7 @@ import UpdateLocationModal from "./admin/modals/UpdateLocationModal";
 import CreatePerformerModal from "./admin/modals/CreatePerformerModal";
 import UpdatePerformerModal from "./admin/modals/UpdatePerformerModal";
 import CreateRolesModal from "./admin/modals/CreateRolesModal";
-import MultiSelect from "./admin/helpers/MultiSelect";
+import MultiSelect from "./admin/components/MultiSelect";
 import UpdateRolesModal from "./admin/modals/UpdateRolesModal";
 import CreateUsersModal from "./admin/modals/CreateUserModal";
 import UpdateUserModal from "./admin/modals/UpdateUserModal";
@@ -20,6 +20,7 @@ import initAddEventBtn from "./admin/scripts/HandleSideNavigation";
 import UpdateEventModal from "./admin/modals/UpdateEventModal";
 import Navbar from "./admin/layout/Navbar";
 import ProgramOverviewPage from "./admin/pages/ProgramOverviewPage";
+import ProgramItemOverviewComponent from "./admin/components/ProgramItemOverviewComponent";
 
 /**
  * View Components
@@ -43,6 +44,7 @@ window.customElements.define('create-event-modal', CreateEventModal)
 window.customElements.define('update-event-modal', UpdateEventModal)
 window.customElements.define('nav-bar', Navbar)
 window.customElements.define('program-overview-page', ProgramOverviewPage)
+window.customElements.define('program-item-overview-component', ProgramItemOverviewComponent)
 
 /**
  * Helper Components

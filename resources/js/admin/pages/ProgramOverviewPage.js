@@ -139,8 +139,26 @@ class ProgramOverviewPage extends BaseComponent {
                         
                     </div>
                     
-                    <div>more program item info!</div>
-                    <div>program end time</div>
+                    <program-item-overview-component
+                        start_time="${new Date()}"
+                        end_time="${new Date()}"
+                        artist="Artist Name"
+                        location="Patronaat"
+                        seats="200"
+                        price="90"
+                        special_guest="Special Guest"
+                    ></program-item-overview-component>
+                    
+                    <program-item-overview-component
+                        start_time="${new Date()}"
+                        end_time="${new Date()}"
+                        artist="Artist Name"
+                        location="Patronaat"
+                        seats="200"
+                        price="90"
+                        special_guest="Special Guest"
+                    ></program-item-overview-component>
+                   
                 </div>
             </div>
         `
