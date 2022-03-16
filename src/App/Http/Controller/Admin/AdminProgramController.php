@@ -51,4 +51,17 @@ class AdminProgramController extends BaseController
         return $this->json(["success" => "successfully created item!"]);
     }
 
+    public function show($id): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_CMS_PROGRAM_OVERVIEW_PAGE__);
+
+        $program = Program::query()
+            ->where("id", "=", $id)
+            ->with("items")
+            ->with("items.location")
+            ->with("items.performer")
+            ->first();
+
+        return $this->json($program);
+    }
 }

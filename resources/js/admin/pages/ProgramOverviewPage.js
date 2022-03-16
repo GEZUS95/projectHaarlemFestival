@@ -105,21 +105,23 @@ class ProgramOverviewPage extends BaseComponent {
        `;
     }
 
-    content(){
+    content(program){
+        if(program === null)
+            return;
+
         this.shadowRoot.innerHTML =`
             ${this.style()}
             <admin-sub-navigation title="Program"></admin-sub-navigation>
             <div class="container">
                 <div class="sidenav">
                     <div class="sidenav-title-holder">
-                        <div class="sidenav-title">Program Name</div>
+                        <div class="sidenav-title">${program.title}</div>
                         <div class="sidenav-title-underline"></div>
                     </div>
                     <div class="sidenav-items">
-                        <div class="sidenav-items-item">Artist Name</div>
-                        <div class="sidenav-items-item">Artist Name</div>
-                        <div class="sidenav-items-item">Artist Name</div>
-                        <div class="sidenav-items-item">Artist Name</div>
+                        ${program.items.map((item) => {
+                            return `<div class="sidenav-items-item">${item["performer"].name}</div>`;
+                        }).join('')}
                     </div>
                     <div class="sidenav-action">
                         <div class="sidenav-action-add">Add item</div>
@@ -130,7 +132,7 @@ class ProgramOverviewPage extends BaseComponent {
                     <div class="program-item-extra-time">
                         <div class="program-item-extra-time-title-container">
                             <div class="program-item-extra-time-title">Program start time</div>
-                            <div class="program-item-extra-time-sub-title"> - 29-Jul Friday 2021</div>
+                            <div class="program-item-extra-time-sub-title"> - ${new Date(program.start_time).toDateString()}</div>
                         </div>
                         <div class="program-item-extra-time-underline"></div>
                     </div>
@@ -139,41 +141,34 @@ class ProgramOverviewPage extends BaseComponent {
                         
                     </div>
                     
-                    <program-item-overview-component
-                        start_time="${new Date()}"
-                        end_time="${new Date()}"
-                        artist="Artist Name"
-                        location="Patronaat"
-                        seats="200"
-                        price="90"
-                        special_guest="Special Guest"
-                    ></program-item-overview-component>
-                    
-                    <program-item-overview-component
-                        start_time="${new Date()}"
-                        end_time="${new Date()}"
-                        artist="Artist Name"
-                        location="Patronaat"
-                        seats="200"
-                        price="90"
-                        special_guest="Special Guest"
-                    ></program-item-overview-component>
-                   
+                    ${program.items.map((item) => {
+                        return `
+                            <program-item-overview-component
+                                start_time="${item.start_time}"
+                                end_time="${item.end_time}"
+                                artist="${item["performer"].name}"
+                                location="${item["location"].name}"
+                                seats="${item["location"].seats}"
+                                price="${item["price"]}"
+                                special_guest="${item["special_guest_id"] !== null ? item["special_guest"].name : "no special guest"}"
+                            ></program-item-overview-component>`;
+                        }).join('')}      
                 </div>
             </div>
         `
     }
 
-    connectedCallback(){
-        this.content();
+    async connectedCallback(){
+        await this.initForm();
         console.log("test");
         // window.addEventListener("modal-update-overview", this.initForm.bind(this));
     }
 
-    initForm(){
-        this.content();
+    async initForm(){
+        const res = await this.queryGet("http://127.0.0.1:4321/admin/program/1")
 
-
+        this.content(res);
+        console.log(res);
     }
 
     static get observedAttributes() {

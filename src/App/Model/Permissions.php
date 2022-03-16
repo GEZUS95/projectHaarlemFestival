@@ -25,6 +25,7 @@ class Permissions {
     public const __VIEW_CMS_ROLES_OVERVIEW_PAGE__ = 'view_cms_roles_overview_page';
     public const __VIEW_CMS_USERS_OVERVIEW_PAGE__ = 'view_cms_users_overview_page';
     public const __VIEW_CMS_EVENT_OVERVIEW_PAGE__ = 'view_cms_event_overview_page';
+    public const __VIEW_CMS_PROGRAM_OVERVIEW_PAGE__ = 'view_cms_program_overview_page';
 
     public const __VIEW_CMS_VIEW_EVENT_PAGE__ = 'view_cms_view_event_page';
 

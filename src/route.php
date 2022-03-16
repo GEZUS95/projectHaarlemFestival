@@ -81,8 +81,8 @@ $routes = [
     ["name" => "admin_sessions", "url" => "/admin/restaurants", "controller" => [new AdminSessionController(), 'index'], "method" => "GET"],
     ["name" => "admin_restaurant_types", "url" => "/admin/restaurants", "controller" => [new AdminRestaurantTypesController(), 'index'], "method" => "GET"],
 
-
     ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
+    ["name" => "admin_program_show", "url" => "/admin/program/{id}", "controller" => [new AdminProgramController(), 'show'], "method" => "GET"],
 
     // Test routes
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
