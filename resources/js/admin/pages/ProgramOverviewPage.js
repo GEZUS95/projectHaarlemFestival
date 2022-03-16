@@ -155,7 +155,13 @@ class ProgramOverviewPage extends BaseComponent {
                         }).join('')}      
                 </div>
             </div>
+            
+            <create-item-modal></create-item-modal>
         `
+        this.shadowRoot.querySelector(".sidenav-action-add").addEventListener("click", () => {
+            window.dispatchEvent(new CustomEvent('modal-create-item', {detail: program.id}))
+        })
+
     }
 
     async connectedCallback(){

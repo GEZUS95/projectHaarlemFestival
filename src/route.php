@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controller\Admin\AdminEventController;
+use App\Http\Controller\Admin\AdminItemController;
 use App\Http\Controller\Admin\AdminLocationsController;
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
@@ -83,6 +84,10 @@ $routes = [
 
     ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
     ["name" => "admin_program_show", "url" => "/admin/program/{id}", "controller" => [new AdminProgramController(), 'show'], "method" => "GET"],
+
+    ["name" => "admin_item_locations", "url" => "/admin/item/locations", "controller" => [new AdminItemController(), 'locations'], "method" => "GET"],
+    ["name" => "admin_item_performers", "url" => "/admin/item/performers", "controller" => [new AdminItemController(), 'performers'], "method" => "GET"],
+    ["name" => "admin_item_save", "url" => "/admin/item/save", "controller" => [new AdminItemController(), 'save'], "method" => "GET"],
 
     // Test routes
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],

@@ -21,6 +21,7 @@ import UpdateEventModal from "./admin/modals/UpdateEventModal";
 import Navbar from "./admin/layout/Navbar";
 import ProgramOverviewPage from "./admin/pages/ProgramOverviewPage";
 import ProgramItemOverviewComponent from "./admin/components/ProgramItemOverviewComponent";
+import CreateItemModal from "./admin/modals/CreateItemModal";
 
 /**
  * View Components
@@ -45,6 +46,7 @@ window.customElements.define('update-event-modal', UpdateEventModal)
 window.customElements.define('nav-bar', Navbar)
 window.customElements.define('program-overview-page', ProgramOverviewPage)
 window.customElements.define('program-item-overview-component', ProgramItemOverviewComponent)
+window.customElements.define('create-item-modal', CreateItemModal)
 
 /**
  * Helper Components

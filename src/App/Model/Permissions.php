@@ -48,4 +48,7 @@ class Permissions {
 
     public const __VIEW_EVENT_PAGE__ = 'view_event_page';
     public const __WRITE_EVENT_PAGE__ = 'write_event_page';
+
+    public const __VIEW_ITEM_PAGE__ = 'view_item_page';
+    public const __WRITE_ITEM_PAGE__ = 'write_item_page';
 }

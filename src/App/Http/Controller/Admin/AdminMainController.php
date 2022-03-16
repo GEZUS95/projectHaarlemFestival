@@ -41,6 +41,7 @@ class AdminMainController extends BaseController
             'roles_update_form_csrf_token',
             'users_create_form_csrf_token',
             'users_update_form_csrf_token',
+            'validate_form_token'
         ];
 
         foreach ($tokens as $token) {
