@@ -84,6 +84,9 @@ $routes = [
 
     ["name" => "admin_program_create", "url" => "/admin/program/create", "controller" => [new AdminProgramController(), 'create'], "method" => "POST"],
     ["name" => "admin_program_show", "url" => "/admin/program/{id}", "controller" => [new AdminProgramController(), 'show'], "method" => "GET"],
+    ["name" => "admin_program_single", "url" => "/admin/program/single/{id}", "controller" => [new AdminProgramController(), 'single'], "method" => "GET"],
+    ["name" => "admin_program_update", "url" => "/admin/program/update/{id}", "controller" => [new AdminProgramController(), 'update'], "method" => "POST"],
+    ["name" => "admin_program_delete", "url" => "/admin/program/delete/{id}", "controller" => [new AdminProgramController(), 'delete'], "method" => "POST"],
 
     ["name" => "admin_item_locations", "url" => "/admin/item/locations", "controller" => [new AdminItemController(), 'locations'], "method" => "GET"],
     ["name" => "admin_item_performers", "url" => "/admin/item/performers", "controller" => [new AdminItemController(), 'performers'], "method" => "GET"],

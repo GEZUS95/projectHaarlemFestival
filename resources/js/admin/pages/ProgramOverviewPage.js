@@ -137,10 +137,6 @@ class ProgramOverviewPage extends BaseComponent {
                         <div class="program-item-extra-time-underline"></div>
                     </div>
                     
-                    <div class="">
-                        
-                    </div>
-                    
                     ${program.items.map((item) => {
                         return `
                             <program-item-overview-component
