@@ -29,23 +29,23 @@ class CreateItemModal extends BaseModal {
             <div class="form">
                 <div class="form-control">
                     <label class="label" for="start_time">Start Time:</label>
-                    <input class="input" type="datetime-local" name="start_time">
+                    <input class="input" id="start_time" type="datetime-local" name="start_time">
                 </div>
                 
                 <div class="form-control">
                     <label class="label" for="end_time">End Time:</label>
-                    <input class="input" type="datetime-local" name="end_time">
+                    <input class="input" id="end_time" type="datetime-local" name="end_time">
                 </div>
                 
                 <div class="form-control">
                     <label class="label" for="price">Price:</label>
-                    <input class="input" name="price">
+                    <input class="input" id="price" name="price">
                 </div>
                 
                 <div class="form-control">
                     <label class="label">Performer:</label>
                     <select class="input" name="performers" id="performers">
-                        <option value="null">Select Performer</option>
+                        <option value="">Select Performer</option>
                         ${this._$performers.map((performer) => {
                             return `<option value="${performer.id}">${performer.name}</option>`;
                         }).join('')}
@@ -55,7 +55,7 @@ class CreateItemModal extends BaseModal {
                 <div class="form-control">
                     <label class="label">Special Guest:</label>
                     <select class="input" name="special_guest" id="special_guest">
-                        <option value="null">Select Special Guest</option>
+                        <option value="">Select Special Guest</option>
                         ${this._$performers.map((performer) => {
                             return `<option value="${performer.id}">${performer.name}</option>`;
                         }).join('')}
@@ -65,7 +65,7 @@ class CreateItemModal extends BaseModal {
                 <div class="form-control">
                     <label class="label">Location:</label>
                     <select class="input" name="locations" id="locations">
-                        <option value="null">Select Location</option>
+                        <option value="">Select Location</option>
                         ${this._$locations.map((location) => {
                             return `<option value="${location.id}">${location.name}</option>`;
                          }).join('')}
@@ -85,26 +85,47 @@ class CreateItemModal extends BaseModal {
     async initForm(e){
         this.renderContent();
 
-        this._$program_id = e.detail.id
-
+        this._$program_id = e.detail;
         this.updateModalTitle("Create Program Item");
 
         this.watchFieldsOnChange();
+    }
+
+    setDate(date){
+        console.log(date);
+        let time = new Date(date)
+        time.setTime(time.getTime() - (60*60*1000));
+        return new Date(time).toUTCString();
     }
 
     handleCreateBtnClick(e){
         const performers = this.shadowRoot.querySelector("#performers");
         const special_guest = this.shadowRoot.querySelector("#special_guest");
         const locations = this.shadowRoot.querySelector("#locations");
+        const start_time = this.shadowRoot.querySelector("#start_time");
+        const end_time = this.shadowRoot.querySelector("#end_time");
+        const price = this.shadowRoot.querySelector("#price");
 
-        let formData = this.createFormData(this._$formData)
-        formData.append("token", this._$crsfToken);
-        formData.append("performers", performers.value);
-        formData.append("special_guest", special_guest.value);
-        formData.append("locations", locations.value);
+        let formData = new FormData();
+        formData.append("start_time", this.setDate(start_time.value));
+        formData.append("end_time", this.setDate(end_time.value));
+        formData.append("price", price.value);
+        formData.append("token", this.getToken());
+        formData.append("performer_id", performers.value);
+        formData.append("special_guest_id", special_guest.value);
+        formData.append("location_id", locations.value);
         formData.append("program_id", this._$program_id)
 
-        this.sendRequestForPaginator(this.baseURL + "/admin/item/save", this, formData);
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                // this._$formData = this.clearFormData(this._$formData)
+                // this.closeForm();
+            }
+        }
+
+        xhr.open('POST', this.baseURL + "/admin/item/save", true);
+        xhr.send(formData);
     }
 
     static get observedAttributes() {

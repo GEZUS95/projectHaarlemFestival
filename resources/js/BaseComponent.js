@@ -4,7 +4,10 @@ class BaseComponent extends HTMLElement {
         this.attachShadow({mode: "open"});
 
         this.baseURL = window.location.origin;
-        this._$crsfToken = document.querySelector('meta[property~="csrf-token"]')?.content;
+    }
+
+    getToken(){
+        return window["csrfToken"];
     }
 
     async query(url = '', data, method = "POST") {

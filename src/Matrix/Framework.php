@@ -47,7 +47,7 @@ class Framework
             var_dump($exception);
             return new RedirectResponse('/login', 303);
         } catch (DataIsNotCorrectlyValidated $exception) {
-            return new Response($exception, 500);
+            return new Response("LOL");
         } catch (\Exception $exception) {
             var_dump($exception);
             return new Response('An error occurred', 500);

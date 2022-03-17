@@ -87,7 +87,7 @@ $routes = [
 
     ["name" => "admin_item_locations", "url" => "/admin/item/locations", "controller" => [new AdminItemController(), 'locations'], "method" => "GET"],
     ["name" => "admin_item_performers", "url" => "/admin/item/performers", "controller" => [new AdminItemController(), 'performers'], "method" => "GET"],
-    ["name" => "admin_item_save", "url" => "/admin/item/save", "controller" => [new AdminItemController(), 'save'], "method" => "GET"],
+    ["name" => "admin_item_save", "url" => "/admin/item/save", "controller" => [new AdminItemController(), 'save'], "method" => "POST"],
 
     // Test routes
     ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
