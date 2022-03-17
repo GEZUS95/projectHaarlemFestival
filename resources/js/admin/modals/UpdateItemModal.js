@@ -43,6 +43,7 @@ class UpdateItemModal extends CreateItemModal {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
+                window.dispatchEvent(new CustomEvent('refresh-program-overview', {detail: this._$program_id}))
                 this.clearFormData();
                 this.closeForm();
             }
@@ -56,6 +57,7 @@ class UpdateItemModal extends CreateItemModal {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
+                window.dispatchEvent(new CustomEvent('refresh-program-overview', {detail: this._$program_id}))
                 this.clearFormData();
                 this.closeForm();
             }

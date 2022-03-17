@@ -131,6 +131,7 @@ class CreateItemModal extends BaseModal {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
+                window.dispatchEvent(new CustomEvent('refresh-program-overview', {detail: this._$program_id}))
                 this.resetFormData();
                 this.closeForm();
             }

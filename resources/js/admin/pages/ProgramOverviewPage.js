@@ -180,16 +180,20 @@ class ProgramOverviewPage extends BaseComponent {
     }
 
     async connectedCallback(){
-        await this.initForm();
-        console.log("test");
-        // window.addEventListener("modal-update-overview", this.initForm.bind(this));
+        await this.test();
+        window.addEventListener("refresh-program-overview", this.initForm.bind(this));
     }
 
-    async initForm(){
+    async test(){
         const res = await this.queryGet("http://127.0.0.1:4321/admin/program/1")
 
         this.content(res);
-        console.log(res);
+    }
+
+    async initForm(e){
+        const res = await this.queryGet("http://127.0.0.1:4321/admin/program/" + e.detail)
+
+        this.content(res);
     }
 
     static get observedAttributes() {
