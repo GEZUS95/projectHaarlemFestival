@@ -26,7 +26,7 @@
     </div>
     <div class="contact-us">
         <h1 class="footer-header">CONTACT US</h1>
-        <form class="footer-contact-form" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("home_post")}}" method="post">
+        <form class="footer-contact-form" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("contact")}}" method="post">
             <input type="text" name="footer-name" id="footer-name" required placeholder="Name">
             <input type="email" name="footer-email" id="footer-email" required placeholder="Email">
             <input type="text" name="footer-message" id="footer-message" required placeholder="Message">

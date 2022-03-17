@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controller\Admin\AdminEventController;
+use App\Http\Controller\Admin\AdminItemController;
 use App\Http\Controller\Admin\AdminLocationsController;
 use App\Http\Controller\Admin\AdminMainController;
 use App\Http\Controller\Admin\AdminPerformerController;
