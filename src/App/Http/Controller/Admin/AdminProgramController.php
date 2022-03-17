@@ -7,6 +7,7 @@ use App\Model\Permissions;
 use App\Model\Program;
 use App\Rules\ColorValidation;
 use App\Rules\EventExistValidation;
+use App\Rules\TokenValidation;
 use Carbon\Carbon;
 use Exception;
 use Matrix\BaseController;
@@ -63,5 +64,38 @@ class AdminProgramController extends BaseController
             ->first();
 
         return $this->json($program);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function single(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__VIEW_ROLES_PAGE__);
+
+
+        return $this->json("test");
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__WRITE_ROLES_PAGE__);
+
+
+        return $this->json(["Success" => "Successfully updated the role"]);
+    }
+
+    public function delete(Request $request, $id): Response
+    {
+        GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
+
+        Program::findOrFail($id)->delete();
+
+        return $this->json(
+            ["Success" => "Successfully deleted the location"]
+        );
     }
 }
