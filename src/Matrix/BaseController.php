@@ -14,6 +14,7 @@ class BaseController
 {
     private BladeOne $blade;
     protected SessionManager $session;
+    protected array $rules;
 
     function __construct() {
         $this->blade = new BladeOne(dirname(__DIR__, 2) . "/resources/views",dirname(__DIR__, 2) . "/public/views",BladeOne::MODE_DEBUG);

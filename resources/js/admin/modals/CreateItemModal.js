@@ -92,13 +92,10 @@ class CreateItemModal extends BaseModal {
     }
 
     setDate(date){
-        console.log(date);
-        let time = new Date(date)
-        time.setTime(time.getTime() - (60*60*1000));
-        return new Date(time).toUTCString();
+        return new Date(date).toUTCString();
     }
 
-    handleCreateBtnClick(e){
+    returnFormData(){
         const performers = this.shadowRoot.querySelector("#performers");
         const special_guest = this.shadowRoot.querySelector("#special_guest");
         const locations = this.shadowRoot.querySelector("#locations");
@@ -116,11 +113,25 @@ class CreateItemModal extends BaseModal {
         formData.append("location_id", locations.value);
         formData.append("program_id", this._$program_id)
 
+        return formData
+    }
+
+    resetFormData(){
+        this.shadowRoot.querySelector("#performers").value = null;
+        this.shadowRoot.querySelector("#special_guest").value = null;
+        this.shadowRoot.querySelector("#locations").value = null;
+        this.shadowRoot.querySelector("#start_time").value = null;
+        this.shadowRoot.querySelector("#end_time").value = null;
+        this.shadowRoot.querySelector("#price").value = null;
+    }
+
+    handleCreateBtnClick(e){
+        const formData = this.returnFormData()
+
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                // this._$formData = this.clearFormData(this._$formData)
-                // this.closeForm();
+                this.resetFormData();
             }
         }
 

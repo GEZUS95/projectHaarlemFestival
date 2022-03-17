@@ -120,7 +120,7 @@ class ProgramOverviewPage extends BaseComponent {
                     </div>
                     <div class="sidenav-items">
                         ${program.items.map((item) => {
-                            return `<div class="sidenav-items-item">${item["performer"].name}</div>`;
+                            return `<div class="sidenav-items-item" id="${item.id}">${item["performer"].name}</div>`;
                         }).join('')}
                     </div>
                     <div class="sidenav-action">
@@ -157,7 +157,10 @@ class ProgramOverviewPage extends BaseComponent {
             </div>
             
             <create-item-modal></create-item-modal>
-        `
+            
+            <update-item-modal></update-item-modal>
+        `;
+
         this.shadowRoot.querySelector(".sidenav-action-add").addEventListener("click", () => {
             window.dispatchEvent(new CustomEvent('modal-create-item', {detail: program.id}))
         })
