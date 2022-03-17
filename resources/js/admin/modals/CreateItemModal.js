@@ -95,7 +95,7 @@ class CreateItemModal extends BaseModal {
         return new Date(date).toUTCString();
     }
 
-    returnFormData(){
+    getFormData(){
         const performers = this.shadowRoot.querySelector("#performers");
         const special_guest = this.shadowRoot.querySelector("#special_guest");
         const locations = this.shadowRoot.querySelector("#locations");
@@ -126,12 +126,13 @@ class CreateItemModal extends BaseModal {
     }
 
     handleCreateBtnClick(e){
-        const formData = this.returnFormData()
+        const formData = this.getFormData()
 
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 this.resetFormData();
+                this.closeForm();
             }
         }
 

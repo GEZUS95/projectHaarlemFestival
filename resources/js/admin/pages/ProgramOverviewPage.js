@@ -163,7 +163,19 @@ class ProgramOverviewPage extends BaseComponent {
 
         this.shadowRoot.querySelector(".sidenav-action-add").addEventListener("click", () => {
             window.dispatchEvent(new CustomEvent('modal-create-item', {detail: program.id}))
-        })
+        });
+
+        const elements = this.shadowRoot.querySelectorAll(".sidenav-items-item");
+        Array.from(elements).forEach((element) => {
+            element.addEventListener('click', (e) =>
+                window.dispatchEvent(new CustomEvent('modal-update-item',{
+                    detail: {
+                        item_id: e.path[0].id,
+                        program_id: program.id
+                    }}
+                ))
+            );
+        });
 
     }
 

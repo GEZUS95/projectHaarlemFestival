@@ -106,7 +106,6 @@ class AdminItemController extends BaseController
         $endTime = Carbon::parse($data["end_time"])->addHour();
 
         Item::findOrFail($id)->update([
-            'program_id' => $data["program_id"],
             'location_id' => $data["location_id"],
             'performer_id' => $data["performer_id"],
             'special_guest_id' => isset($data["special_guest_id"]) ? null : $data["special_guest_id"],
