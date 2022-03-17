@@ -5,6 +5,7 @@ namespace App\Model;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\DB;
 
 class Image extends Model {
 
@@ -56,7 +57,6 @@ class Image extends Model {
         if(!move_uploaded_file( $file['tmp_name'], $uploadFolder ))
             return false;
 
-        var_dump($name, $oldName, $uploadFolder);
         unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $oldName);
 
         Image::query()->where('file_location', '=', $oldName)->update([
@@ -66,8 +66,15 @@ class Image extends Model {
         return true;
     }
 
+    /**
+     * Clean up hole database with pivot keys
+     * @param $fileName
+     */
     public static function deleteFile($fileName){
-
+        unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $fileName);
+        $image = Image::query()->where('file_location', '=', $fileName);
+        DB::table("image_ables")->where("image_id", "=", $image->id)->delete();
+        $image->delete();
     }
 
     /**

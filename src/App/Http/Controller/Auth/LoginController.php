@@ -2,6 +2,8 @@
 
 namespace  App\Http\Controller\Auth;
 
+use App\Rules\EventExistValidation;
+use App\Rules\TokenValidation;
 use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
@@ -25,24 +27,13 @@ class LoginController extends BaseController {
     public function login(Request $request)
     {
         $data = $request->request->all();
-        $this->session = SessionManager::getSessionManager();
+        $rules = [
+            'token' => ['required', new TokenValidation("login_form_csrf_token")],
+            'email' => ['required', 'email'],
+            'password' => 'required',
+        ];
 
-        if($data["token"] != $this->session->get("login_form_csrf_token"))
-            return new Response('Unauthorized', 403);
-
-        $validator = (new ValidatorFactory())->make(
-            $data,
-            [
-                'token' => 'required',
-                'email' => 'required',
-                'password' => 'required',
-            ]
-        );
-
-        if ($validator->fails()) {
-            $referer = $request->headers->get('referer');
-            return $this->Redirect($referer);
-        }
+        $this->validate($data, $rules);
 
         if(!AuthManager::login($data["email"], $data["password"])){
             $referer = $request->headers->get('referer');

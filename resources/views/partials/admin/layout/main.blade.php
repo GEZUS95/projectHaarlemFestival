@@ -15,17 +15,19 @@
     <meta http-equiv="expires" content="-1" />
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
+
+    <script>
+        window.csrfToken = "{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
+    </script>
 </head>
 <body>
-@include("partials.admin.layout.nav")
+<nav-bar></nav-bar>
 <main class="partials-admin-layout-main">
     @include("partials.admin.layout.sidenav")
     <div class="partials-admin-layout-main-content">
         @yield("content")
     </div>
 </main>
-
-
 
 <script type="text/javascript" src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("js")}}"></script>
 </body>

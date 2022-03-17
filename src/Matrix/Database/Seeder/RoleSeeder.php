@@ -10,6 +10,7 @@ class RoleSeeder
     public function seed()
     {
         Role::create([
+            'name' => "admin",
             'permissions' => json_encode(
                 array(
                     Permissions::__ADMIN__,

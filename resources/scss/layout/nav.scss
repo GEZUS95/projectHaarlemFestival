@@ -1,0 +1,49 @@
+.layout-nav {
+  display: flex;
+  background: black;
+  position: static;
+  top: 0;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.layout-nav-btn, {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.layout-nav-dropdown:hover .layout-nav-dropdown {
+  background-color: dodgerblue;
+}
+
+.layout-nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.layout-nav-dropdown-content-link {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.layout-nav-dropdown-content-link:hover {
+  background-color: dodgerblue;
+}
+
+.layout-nav-dropdown:hover .layout-nav-dropdown-content {
+  display: block;
+}
+.layout-nav-pictograms {
+  display: flex;
+}

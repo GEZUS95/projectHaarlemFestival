@@ -28,8 +28,6 @@ class Item extends Model
         'special_guest_id' => 'integer',
     ];
 
-    protected $dateFormat = 'Y-m-d H:i';
-
     public function programs(): BelongsTo
     {
 

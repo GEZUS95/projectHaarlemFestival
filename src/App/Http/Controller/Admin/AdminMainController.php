@@ -20,16 +20,32 @@ class AdminMainController extends BaseController
     {
         GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
 
+        $this->initFormTokens();
+
         return $this->render('partials.admin.index', []);
     }
 
-    public function getEventTitles(): Response
-    {
-        GuardManager::guard(Permissions::__VIEW_CMS_PAGE__);
+    /**
+     * @throws Exception
+     */
+    private function initFormTokens(){
 
-        $eventTitles = Event::query()->get()->map->only(['title']);
+        $tokens = [
+            'event_create_form_csrf_token',
+            'event_update_form_csrf_token',
+            'performer_create_form_csrf_token',
+            'performer_update_form_csrf_token',
+            'locations_create_form_csrf_token',
+            'locations_update_form_csrf_token',
+            'roles_create_form_csrf_token',
+            'roles_update_form_csrf_token',
+            'users_create_form_csrf_token',
+            'users_update_form_csrf_token',
+            'validate_form_token'
+        ];
 
-        return $this->json(["titles" => $eventTitles]);
+        foreach ($tokens as $token) {
+            $this->session->set($token,  bin2hex(random_bytes(24)));
+        }
     }
-
 }

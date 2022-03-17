@@ -1,10 +1,14 @@
+//admin scss files
 @import 'partials/admin/layout/main.scss';
-@import 'partials/admin/layout/nav.scss';
 @import 'partials/admin/layout/sidenav.scss';
+@import 'partials/admin/partials/event.scss';
+
 @import 'partials/event/index.scss';
 @import 'partials/food/index.scss';
 @import 'partials/food/single.scss';
 @import 'layout/footer.scss';
+@import 'layout/nav.scss';
+
 
 html, body {
     margin: 0;
@@ -19,5 +23,5 @@ footer {
 body {
     display: flex;
     flex-direction: column;
-    font-family: roboto, serif;
+    font-family: Roboto, serif;
 }

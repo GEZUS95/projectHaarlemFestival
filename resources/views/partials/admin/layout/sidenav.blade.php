@@ -2,7 +2,8 @@
     <div class="partials-admin-layout-sidenav-title">Events</div>
     <div>
         <side-navigation-events
-            titles="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_titles")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event")}}"
+            event_link="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_event_show")}}"
         ></side-navigation-events>
         <div class="partials-admin-layout-sidenav-btn-add-events">
             <div class="partials-admin-layout-sidenav-btn-event-icon partials-admin-layout-sidenav-btn-events-plus"><i class="fa-solid fa-circle-plus"></i></div>
@@ -35,11 +36,30 @@
                     link-name="Locations"
             ></side-navigation-link>
         </div>
-        <div class="partials-admin-layout-sidenav-users-other">
-            <side-navigation-link
-                    href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
-                    link-name="Restaurants"
-            ></side-navigation-link>
+
+        <div class="partials-admin-layout-sidenav-dropdown">
+            <div class="partials-admin-layout-sidenav-users-other">Food Settings</div>
+            <div class="partials-admin-layout-sidenav-dropdown-content">
+                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
+                    <side-navigation-link
+                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
+                            link-name="Restaurants"
+                    ></side-navigation-link>
+                </div>
+                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
+                    <side-navigation-link
+                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurant_types")}}"
+                            link-name="Restaurants Types"
+                    ></side-navigation-link>
+                </div>
+                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
+                    <side-navigation-link
+                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_sessions")}}"
+                            link-name="Sessions"
+                    ></side-navigation-link>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>

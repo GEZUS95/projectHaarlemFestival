@@ -14,6 +14,7 @@ class CreateRestaurantsTable
         Capsule::schema()->create('restaurants', function ($table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('location_id');
             $table->longtext('description');
             $table->float("stars");

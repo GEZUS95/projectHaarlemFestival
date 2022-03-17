@@ -2,6 +2,7 @@
 
 namespace Matrix;
 
+use Matrix\Exception\DataIsNotCorrectlyValidated;
 use Matrix\Exception\NotLoggedInException;
 use Matrix\Exception\UnauthorizedAccessException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,6 +46,8 @@ class Framework
         }catch (NotLoggedInException $exception) {
             var_dump($exception);
             return new RedirectResponse('/login', 303);
+        } catch (DataIsNotCorrectlyValidated $exception) {
+            return new Response("LOL");
         } catch (\Exception $exception) {
             var_dump($exception);
             return new Response('An error occurred', 500);
