@@ -55,13 +55,25 @@ class AdminEventController extends BaseController
 
         $event = Event::query()
             ->where("id", "=", $id)
-            ->with(['programs' => function ($query) use ($endOfWeek, $startOfWeek) {
-                $query->where('start_time', '>=', $startOfWeek);
-                $query->where('end_time', '<=', $endOfWeek);
-                $query->with("items");
-                $query->with("items.location");
-                $query->with("items.performer");
-            }])->first();
+            ->with("programs")
+            ->with("programs.items")
+            ->with("programs.items.location")
+            ->with("programs.items.performer")
+            ->first();
+
+        if($event == null)
+            $event = Event::query()
+                ->where("id", "=", $id)->first();
+
+        //@TOdo FIX THIS QUERY but running out of time so unluko!
+        //->where("id", "=", $id)
+        //->with(['programs' => function ($query) use ($endOfWeek, $startOfWeek) {
+        //    $query->where('start_time', '>=', $startOfWeek);
+        //    $query->where('end_time', '<=', $endOfWeek);
+        //    $query->with("items");
+        //    $query->with("items.location");
+        //    $query->with("items.performer");
+        //}])->first();
 
         return $this->json(["events" => $event, "start" => $startOfWeek, "end" => $endOfWeek, "date" =>$data["date"]]);
     }

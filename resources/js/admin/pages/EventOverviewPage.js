@@ -7,6 +7,10 @@ class EventOverviewPage extends HTMLElement {
         this._$url = null;
         this._$event_id = null;
 
+        window.addEventListener("show-event-overview", (() => {
+            this.fetchData();
+        }));
+
         window.addEventListener("schedule-next-week", (() => {
             this._$date = this.getMonday(new Date(new Date(this._$date).setDate(new Date(this._$date).getDate() + 7)))
             this.fetchData();
@@ -171,6 +175,8 @@ class EventOverviewPage extends HTMLElement {
 
         this.shadowRoot.innerHTML = `
         ${this.getStyleObject()}
+        <event-sub-navigation title="${data.title}"></event-sub-navigation>
+        
         <div class="schedule">
             <div class="schedule-hours-filler">
                 <div class="schedule-days-title"></div>
@@ -199,7 +205,7 @@ class EventOverviewPage extends HTMLElement {
                                 ${hours.program.map((pro) => {
                                     return `
                                     <div class="schedule-hours-box-sub">
-                                        <div class="${pro.type}" style="background-color: ${pro.program.color}">
+                                        <div class="${pro.type}" id="${pro.program.id}" style="background-color: ${pro.program.color}">
                                             ${pro.type === "program_start" ? pro.program.title : ''}
                                             ${hours.items.map((i) => {
                                                 return `
@@ -224,6 +230,18 @@ class EventOverviewPage extends HTMLElement {
         this._$lastPlacedItemId = null;
         this._$firstPlacedItemId = null;
         this.shadowRoot.querySelector(".schedule").addEventListener('mousemove', this.createPrograms.bind(this) );
+
+        const elements = this.shadowRoot.querySelectorAll(".program_end, .program_start, .program_between");
+        Array.from(elements).forEach((element) => {
+            element.addEventListener('click', this.openProgramOverview.bind(this) );
+        });
+    }
+
+    openProgramOverview(e){
+        this.shadowRoot.innerHTML = "";
+        window.dispatchEvent(new CustomEvent('refresh-program-overview', {
+            detail: e.path[0].id
+        }))
     }
 
     createPrograms(event){

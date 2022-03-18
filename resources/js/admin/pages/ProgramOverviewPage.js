@@ -118,7 +118,10 @@ class ProgramOverviewPage extends BaseComponent {
 
         this.shadowRoot.innerHTML =`
             ${this.style()}
-            <admin-sub-navigation title="Program"></admin-sub-navigation>
+            <admin-sub-navigation 
+                title="Program"
+                back="true"
+            ></admin-sub-navigation>
             <div class="container">
                 <div class="sidenav">
                     <div class="sidenav-title-holder">
@@ -192,14 +195,12 @@ class ProgramOverviewPage extends BaseComponent {
     }
 
     async connectedCallback(){
-        await this.test();
         window.addEventListener("refresh-program-overview", this.initForm.bind(this));
+        window.addEventListener("hide-program-overview", this.hide.bind(this));
     }
 
-    async test(){
-        const res = await this.queryGet("http://127.0.0.1:4321/admin/program/1")
-
-        this.content(res);
+    hide(){
+        this.shadowRoot.innerHTML = "";
     }
 
     async initForm(e){
