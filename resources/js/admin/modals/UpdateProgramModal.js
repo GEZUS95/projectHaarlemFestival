@@ -37,9 +37,9 @@ class UpdateProgramModal extends CreateProgramModal {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-
-                // this._$formData = this.clearFormData(this._$formData)
-                // this.closeForm();
+                window.dispatchEvent(new CustomEvent('refresh-program-overview', {detail: this._$program_id}))
+                this._$formData = this.clearFormData(this._$formData)
+                this.closeForm();
             }
         }
 
@@ -51,14 +51,21 @@ class UpdateProgramModal extends CreateProgramModal {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-
-                // this._$formData = this.clearFormData(this._$formData)
-                // this.closeForm();
+                window.dispatchEvent(new CustomEvent("hide-program-overview", {detail : true}))
+                window.dispatchEvent(new CustomEvent("show-event-overview", {detail : true}))
+                this._$formData = this.clearFormData(this._$formData)
+                this.closeForm();
             }
         }
 
         xhr.open('POST', this.baseURL +"/admin/program/delete/"+this._$programId, true);
         xhr.send();
+    }
+
+    handleCancelBtnClick(){
+        window.dispatchEvent(new CustomEvent('refresh-program-overview', {detail: this._$program_id}))
+        this._$formData = this.clearFormData(this._$formData)
+        this.closeForm();
     }
 
     static get observedAttributes() {
