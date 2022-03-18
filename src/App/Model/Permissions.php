@@ -51,4 +51,7 @@ class Permissions {
 
     public const __VIEW_ITEM_PAGE__ = 'view_item_page';
     public const __WRITE_ITEM_PAGE__ = 'write_item_page';
+
+    public const __VIEW_PROGRAM_PAGE__ = 'view_program_page';
+    public const __WRITE_PROGRAM_PAGE__ = 'write_program_page';
 }

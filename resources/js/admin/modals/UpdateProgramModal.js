@@ -1,29 +1,25 @@
-import BaseModal from "./BaseModal";
+import CreateProgramModal from "./CreateProgramModal";
 
-class CreateProgramModal extends BaseModal {
+class UpdateProgramModal extends CreateProgramModal {
     constructor() {
         super();
 
-        this._$url = null;
-        this._$formData = {
-            title: '',
-            total_price_program: '',
-            start_time: null,
-            end_time: null,
-            color: '#ffffff',
-            event_id: null,
-        };
+        this._$update = true;
+        this._$programId = null;
     }
 
     connectedCallback(){
-        window.addEventListener("modal-update-event", this.initForm.bind(this));
+        window.addEventListener("modal-update-program", this.initForm.bind(this));
     }
 
     async initForm(e){
-        let url = this.queryUrlReplaceId(this._$query_url, e.detail);
+        this._$programId = e.detail;
 
-        const resFormData = await this.setFormData(url, "event")
-        console.log(resFormData);
+        await this.setFormData(this.baseURL + "/admin/program/single/" + e.detail, "program")
+        let startTime = new Date(this._$formData.start_time);
+        let endTime = new Date(this._$formData.end_time);
+        this._$formData.start_time = new Date(startTime.setTime(startTime.getTime() + (60*60*1000)));
+        this._$formData.end_time = new Date(endTime.setTime(endTime.getTime() + (60*60*1000)));
         this.renderContent();
 
         this.updateModalTitle("Update Program");
@@ -32,8 +28,11 @@ class CreateProgramModal extends BaseModal {
     }
 
     handleUpdateBtnClick(){
+        this._$formData.start_time = this.setDate(this._$formData.start_time)
+        this._$formData.end_time = this.setDate(this._$formData.end_time)
+
         let formData = this.createFormData(this._$formData)
-        formData.append("token", this._$token)
+        formData.append("token", this.getToken());
 
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
@@ -44,8 +43,8 @@ class CreateProgramModal extends BaseModal {
             }
         }
 
-        xhr.open('POST', this.baseURL, true);
-        xhr.send();
+        xhr.open('POST', this.baseURL +"/admin/program/update/"+this._$programId, true);
+        xhr.send(formData);
     }
 
     handleDeleteBtnClick(){
@@ -58,7 +57,7 @@ class CreateProgramModal extends BaseModal {
             }
         }
 
-        xhr.open('POST', this.baseURL, true);
+        xhr.open('POST', this.baseURL +"/admin/program/delete/"+this._$programId, true);
         xhr.send();
     }
 
@@ -67,4 +66,4 @@ class CreateProgramModal extends BaseModal {
     }
 }
 
-export default CreateProgramModal;
+export default UpdateProgramModal;

@@ -23,6 +23,7 @@ import ProgramOverviewPage from "./admin/pages/ProgramOverviewPage";
 import ProgramItemOverviewComponent from "./admin/components/ProgramItemOverviewComponent";
 import CreateItemModal from "./admin/modals/CreateItemModal";
 import UpdateItemModal from "./admin/modals/UpdateItemModal";
+import UpdateProgramModal from "./admin/modals/UpdateProgramModal";
 
 /**
  * View Components
@@ -49,6 +50,7 @@ window.customElements.define('program-overview-page', ProgramOverviewPage)
 window.customElements.define('program-item-overview-component', ProgramItemOverviewComponent)
 window.customElements.define('create-item-modal', CreateItemModal)
 window.customElements.define('update-item-modal', UpdateItemModal)
+window.customElements.define('update-program-modal', UpdateProgramModal)
 
 /**
  * Helper Components

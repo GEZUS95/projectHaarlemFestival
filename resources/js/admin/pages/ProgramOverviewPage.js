@@ -101,6 +101,13 @@ class ProgramOverviewPage extends BaseComponent {
                 display: flex;
                 flex-direction: row;
             }
+            
+            .sidenav-title-display {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                align-items: center;
+            }
         </style>
        `;
     }
@@ -115,7 +122,10 @@ class ProgramOverviewPage extends BaseComponent {
             <div class="container">
                 <div class="sidenav">
                     <div class="sidenav-title-holder">
-                        <div class="sidenav-title">${program.title}</div>
+                        <div class="sidenav-title-display">
+                            <div class="sidenav-title">${program.title}</div>
+                            <div class="sidenav-program-edit">Edit</div>
+                        </div>
                         <div class="sidenav-title-underline"></div>
                     </div>
                     <div class="sidenav-items">
@@ -155,10 +165,16 @@ class ProgramOverviewPage extends BaseComponent {
             <create-item-modal></create-item-modal>
             
             <update-item-modal></update-item-modal>
+            
+            <update-program-modal></update-program-modal>
         `;
 
         this.shadowRoot.querySelector(".sidenav-action-add").addEventListener("click", () => {
             window.dispatchEvent(new CustomEvent('modal-create-item', {detail: program.id}))
+        });
+
+        this.shadowRoot.querySelector(".sidenav-program-edit").addEventListener("click", () => {
+            window.dispatchEvent(new CustomEvent('modal-update-program', {detail: program.id}))
         });
 
         const elements = this.shadowRoot.querySelectorAll(".sidenav-items-item");

@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
 
 
 namespace App\Http\Controller\Admin;
@@ -49,7 +49,7 @@ class AdminProgramController extends BaseController
             'event_id' => $data["event_id"],
         ]);
 
-        return $this->json(["success" => "successfully created item!"]);
+        return $this->json(["success" => "successfully created program!"]);
     }
 
     public function show($id): Response
@@ -71,10 +71,11 @@ class AdminProgramController extends BaseController
      */
     public function single(Request $request, $id): Response
     {
-        GuardManager::guard(Permissions::__VIEW_ROLES_PAGE__);
+        GuardManager::guard(Permissions::__VIEW_PROGRAM_PAGE__);
 
+        $program = Program::query()->where('id', '=', $id)->first();
 
-        return $this->json("test");
+        return $this->json(["program" => $program]);
     }
 
     /**
@@ -82,20 +83,45 @@ class AdminProgramController extends BaseController
      */
     public function update(Request $request, $id): Response
     {
-        GuardManager::guard(Permissions::__WRITE_ROLES_PAGE__);
+        GuardManager::guard(Permissions::__WRITE_PROGRAM_PAGE__);
 
+        $data = $request->request->all();
+        var_dump($data);
+        $rules = [
+            'token' => ['required', new TokenValidation("validate_form_token")],
+            'color' => ['required','string', new ColorValidation],
+            'end_time' => 'required',
+            'start_time' => 'required',
+            'event_id' => ['required', 'integer', new EventExistValidation],
+            'title' => 'required|string',
+            'total_price_program' => 'required|integer',
+        ];
 
-        return $this->json(["Success" => "Successfully updated the role"]);
+        $this->validate($data, $rules);
+
+        $startTime = Carbon::parse($data["start_time"])->addHour();
+        $endTime = Carbon::parse($data["end_time"])->addHour();
+
+        Program::findOrFail($id)->update([
+            'title' => $data["title"],
+            'total_price_program' => $data["total_price_program"],
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'color' => $data["color"],
+            'event_id' => $data["event_id"],
+        ]);
+
+        return $this->json(["Success" => "Successfully updated the program"]);
     }
 
     public function delete(Request $request, $id): Response
     {
-        GuardManager::guard(Permissions::__WRITE_LOCATION_PAGE__);
+        GuardManager::guard(Permissions::__WRITE_PROGRAM_PAGE__);
 
         Program::findOrFail($id)->delete();
 
         return $this->json(
-            ["Success" => "Successfully deleted the location"]
+            ["Success" => "Successfully deleted the program"]
         );
     }
 }
