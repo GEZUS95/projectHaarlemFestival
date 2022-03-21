@@ -18,6 +18,7 @@ use App\Http\Controller\EventController;
 use App\Http\Controller\RestaurantController;
 use App\Http\Controller\FrontendController;
 use App\Http\Controller\EmailController;
+use App\Http\Controller\QRController;
 use App\Http\Controller\ContactController;
 use Matrix\Managers\RouteManager;
 
@@ -101,6 +102,8 @@ $routes = [
 
     ["name" => "test_email", "url" => "/emailtest", "controller" => [new EmailController(), 'index'], "method" => "GET"],
     ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendEmail'], "method" => "POST"],
+    ["name" => "test_qr", "url" => "/qrtest", "controller" => [new QRController(), 'index'], "method" => "GET"],
+    ["name" => "test_qr_post", "url" => "/qrtest", "controller" => [new QRController(), 'makeQR'], "method" => "POST"],
 
     // Other routes
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],
