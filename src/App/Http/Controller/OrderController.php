@@ -97,19 +97,76 @@ class OrderController extends BaseController
     /**
      * Wait for the response and finalize the order!
      * @param Request $request
+     * @return Response|void
+     * @throws ApiException
+     * @throws Exception
      */
     public function invoice(Request $request)
     {
+        $mollie = new MollieApiClient();
+        $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
 
+        try {
+            /*
+             * Retrieve the payment's.
+             */
+            $payment = $mollie->payments->get($_POST["id"]);
+
+
+            if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
+                /*
+                 * The payment is paid and isn't refunded or charged back.
+                 * At this point you'd probably want to start the process of delivering the product to the customer.
+                 */
+                $order = $this->getOrderById($payment->metadata["order_id"])->update(["paid" => true]);
+
+                return $this->render("partials.tests.invoice", ['order' => $order]);
+
+
+            } elseif ($payment->isOpen()) {
+                /*
+                 * The payment is open.
+                 */
+            } elseif ($payment->isPending()) {
+                /*
+                 * The payment is pending.
+                 */
+            } elseif ($payment->isFailed()) {
+                /*
+                 * The payment has failed.
+                 */
+            } elseif ($payment->isExpired()) {
+                /*
+                 * The payment is expired.
+                 */
+            } elseif ($payment->isCanceled()) {
+                /*
+                 * The payment has been canceled.
+                 */
+            } elseif ($payment->hasRefunds()) {
+                /*
+                 * The payment has been (partially) refunded.
+                 * The status of the payment is still "paid"
+                 */
+            } elseif ($payment->hasChargebacks()) {
+                /*
+                 * The payment has been (partially) charged back.
+                 * The status of the payment is still "paid"
+                 */
+            }
+        } catch (ApiException $e) {
+            //echo "API call failed: " . htmlspecialchars($e->getMessage());
+            echo "Someting went wong!";
+        }
     }
 
     /**
      * Get the order and all the total prices of the program, event, item, restaurant
-     * Make molly api call and finalize the order
+     * Make mollie api call and finalize the order
      * @param Request $request
      * @throws ApiException
      */
-    public function molly(Request $request)
+    public function mollie(Request $request)
     {
         $user = AuthManager::getCurrentUser();
         $total = 0;
@@ -130,11 +187,14 @@ class OrderController extends BaseController
         $payment = $mollie->payments->create([
             "amount" => [
                 "currency" => "EUR",
-                "value" => $total
+                "value" => number_format((float)$total, 2, '.', '')
             ],
             "description" => $user->name . ' ordered ',
             "redirectUrl" => RouteManager::getUrlByRouteName("order"),
             "webhookUrl" => RouteManager::getUrlByRouteName("invoice"),
+            "metadata" => [
+                "order_id" => $order->id,
+            ],
         ]);
         header("Location: " . $payment->getCheckoutUrl(), true, 303);
 
@@ -160,6 +220,14 @@ class OrderController extends BaseController
             'uuid' => Uuid::uuid4(),
             'user_id' => $user->id,
         ]);
+    }
+
+
+    private function getOrderById($id)
+    {
+        return Order::query()
+            ->where("id", "=", $id)
+            ->first();
     }
 
     /**
