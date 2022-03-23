@@ -4,6 +4,7 @@ namespace App\Http\Controller;
 
 use App\Model\Event;
 use App\Model\Restaurant;
+use App\Model\Session;
 use Exception;
 use Matrix\BaseController;
 use Symfony\Component\HttpFoundation\Request;
