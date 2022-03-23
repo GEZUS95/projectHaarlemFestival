@@ -40,6 +40,6 @@ class Order extends Model {
 
     public function restaurants(): MorphToMany
     {
-        return $this->morphedByMany(Restaurant::class, 'order_able', 'order_able');
+        return $this->morphedByMany(Session::class, 'order_able', 'order_able');
     }
 }

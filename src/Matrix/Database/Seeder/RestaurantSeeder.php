@@ -36,7 +36,7 @@ class RestaurantSeeder
             'seats' => 50,
             'price' => 44.00,
             'price_child' => 22.50,
-            'duration' => 120,
+            'session_time' => 120,
             'accessibility' => 1,
         ]);
 
@@ -49,7 +49,7 @@ class RestaurantSeeder
             'seats' => 150,
             'price' => 44.00,
             'price_child' => 22.50,
-            'duration' => 90,
+            'session_time' => 90,
             'accessibility' => 0,
         ]);
 

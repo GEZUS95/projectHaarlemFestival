@@ -56,8 +56,5 @@ class Restaurant extends Model {
 
     }
 
-    public function orders(): MorphToMany
-    {
-        return $this->morphToMany(Order::class, 'order_able');
-    }
+
 }
