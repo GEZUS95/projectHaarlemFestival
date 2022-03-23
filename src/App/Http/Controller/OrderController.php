@@ -119,7 +119,7 @@ class OrderController extends BaseController
                  * At this point you'd probably want to start the process of delivering the product to the customer.
                  */
                 $order = $this->getOrderById($payment->metadata["order_id"])->update(["paid" => true]);
-
+                //TODO: use ::find
                 return $this->render("partials.tests.invoice", ['order' => $order]);
 
 
