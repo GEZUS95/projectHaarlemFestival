@@ -21,6 +21,7 @@ use App\Http\Controller\EmailController;
 use App\Http\Controller\QRController;
 use App\Http\Controller\ContactController;
 use Matrix\Managers\RouteManager;
+use \App\Http\Controller\CartController;
 
 $routes = [
     // basic routes
@@ -30,6 +31,10 @@ $routes = [
     ["name" => "login_post", "url" => "/login", "controller" => [new LoginController(), 'login'], "method" => "POST"],
     ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
+
+    // cart routes
+    ["name" => "cart", "url" => "/cart", "controller" => [new CartController(), 'index'], "method" => "GET"],
+    ["name" => "cart_pay", "url" => "/cart/pay", "controller" => [new CartController(), 'pay'], "method" => "GET"],
 
     // Food routes
     ["name" => "food", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],
