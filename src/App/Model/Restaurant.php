@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -47,10 +48,10 @@ class Restaurant extends Model {
 
     }
 
-    public function sessions(): HasOne
+    public function sessions(): HasMany
     {
 
-        return $this->hasOne(Session::class);
+        return $this->hasMany(Session::class);
 
     }
 

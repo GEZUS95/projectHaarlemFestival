@@ -15,7 +15,7 @@ class CreateSessionsTable
             $table->bigIncrements('id');
             $table->unsignedBigInteger('restaurant_id');
             $table->unsignedInteger('duration');
-            $table->date('start_time');
+            $table->dateTime('start_time');
             $table->timestamps();
         });
     }
