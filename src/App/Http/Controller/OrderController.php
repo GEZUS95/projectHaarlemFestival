@@ -31,6 +31,18 @@ class OrderController extends BaseController
     }
 
     /**
+     * Check if the user is logged in
+     * Get the logged-in user
+     * Get the receipt if it exist
+     * @throws Exception
+     */
+    public function receipt(): Response
+    {
+        $user = AuthManager::getCurrentUser();
+        return $this->render("partials.tests.receipt", ['receipt' => $this->getReceipt($user)]);
+    }
+
+    /**
      * Make a post request to the back end with (id, type) example (id:1, type)
      * Add the type to the order and create the order if it doenst exist -> call $this->create
      * call this->model
@@ -118,8 +130,7 @@ class OrderController extends BaseController
                  * The payment is paid and isn't refunded or charged back.
                  * At this point you'd probably want to start the process of delivering the product to the customer.
                  */
-                $order = $this->getOrderById($payment->metadata["order_id"])->update(["paid" => true]);
-                //TODO: use ::find en andere functie verwijderen
+                $order = $this::find($payment->metadata["order_id"])->update(["paid" => true]);
                 return $this->render("partials.tests.invoice", ['order' => $order]);
 
 
@@ -222,11 +233,16 @@ class OrderController extends BaseController
         ]);
     }
 
-
-    private function getOrderById($id)
+    /**
+     * if the order already exist for the current user just return the order
+     * @param $user
+     * @return Builder|Model|object
+     */
+    private function getReceipt($user)
     {
         return Order::query()
-            ->where("id", "=", $id)
+            ->where("user_id", "=", $user->id)
+            ->where('paid', '=', true)
             ->first();
     }
 
