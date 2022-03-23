@@ -33,7 +33,7 @@ $routes = [
     ["name" => "register", "url" => "/register", "controller" => [new RegisterController(), 'index'], "method" => "GET"],
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
 
-    // cart routes
+    // order routes and mollie
     ["name" => "order", "url" => "/order", "controller" => [new OrderController(), 'index'], "method" => "GET"],
     ["name" => "order_add", "url" => "/order/add", "controller" => [new OrderController(), 'add'], "method" => "POST"],
     ["name" => "order_remove", "url" => "/order/remove", "controller" => [new OrderController(), 'remove'], "method" => "POST"],
