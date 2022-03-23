@@ -64,15 +64,15 @@ class RestaurantSeeder
         ]);
         Session::create([
             'id' => 2,
-            'restaurant_id' => 2,
+            'restaurant_id' => 1,
             'start_time' => Carbon::now()->startOfDay()->addHours(14),
             'end_time' => Carbon::now()->startOfDay()->addHours(16),
         ]);
-//        Session::create([
-//           'id' => 3,
-//           'restaurant_id' => 3,
-//           'duration' =>  120,
-//            'start_time' => Carbon::now()->startOfDay()->addHours(16),
-//        ]);
+        Session::create([
+           'id' => 3,
+           'restaurant_id' => 1,
+            'start_time' => Carbon::now()->startOfDay()->addHours(16),
+            'end_time' => Carbon::now()->startOfDay()->addHours(18),
+        ]);
     }
 }
