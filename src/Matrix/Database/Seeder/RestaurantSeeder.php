@@ -15,7 +15,7 @@ class RestaurantSeeder
     {
         $cuisines = ['European', 'Dutch', 'Modern', 'Fish and seafood', 'French', 'Asian', 'International', 'Steakhouse', 'Argentinian'];
         // Create restaurant types
-        foreach($cuisines as $c){
+        foreach ($cuisines as $c) {
             RestaurantType::create([
                 'type' => $c,
             ]);
@@ -36,6 +36,7 @@ class RestaurantSeeder
             'seats' => 50,
             'price' => 44.00,
             'price_child' => 22.50,
+            'duration' => 120,
             'accessibility' => 1,
         ]);
 
@@ -48,22 +49,24 @@ class RestaurantSeeder
             'seats' => 150,
             'price' => 44.00,
             'price_child' => 22.50,
+            'duration' => 90,
             'accessibility' => 0,
         ]);
 
-        $restaurant->types()->attach([5,1,4]);
-        $restaurant2->types()->attach([2,1,6]);
+        $restaurant->types()->attach([5, 1, 4]);
+        $restaurant2->types()->attach([2, 1, 6]);
 
         Session::create([
-           'id' => 1,
-           'restaurant_id' => 1,
-           'duration' =>  120,
+            'id' => 1,
+            'restaurant_id' => 1,
             'start_time' => Carbon::now()->startOfDay()->addHours(12),
-        ]);Session::create([
-           'id' => 2,
-           'restaurant_id' => 2,
-           'duration' =>  120,
+            'end_time' => Carbon::now()->startOfDay()->addHours(14),
+        ]);
+        Session::create([
+            'id' => 2,
+            'restaurant_id' => 2,
             'start_time' => Carbon::now()->startOfDay()->addHours(14),
+            'end_time' => Carbon::now()->startOfDay()->addHours(16),
         ]);
 //        Session::create([
 //           'id' => 3,

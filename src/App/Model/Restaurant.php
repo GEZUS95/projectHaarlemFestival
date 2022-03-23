@@ -22,6 +22,7 @@ class Restaurant extends Model {
         'seats',
         'price',
         'price_child',
+        'session_time',
         'accessibility',
     ];
 

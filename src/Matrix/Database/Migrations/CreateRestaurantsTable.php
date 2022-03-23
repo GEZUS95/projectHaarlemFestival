@@ -22,6 +22,7 @@ class CreateRestaurantsTable
             $table->float("price");
             $table->float("price_child");
             $table->boolean("accessibility");
+            $table->unsignedInteger('duration');
             $table->timestamps();
         });
     }
