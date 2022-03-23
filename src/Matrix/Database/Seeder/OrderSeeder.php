@@ -11,6 +11,7 @@ use App\Model\Restaurant;
 use App\Model\Role;
 use App\Model\User;
 use Faker\Factory;
+use Ramsey\Uuid\Uuid;
 
 class OrderSeeder
 {
@@ -33,6 +34,8 @@ class OrderSeeder
         $user = User::query()->where("email", "=", "order@example.com")->first();
 
         Order::create([
+            'uuid' => Uuid::uuid4(),
+            'paid' => false,
             'user_id' => $user->id,
         ]);
 

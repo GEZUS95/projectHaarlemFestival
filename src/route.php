@@ -15,6 +15,7 @@ use App\Http\Controller\HomeController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\Auth\RegisterController;
 use App\Http\Controller\EventController;
+use App\Http\Controller\OrderController;
 use App\Http\Controller\RestaurantController;
 use App\Http\Controller\FrontendController;
 use App\Http\Controller\EmailController;
@@ -33,8 +34,12 @@ $routes = [
     ["name" => "register_post", "url" => "/register", "controller" => [new RegisterController(), 'register'], "method" => "POST"],
 
     // cart routes
-    ["name" => "cart", "url" => "/cart", "controller" => [new CartController(), 'index'], "method" => "GET"],
-    ["name" => "cart_pay", "url" => "/cart/pay", "controller" => [new CartController(), 'pay'], "method" => "GET"],
+    ["name" => "order", "url" => "/order", "controller" => [new OrderController(), 'index'], "method" => "GET"],
+    ["name" => "order_add", "url" => "/order/add", "controller" => [new OrderController(), 'add'], "method" => "POST"],
+    ["name" => "order_remove", "url" => "/order/remove", "controller" => [new OrderController(), 'remove'], "method" => "POST"],
+    ["name" => "order_delete", "url" => "/order/delete", "controller" => [new OrderController(), 'delete'], "method" => "POST"],
+    ["name" => "order_pay", "url" => "/order/pay", "controller" => [new OrderController(), 'mollie'], "method" => "GET"],
+    ["name" => "invoice", "url" => "/invoice", "controller" => [new OrderController(), 'invoice'], "method" => "GET"],
 
     // Food routes
     ["name" => "food", "url" => "/food", "controller" => [new RestaurantController(), 'index'], "method" => "GET"],

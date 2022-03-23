@@ -21,7 +21,9 @@
     "fakerphp/faker": "^1.19",
     "symfony/mailer": "^6.0",
     "itsgoingd/clockwork": "^5.1",
-    "endroid/qr-code": "^4.4"
+    "endroid/qr-code": "^4.4",
+    "ramsey/uuid": "^4.2",
+    "mollie/mollie-api-php": "2.0"
   },
   "autoload": {
     "psr-4": {
