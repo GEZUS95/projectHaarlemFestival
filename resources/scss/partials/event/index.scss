@@ -86,3 +86,28 @@
   display: flex;
   justify-content: center;
 }
+
+.partials-event-index-performers-container {
+  width: 33%;
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+}
+
+.partials-event-index-performers-images {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.partials-event-index-performers-info {
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.partials-event-index-performers-info-name {
+  font-weight: bold;
+  font-size: 18px;
+}

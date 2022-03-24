@@ -12,6 +12,10 @@
         .partials-event-index-programs-text {
             margin: 5px 5px 10px 20px;
         }
+
+        .partials-event-index-performers {
+            margin: 5px 5px 10px 20px;
+        }
     </style>
 
     <div class="partials-event-index">
@@ -53,8 +57,25 @@
                 @endforeach
             </div>
 
+            <div class="partials-event-index-programs-schedule">Performers</div>
+
             <div class="partials-event-index-performers">
 
+                @foreach($performers as $performer)
+                    <div class="partials-event-index-performers-container">
+                        <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $performer->images[0]->file_location])}}"
+                             alt="haarlem"
+                             class="partials-event-index-performers-images"
+                        >
+                        <div class="partials-event-index-performers-info">
+                            <div class="partials-event-index-performers-info-name">{{$performer->name}}</div>
+                            <div>
+{{--                                @todo Make model functions here so $perfomer->playsOn()--}}
+                                <div>Plays on Friday</div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <div class="partials-event-index-programs-schedule">Locations</div>
@@ -82,4 +103,6 @@
         </div>
 
     </div>
+
+    <br>
 @endsection
