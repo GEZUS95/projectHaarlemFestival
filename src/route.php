@@ -109,7 +109,7 @@ $routes = [
     ["name" => "admin_item_delete", "url" => "/admin/item/delete/{id}", "controller" => [new AdminItemController(), 'delete'], "method" => "POST"],
 
     // Test routes
-    ["name" => "test", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
+    ["name" => "event", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
 
     ["name" => "test_email", "url" => "/emailtest", "controller" => [new EmailController(), 'index'], "method" => "GET"],
     ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendEmail'], "method" => "POST"],

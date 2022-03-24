@@ -52,6 +52,7 @@ class AdminItemController extends BaseController
         GuardManager::guard(Permissions::__WRITE_ITEM_PAGE__);
 
         $data = $request->request->all();
+
         $rules = [
             'token' => ['required', new TokenValidation("validate_form_token")],
             'program_id' => ['required', new ProgramExistValidation()],

@@ -13,7 +13,7 @@ class ItemIsBetweenProgramTimes implements Rule
 
     public function __construct($programId)
     {
-        $this->program = Program::query()->find($programId)->first();
+        $this->program = Program::find($programId);
     }
 
     /**

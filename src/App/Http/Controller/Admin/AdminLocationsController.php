@@ -120,7 +120,7 @@ class AdminLocationsController extends BaseController
 
         $this->validate($data, $rules);
 
-        $model = Location::findOrFail($id)->update([
+        Location::find($id)->update([
             'name' => $data["name"],
             'city' => $data["city"],
             'address' => $data["address"],
@@ -129,7 +129,7 @@ class AdminLocationsController extends BaseController
             'color' => $data["color"],
         ]);
 
-        Image::updateFiles($_FILES["file"], $model);
+        Image::updateFiles($_FILES["file"], Location::find($id));
 
         return $this->json(
             ["Success" => "Successfully updated the location"]

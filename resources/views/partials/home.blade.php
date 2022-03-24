@@ -2,8 +2,72 @@
 @section('content')
 
     <style>
+        .partials-home-event {
+            width: 100%;
+        }
 
+        .partials-home-event-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+            padding: 0 40px;
+        }
 
+        .partials-home-event-nav-title {
+            color: #5A5D61;
+            font-weight: bold;
+            font-size: 60px;
+        }
+
+        .partials-home-event-nav-btn {
+            background-color: #007BFF;
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 2px;
+            line-height: 1.5;
+            border-radius: 0.3rem;
+            user-select: none;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            width: 170px;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .partials-home-event-programs {
+            display: flex;
+            flex-direction: row;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .partials-home-event-programs-images {
+            width: 100%;
+        }
+
+        .partials-home-event-programs-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .partials-home-event-programs-date {
+            position: absolute;
+            top: 0;
+            color: white;
+            width: 100%;
+            font-size: 20px;
+            padding: 5px 10px;
+        }
     </style>
 
     <div class="partials-home">
@@ -99,28 +163,76 @@
                 what makes jazz very fun for both young and old! At the Haarlem festival there will be 18 bands playing
                 across 4 different days, on thursday, friday and saturday the concerts will be given in the Patronaat
                 venue. On sunday the bands will play on The Grote Markt for everyone to see!
-            </div> <br>
+            </div>
+            <br>
             <div class="partials-home-welcome-text"> Electronic dance music (EDM), also known as dance music, club
                 music, or simply dance, is a broad range of percussive electronic music genres made largely for
                 nightclubs, raves, and festivals. Dance is usually produced by DJ’s. The DJ’s create a mix of there
                 music by segueing from one recording to another. The artists will play these tracks on Haarlem Fesitval.
-            </div> <br>
+            </div>
+            <br>
             <div class="partials-home-welcome-text">
                 Always been curious what Haarlem has to offer? This is what the festival is all about. On this page you
                 can find the best restaurants in town and what they have to offer. Enjoy the taste of Haarlem and their
                 finests chefs. The respected chefs from the restaurants affiliated to the Haarlem festival want to give
                 you an expression of the culinairy activities. This will be in a form of an workshop at the restaurant,
                 or can be followed at home. If you have an allergy please let us know in the reservation.
-            </div> <br>
+            </div>
+            <br>
 
         </div>
 
-        <div>
-            Events
-            @foreach($events as $event)
+        <div class="partials-home-event">
+            @foreach($events as $index => $event)
 
-                {{$event->title}}
+                <div
+                        @if($index % 2 == 0) style="background-color: white"
+                        @else style="background-color: #CFD8DC"
+                        @endif
+                >
+                    <div class="partials-home-event-nav">
 
+                        <div class="partials-home-event-nav-title">
+                            {{$event->title}}
+                        </div>
+
+                        <a
+                                class="partials-home-event-nav-btn"
+                                href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("event", ["title" => $event->title])}}">
+                            Go To {{$event->title}}
+                        </a>
+                    </div>
+
+                    <div class="partials-home-event-programs">
+                        @foreach($event->programs as $program)
+                            <div style="width: {{100 / count($event->programs) . "%"}}" class="partials-home-event-programs-container">
+                                @if(count($program->items) != 0)
+                                    @if(count($program->items[array_rand($program->items->toArray())]->location->images) != 0)
+
+                                        <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $program->items[array_rand($program->items->toArray())]->location->images[0]->file_location])}}"
+                                             alt="haarlem"
+                                             class="partials-home-event-programs-images"
+                                        >
+                                    @else
+                                        <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("assets", ["slug" => "placeholder.jpg"])}}"
+                                             alt="haarlem"
+                                             class="partials-home-event-programs-images"
+                                        >
+                                    @endif
+                                @else
+                                    <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("assets", ["slug" => "placeholder.jpg"])}}"
+                                         alt="haarlem"
+                                         class="partials-home-event-programs-images"
+                                    >
+                                @endif
+
+                                <div class="partials-home-event-programs-date">
+                                    {{\Carbon\Carbon::parse($program->start_time)->format('D d F Y')}}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             @endforeach
             <div>
 

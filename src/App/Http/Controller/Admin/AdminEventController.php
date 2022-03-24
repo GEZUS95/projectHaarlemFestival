@@ -139,13 +139,13 @@ class AdminEventController extends BaseController
 
         $this->validate($data, $rules);
 
-        $event = Event::findOrFail($id)->update([
+        Event::findOrFail($id)->update([
             'title' => $data["title"],
             'description' => $data["description"],
             'total_price_event' => $data["total_price_event"],
         ]);
 
-        Image::updateFiles($_FILES["file"], $event);
+        Image::updateFiles($_FILES["file"], Event::find($id));
 
         return $this->json(
             ["Success" => "Successfully updated the location"]
