@@ -27,8 +27,10 @@ class EventOverviewPage extends HTMLElement {
         }));
 
         window.addEventListener("force-refresh", (evt => {
+            console.log(evt.detail)
             this._$date = this.getMonday(evt.detail)
             this.fetchData();
+            console.log("test");
         }));
     }
 

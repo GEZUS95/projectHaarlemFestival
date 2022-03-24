@@ -37,29 +37,29 @@
             ></side-navigation-link>
         </div>
 
-        <div class="partials-admin-layout-sidenav-dropdown">
-            <div class="partials-admin-layout-sidenav-users-other">Food Settings</div>
-            <div class="partials-admin-layout-sidenav-dropdown-content">
-                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
-                    <side-navigation-link
-                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"
-                            link-name="Restaurants"
-                    ></side-navigation-link>
-                </div>
-                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
-                    <side-navigation-link
-                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurant_types")}}"
-                            link-name="Restaurants Types"
-                    ></side-navigation-link>
-                </div>
-                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">
-                    <side-navigation-link
-                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_sessions")}}"
-                            link-name="Sessions"
-                    ></side-navigation-link>
-                </div>
-            </div>
-        </div>
+{{--        <div class="partials-admin-layout-sidenav-dropdown">--}}
+{{--            <div class="partials-admin-layout-sidenav-users-other">Food Settings</div>--}}
+{{--            <div class="partials-admin-layout-sidenav-dropdown-content">--}}
+{{--                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">--}}
+{{--                    <side-navigation-link--}}
+{{--                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurants")}}"--}}
+{{--                            link-name="Restaurants"--}}
+{{--                    ></side-navigation-link>--}}
+{{--                </div>--}}
+{{--                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">--}}
+{{--                    <side-navigation-link--}}
+{{--                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_restaurant_types")}}"--}}
+{{--                            link-name="Restaurants Types"--}}
+{{--                    ></side-navigation-link>--}}
+{{--                </div>--}}
+{{--                <div class="partials-admin-layout-sidenav-users-other partials-admin-layout-sidenav-dropdown-content-inner ">--}}
+{{--                    <side-navigation-link--}}
+{{--                            href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin_sessions")}}"--}}
+{{--                            link-name="Sessions"--}}
+{{--                    ></side-navigation-link>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     </div>
 </div>

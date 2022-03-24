@@ -13,6 +13,8 @@ class CreateProgramModal extends BaseModal {
             color: '#ffffff',
             event_id: null,
         };
+
+        this._$time = new Date();
     }
 
     style(){
@@ -62,7 +64,8 @@ class CreateProgramModal extends BaseModal {
         this._$formData.start_time = startTime;
         this._$formData.end_time = endTime;
         this._$formData.event_id = e.detail.eventId;
-
+        this._$time = startTime;
+        console.log(this._$formData.start_time )
         this.renderContent();
         this.updateModalTitle("Create Program");
         this.watchFieldsOnChange();
@@ -70,7 +73,7 @@ class CreateProgramModal extends BaseModal {
 
     handleCancelBtnClick() {
         super.handleCancelBtnClick();
-        window.dispatchEvent(new CustomEvent('force-refresh', {detail: this._$formData.start_time}))
+        window.dispatchEvent(new CustomEvent('force-refresh', {detail: new Date(this._$time)}))
     }
 
     setDate(date){
