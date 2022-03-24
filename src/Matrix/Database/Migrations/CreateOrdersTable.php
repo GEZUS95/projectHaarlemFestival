@@ -13,7 +13,7 @@ class CreateOrdersTable
             
         Capsule::schema()->create('orders', function ($table) {
             $table->bigIncrements('id');
-            $table->boolean('paid');
+            $table->string('status');
             $table->string('uuid');
             $table->unsignedBigInteger("user_id");
             $table->timestamps();

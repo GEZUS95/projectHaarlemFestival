@@ -202,7 +202,7 @@ class OrderController extends BaseController
             ],
             "description" => $user->name . ' ordered ',
             "redirectUrl" => RouteManager::getUrlByRouteName("order"),
-            "webhookUrl" => RouteManager::getUrlByRouteName("invoice"),
+            "webhookUrl" => RouteManager::getUrlByRouteName("webhook"),
             "metadata" => [
                 "order_id" => $order->id,
             ],

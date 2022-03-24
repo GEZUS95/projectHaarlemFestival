@@ -35,7 +35,7 @@ class OrderSeeder
 
         Order::create([
             'uuid' => Uuid::uuid4(),
-            'paid' => false,
+            'status' => 'open',
             'user_id' => $user->id,
         ]);
 
