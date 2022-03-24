@@ -42,4 +42,13 @@ class FrontendController extends BaseController
         return $response;
     }
 
+    public function assets(Request $request, $slug): BinaryFileResponse
+    {
+        $file = dirname(__DIR__, 4).'/resources/assets/'.$slug;
+        $response = new BinaryFileResponse($file);
+        $response->setPublic();
+        $response->setMaxAge(1);
+        return $response;
+    }
+
 }

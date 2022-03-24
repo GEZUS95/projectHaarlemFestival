@@ -118,6 +118,7 @@ $routes = [
     ["name" => "css", "url" => "/main.css", "controller" => [new FrontendController(), 'style'], "method" => "GET"],
     ["name" => "js", "url" => "/main.js", "controller" => [new FrontendController(), 'javascript'], "method" => "GET"],
     ["name" => "images", "url" => "/images/{slug}", "controller" => [new FrontendController(), 'images'], "method" => "GET"],
+    ["name" => "assets", "url" => "/assets/{slug}", "controller" => [new FrontendController(), 'assets'], "method" => "GET"],
 ];
 
 $generatedRoute = new RouteManager($routes);

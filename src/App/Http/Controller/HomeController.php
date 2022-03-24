@@ -2,6 +2,7 @@
 
 namespace App\Http\Controller;
 
+use App\Model\Event;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,13 @@ class HomeController extends BaseController {
      */
     public function index(Request $request): Response
     {
-        $this->session->set("login_form_csrf_token",  bin2hex(random_bytes(24)));
+        $events = Event::query()
+            ->with("programs")
+            ->with("programs.items")
+            ->with("programs.items.location")
+            ->with("programs.items.performer")
+            ->get();
 
-        return $this->render('partials.home', []);
-    }
-    public function sendMessage(Request $request){
-        //Hier code voor naar database
+        return $this->render('partials.home', ["events" => $events]);
     }
 }

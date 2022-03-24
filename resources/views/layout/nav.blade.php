@@ -3,13 +3,8 @@
         <a href="/" class="layout-nav-btn">Haarlem Festival</a>
     </div>
 
-    <div class="layout-nav-dropdown">
-        <div class="layout-nav-btn nav-dropdown">Dropdown</div>
-        <div class="layout-nav-dropdown-content">
-            <a class="layout-nav-dropdown-content-link" href="/emailtest">Email</a>
-            <a class="layout-nav-dropdown-content-link" href="/emailtest">Email2</a>
-            <a class="layout-nav-dropdown-content-link" href="/emailtest">Email3</a>
-        </div>
+    <div class="layout-nav-links">
+        test
     </div>
     <div class="layout-nav-pictograms">
         <div class="layout-nav-pictogram-profile"><a href="" class="layout-nav-btn">
