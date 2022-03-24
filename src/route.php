@@ -39,7 +39,7 @@ $routes = [
     ["name" => "order_remove", "url" => "/order/remove", "controller" => [new OrderController(), 'remove'], "method" => "POST"],
     ["name" => "order_delete", "url" => "/order/delete", "controller" => [new OrderController(), 'delete'], "method" => "POST"],
     ["name" => "order_pay", "url" => "/order/pay", "controller" => [new OrderController(), 'mollie'], "method" => "GET"],
-    ["name" => "invoice", "url" => "/invoice", "controller" => [new OrderController(), 'invoice'], "method" => "GET"],
+    ["name" => "webhook", "url" => "/webhook", "controller" => [new OrderController(), 'webhook'], "method" => "POST"],
     ["name" => "receipt", "url" => "/receipt", "controller" => [new OrderController(), 'receipt'], "method" => "GET"],
 
     // Food routes

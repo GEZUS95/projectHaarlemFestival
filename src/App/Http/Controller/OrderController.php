@@ -113,7 +113,7 @@ class OrderController extends BaseController
      * @throws ApiException
      * @throws Exception
      */
-    public function invoice(Request $request)
+    public function webhook(Request $request)
     {
         $mollie = new MollieApiClient();
         $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
