@@ -10,6 +10,8 @@ class LocationSeeder
 {
     public function seed()
     {
+        if(1 + 1 == 2) return;
+
         $faker = Factory::create();
 
         for($i = 0; $i < 20; $i++){

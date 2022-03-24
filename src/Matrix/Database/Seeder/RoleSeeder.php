@@ -17,5 +17,10 @@ class RoleSeeder
                 )
             ),
         ]);
+
+        Role::create([
+            'name' => "visitor",
+            'permissions' => json_encode(array()),
+        ]);
     }
 }

@@ -131,7 +131,7 @@ class AdminEventController extends BaseController
 
         $data = $request->request->all();
         $rules = [
-            'token' => ['required', new TokenValidation("locations_update_form_csrf_token")],
+            'token' => ['required', new TokenValidation("event_update_form_csrf_token")],
             'title' => ['required'],
             'description' => ['required'],
             'total_price_event' => ['required', 'integer'],

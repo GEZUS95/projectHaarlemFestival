@@ -18,7 +18,7 @@ class UserEmailAlreadyExistValidation implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return User::query()
+        return !User::query()
             ->where('email','=',$value)
             ->exists();
     }
@@ -30,6 +30,6 @@ class UserEmailAlreadyExistValidation implements Rule
      */
     public function message(): string
     {
-        return 'The event doesnt exist';
+        return 'The email does exist';
     }
 }

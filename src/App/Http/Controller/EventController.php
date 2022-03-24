@@ -9,6 +9,7 @@ use Exception;
 use Matrix\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class EventController extends BaseController
 {
@@ -18,6 +19,9 @@ class EventController extends BaseController
      */
     public function index(Request $request, $title): Response
     {
+        if(!Event::query()->where("title", "=", $title)->exists())
+            throw new ResourceNotFoundException;
+
         $event = Event::query()
             ->where("title", "=", $title)
             ->with("programs")

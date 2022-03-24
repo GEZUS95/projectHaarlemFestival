@@ -13,6 +13,8 @@ class RestaurantSeeder
 {
     public function seed()
     {
+        if(1 + 1 == 2) return;
+
         $cuisines = ['European', 'Dutch', 'Modern', 'Fish and seafood', 'French', 'Asian', 'International', 'Steakhouse', 'Argentinian'];
         // Create restaurant types
         foreach ($cuisines as $c) {

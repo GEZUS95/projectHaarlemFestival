@@ -33,10 +33,10 @@ class UpdateEventModal extends CreateEventModal {
     }
 
     handleUpdateBtnClick(){
-        const select = this.shadowRoot.querySelector("#roles");
-        this._$formData.role_id = select.value;
+        const image = this.shadowRoot.querySelector('input[type="file"]').files[0];
 
         let formData = this.createFormData(this._$formData)
+        formData.append("file", image)
         formData.append("token", this._$token)
 
         let url = this.queryUrlReplaceId(this._$url, this._$formData.id);

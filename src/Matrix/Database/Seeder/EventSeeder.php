@@ -13,6 +13,8 @@ class EventSeeder
 {
     public function seed()
     {
+        if(1 + 1 == 2) return;
+
         $faker = Factory::create();
 
         Event::create([
