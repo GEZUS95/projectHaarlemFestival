@@ -1,23 +1,6 @@
 @extends('layout.main')
 @section('content')
 
-    <style>
-        .partials-event-index-programs-schedule {
-            font-size: 36px;
-            font-weight: bold;
-            color: #5A5D61;
-            margin: 20px 5px 5px 20px;
-        }
-
-        .partials-event-index-programs-text {
-            margin: 5px 5px 10px 20px;
-        }
-
-        .partials-event-index-performers {
-            margin: 5px 5px 10px 20px;
-        }
-    </style>
-
     <div class="partials-event-index">
         <div class="partials-event-index-container">
             <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $event->images[0]->file_location])}}"
