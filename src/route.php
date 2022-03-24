@@ -110,6 +110,7 @@ $routes = [
 
     // Test routes
     ["name" => "event", "url" => "/event/{title}", "controller" => [new EventController(), "index"], "method" => "GET"],
+    ["name" => "event_program", "url" => "/program/{id}", "controller" => [new EventController(), "program"], "method" => "GET"],
 
     ["name" => "test_email", "url" => "/emailtest", "controller" => [new EmailController(), 'index'], "method" => "GET"],
     ["name" => "test_email_post", "url" => "/emailtest", "controller" => [new EmailController(), 'sendEmail'], "method" => "POST"],

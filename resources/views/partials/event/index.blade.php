@@ -25,7 +25,8 @@
             </div>
             <div class="partials-event-index-programs">
                 @foreach($event->programs as $program)
-                    <div style="width: {{100 / count($event->programs) . "%"}}"
+                    <a style="width: {{100 / count($event->programs) . "%"}}"
+                       href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("event_program", ["id" => $program->id])}}"
                          class="partials-event-index-programs-container">
 
                         <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $program->items[array_rand($program->items->toArray())]->location->images[0]->file_location])}}"
@@ -36,7 +37,7 @@
                         <div class="partials-event-index-programs-date">
                             {{\Carbon\Carbon::parse($program->start_time)->format('D d F Y')}}
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
 

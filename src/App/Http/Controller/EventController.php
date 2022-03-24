@@ -5,6 +5,7 @@ namespace App\Http\Controller;
 use App\Model\Event;
 use App\Model\Location;
 use App\Model\Performer;
+use App\Model\Program;
 use Exception;
 use Matrix\BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,9 @@ class EventController extends BaseController
 {
 
     /**
+     * @param Request $request
+     * @param $title
+     * @return Response
      * @throws Exception
      */
     public function index(Request $request, $title): Response
@@ -51,4 +55,22 @@ class EventController extends BaseController
         return $this->render("partials.event.index", ["event" => $event, "locations" => $locations, "performers" => $performers]);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return Response
+     * @throws Exception
+     */
+    public function program(Request $request, $id): Response
+    {
+        $program = Program::query()
+            ->where("id", "=", $id)
+            ->with("events")
+            ->with("items")
+            ->with("items.location")
+            ->with("items.performer")
+            ->first();
+
+        return $this->render("partials.event.program", ["program" => $program]);
+    }
 }
