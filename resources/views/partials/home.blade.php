@@ -1,75 +1,6 @@
 @extends('layout.main')
 @section('content')
 
-    <style>
-        .partials-home-event {
-            width: 100%;
-        }
-
-        .partials-home-event-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 90px;
-            padding: 0 40px;
-        }
-
-        .partials-home-event-nav-title {
-            color: #5A5D61;
-            font-weight: bold;
-            font-size: 60px;
-        }
-
-        .partials-home-event-nav-btn {
-            background-color: #007BFF;
-            color: #ffffff;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 4px 2px;
-            line-height: 1.5;
-            border-radius: 0.3rem;
-            user-select: none;
-            border: 1px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-            width: 170px;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        .partials-home-event-programs {
-            display: flex;
-            flex-direction: row;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .partials-home-event-programs-images {
-            width: 100%;
-        }
-
-        .partials-home-event-programs-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .partials-home-event-programs-date {
-            position: absolute;
-            top: 0;
-            color: white;
-            width: 100%;
-            font-size: 20px;
-            padding: 5px 10px;
-        }
-    </style>
-
     <div class="partials-home">
         <div class="partials-home-image-container">
             <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("assets", ["slug" => "banner.jpg"])}}"
@@ -205,7 +136,8 @@
 
                     <div class="partials-home-event-programs">
                         @foreach($event->programs as $program)
-                            <div style="width: {{100 / count($event->programs) . "%"}}" class="partials-home-event-programs-container">
+                            <div style="width: {{100 / count($event->programs) . "%"}}"
+                                 class="partials-home-event-programs-container">
                                 @if(count($program->items) != 0)
                                     @if(count($program->items[array_rand($program->items->toArray())]->location->images) != 0)
 
@@ -233,8 +165,5 @@
                         @endforeach
                     </div>
                 </div>
-            @endforeach
-            <div>
-
-            </div>
+    @endforeach
 @endsection
