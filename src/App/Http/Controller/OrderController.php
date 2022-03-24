@@ -130,7 +130,7 @@ class OrderController extends BaseController
                  * The payment is paid and isn't refunded or charged back.
                  * At this point you'd probably want to start the process of delivering the product to the customer.
                  */
-                $order = $this::find($payment->metadata["order_id"])->update(["paid" => true]);
+                $order = $this::find($payment->metadata["order_id"])->update(["status" => "paid"]);
                 return $this->render("partials.tests.invoice", ['order' => $order]);
 
 
@@ -138,32 +138,39 @@ class OrderController extends BaseController
                 /*
                  * The payment is open.
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "open"]);
             } elseif ($payment->isPending()) {
                 /*
                  * The payment is pending.
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "pending"]);
             } elseif ($payment->isFailed()) {
                 /*
                  * The payment has failed.
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "failed"]);
             } elseif ($payment->isExpired()) {
                 /*
                  * The payment is expired.
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "expired"]);
             } elseif ($payment->isCanceled()) {
                 /*
                  * The payment has been canceled.
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "canceled"]);
             } elseif ($payment->hasRefunds()) {
                 /*
                  * The payment has been (partially) refunded.
                  * The status of the payment is still "paid"
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "refund"]);
             } elseif ($payment->hasChargebacks()) {
                 /*
                  * The payment has been (partially) charged back.
                  * The status of the payment is still "paid"
                  */
+                $this::find($payment->metadata["order_id"])->update(["status" => "chargeback"]);
             }
         } catch (ApiException $e) {
             //echo "API call failed: " . htmlspecialchars($e->getMessage());
