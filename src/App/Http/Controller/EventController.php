@@ -65,7 +65,7 @@ class EventController extends BaseController
     {
         $program = Program::query()
             ->where("id", "=", $id)
-            ->with("events")
+            ->with("event")
             ->with("items")
             ->with("items.location")
             ->with("items.performer")

@@ -27,7 +27,7 @@
                 @foreach($event->programs as $program)
                     <a style="width: {{100 / count($event->programs) . "%"}}"
                        href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("event_program", ["id" => $program->id])}}"
-                         class="partials-event-index-programs-container">
+                       class="partials-event-index-programs-container">
 
                         <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $program->items[array_rand($program->items->toArray())]->location->images[0]->file_location])}}"
                              alt="haarlem"
@@ -54,7 +54,7 @@
                         <div class="partials-event-index-performers-info">
                             <div class="partials-event-index-performers-info-name">{{$performer->name}}</div>
                             <div>
-{{--                                @todo Make model functions here so $perfomer->playsOn()--}}
+                                {{--                                @todo Make model functions here so $perfomer->playsOn()--}}
                                 <div>Plays on Friday</div>
                             </div>
                         </div>
@@ -64,7 +64,8 @@
 
             <div class="partials-event-index-programs-schedule">Locations</div>
             <div class="partials-event-index-programs-text">
-                The Haarlem Festival dance {{$event->title}} is spread across multiple locations. Through out the event artists will
+                The Haarlem Festival dance {{$event->title}} is spread across multiple locations. Through out the event
+                artists will
                 perform at these locations on multiple days! Click on a tile below for more information.
             </div>
             <div class="partials-event-index-programs">

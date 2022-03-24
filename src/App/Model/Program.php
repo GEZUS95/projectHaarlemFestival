@@ -26,7 +26,7 @@ class Program extends Model {
         'event_id' => 'integer',
     ];
 
-    public function events(): BelongsTo
+    public function event(): BelongsTo
     {
 
         return $this->belongsTo(Event::class);
