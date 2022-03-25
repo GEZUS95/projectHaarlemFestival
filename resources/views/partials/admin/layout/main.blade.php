@@ -27,6 +27,11 @@
     <div class="partials-admin-layout-main-content">
         @yield("content")
     </div>
+
+    <create-event-modal
+            token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("event_create_form_csrf_token")}}"
+            url="{{\Matrix\Managers\RouteManager::getUrlWithOutFilledParameters("admin_event_save")}}"
+    ></create-event-modal>
 </main>
 
 <script type="text/javascript" src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("js")}}"></script>

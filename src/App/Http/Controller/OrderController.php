@@ -2,11 +2,17 @@
 
 namespace App\Http\Controller;
 
+use App\Model\Event;
+use App\Model\Item;
 use App\Model\Order;
+use App\Model\Program;
 use App\Rules\TokenValidation;
 use Exception;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Matrix\BaseController;
 use Matrix\Managers\AuthManager;
 use Matrix\Managers\RouteManager;
@@ -29,7 +35,97 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.order.index", ['order' => $this->getOrder($user)]);
+
+        $event = Event::all()
+            ->random()
+            ->first();
+
+        $image_link = $event->images[0]->file_location;
+
+        $order = $this->removeDupes(Order::query()
+            ->where("user_id", "=", $user->id)
+            ->where('status', '=', "normal")
+            ->with("items")
+            ->with("programs")
+            ->with("events")
+            ->first());
+
+        $orderIds = [];
+        foreach ($order["items"] as $item) {
+            if (in_array($item->id, $orderIds))
+                array_push($orderIds, $item->id);
+        }
+
+        $extraSales = [];
+        if (!empty($orderIds)) {
+            $extraSales = Item::query()
+                ->whereNotIn('id', $orderIds)
+                ->get()
+                ->random()
+                ->limit(2);
+        }
+
+        return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales]);
+    }
+
+    private function removeDupes($order): Collection
+    {
+        $alreadyQueriedItemIds = [];
+        $newItems = Collection::make([]);
+        foreach ($order->items as $item) {
+            if (in_array($item->id, $alreadyQueriedItemIds))
+                continue;
+
+            array_push($alreadyQueriedItemIds, $item->id);
+            $found = Item::query()
+                ->where("id", "=", $item->id)
+                ->with('performer')
+                ->with('location')
+                ->first();
+
+            $found["count"] = $this->count($item->id, "App\Model\Item");
+            $newItems->push($found);
+        }
+
+        $alreadyQueriedProgramIds = [];
+        $newPrograms = Collection::make([]);
+        foreach ($order->programs as $program) {
+            if (in_array($program->id, $alreadyQueriedProgramIds))
+                continue;
+
+            array_push($alreadyQueriedProgramIds, $program->id);
+            $found = Program::query()
+                ->where("id", "=", $program->id)
+                ->first();
+
+            $found["count"] = $this->count($program->id, "App\Model\Program");
+            $newPrograms->push($found);
+        }
+
+        $alreadyQueriedEventIds = [];
+        $newEvent = Collection::make([]);
+        foreach ($order->events as $event) {
+            if (in_array($event->id, $alreadyQueriedEventIds))
+                continue;
+
+            array_push($alreadyQueriedEventIds, $event->id);
+            $found = Event::query()
+                ->where("id", "=", $event->id)
+                ->first();
+
+            $found["count"] = $this->count($event->id, "App\Model\Event");
+            $newEvent->push($found);
+        }
+
+        return Collection::make(["events" => $newEvent, "programs" => $newPrograms, "items" => $newItems]);
+    }
+
+    private function count($id, $type): int
+    {
+        return Capsule::table('order_able')
+            ->where("order_able_id", "=", $id)
+            ->where("order_able_type", "=", $type)
+            ->count();
     }
 
     /**
