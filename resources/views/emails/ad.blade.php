@@ -1,15 +1,5 @@
 <html>
 <body>
-<table class="wrapper">
-    <tr>
-        <td style="text-align:center;">
-
-        </td>
-    </tr>
-</table>
-<table class="main" style="text-align: left; margin-left: auto; margin-right: auto;">
-
-</table>
 <h1 style="font-size:xx-large;color:white;background-color:#1A222A;text-align:center;padding:1%;">Haarlem Festival</h1>
 <h1 style="background-color:white;color:black;text-align:center;padding:20px;">Hi {{$name}} Testpersoon!</h1>
 
