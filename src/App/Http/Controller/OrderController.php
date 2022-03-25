@@ -72,8 +72,7 @@ class OrderController extends BaseController
             $model->orders()->attach($order);
         }
 
-        $referer = $request->headers->get('referer');
-        return $this->Redirect($referer);
+        return $this->json(["Success" => "Added the type to the cart"]);
     }
 
     /**

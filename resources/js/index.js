@@ -24,6 +24,8 @@ import ProgramItemOverviewComponent from "./admin/components/ProgramItemOverview
 import CreateItemModal from "./admin/modals/CreateItemModal";
 import UpdateItemModal from "./admin/modals/UpdateItemModal";
 import UpdateProgramModal from "./admin/modals/UpdateProgramModal";
+import BuyItemTicket from "./components/BuyItemTicket";
+import BuyProgramTicket from "./components/BuyProgramTicket";
 
 /**
  * View Components
@@ -51,6 +53,8 @@ window.customElements.define('program-item-overview-component', ProgramItemOverv
 window.customElements.define('create-item-modal', CreateItemModal)
 window.customElements.define('update-item-modal', UpdateItemModal)
 window.customElements.define('update-program-modal', UpdateProgramModal)
+window.customElements.define('buy-item-ticket', BuyItemTicket)
+window.customElements.define('buy-program-ticket', BuyProgramTicket)
 
 /**
  * Helper Components
