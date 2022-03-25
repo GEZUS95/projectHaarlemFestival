@@ -16,7 +16,7 @@ class EmailManager
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    public function __construct($emailAddress, $subject, $blade_name, $args = array())
+    public function __construct($emailAddress, $subject, $blade_name, $args = array(), $attachment = null, $name= null)
     {
         $blade = new BladeOne(dirname(__DIR__, 3) . "/resources/views",dirname(__DIR__, 3) . "/public/views",BladeOne::MODE_DEBUG);
         $blade->run('emails.signup',[]);
@@ -28,6 +28,8 @@ class EmailManager
             ->to($emailAddress)
             ->subject($subject)
             ->html(html_entity_decode($blade->run($blade_name, $args)));
+
+        if($attachment != null) $email->attach($attachment, $name);
 
         $mailer->send($email);
     }

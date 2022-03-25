@@ -23,7 +23,8 @@
     "itsgoingd/clockwork": "^5.1",
     "endroid/qr-code": "^4.4",
     "ramsey/uuid": "^4.2",
-    "mollie/mollie-api-php": "2.0"
+    "mollie/mollie-api-php": "2.0",
+    "dompdf/dompdf": "^1.2"
   },
   "autoload": {
     "psr-4": {
