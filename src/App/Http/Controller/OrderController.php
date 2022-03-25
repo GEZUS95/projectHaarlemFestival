@@ -29,7 +29,7 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.tests.order", ['order' => $this->getOrder($user)]);
+        return $this->render("partials.order.index", ['order' => $this->getOrder($user)]);
     }
 
     /**

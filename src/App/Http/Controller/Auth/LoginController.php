@@ -8,7 +8,9 @@ use Exception;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\AuthManager;
+use Matrix\Managers\RouteManager;
 use Matrix\Managers\SessionManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,6 +43,13 @@ class LoginController extends BaseController {
         }
 
         return $this->json(['result' => AuthManager::getCurrentUser()]);
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        AuthManager::logout();
+
+        return $this->Redirect(RouteManager::getUrlByRouteName("home"));
     }
 
 }
