@@ -63,6 +63,8 @@ class EventController extends BaseController
      */
     public function program(Request $request, $id): Response
     {
+        $this->session->set("validate_form_token",  bin2hex(random_bytes(24)));
+
         $program = Program::query()
             ->where("id", "=", $id)
             ->with("event")

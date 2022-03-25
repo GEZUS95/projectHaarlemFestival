@@ -108,9 +108,11 @@
                             <div class="partials-event-program-b-tickets-location">{{$item->location->name}}</div>
                         </div>
 
-                        <form>
+                        <form method="POST" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}">
+                            <input type="hidden" value="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}" name="token">
                             <input type="number" value="0" name="amount">
-                            <input type="hidden" value="item" name="item">
+                            <input type="hidden" value="{{$item->id}}" name="id">
+                            <input type="hidden" value="item" name="type">
                             <input type="submit" value="Add to Cart">
                         </form>
                     </div>

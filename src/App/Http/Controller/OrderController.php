@@ -3,6 +3,7 @@
 namespace App\Http\Controller;
 
 use App\Model\Order;
+use App\Rules\TokenValidation;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -51,33 +52,13 @@ class OrderController extends BaseController
      * validate request
      * @throws Exception
      */
-    public function add(Request $request): Response
+    public function set(Request $request): Response
     {
         $data = $request->request->all();
         $rules = [
-            'id' => 'required',
-            'type' => 'required',
-        ];
-        $this->validate($data, $rules);
-
-        $model = $this->model($data['type'], $data['id']);
-        $order = $this->getOrder(AuthManager::getCurrentUser());
-
-        $model->orders()->attach($order);
-        return $this->render("partials.tests.order", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
-    }
-
-    /**
-     * Same as the add function but instead remove the order
-     * @param Request $request
-     * validate request
-     * @throws Exception
-     */
-    public function remove(Request $request): Response
-    {
-        $data = $request->request->all();
-        $rules = [
-            'id' => 'required',
+            'token' => ['required', new TokenValidation("validate_form_token")],
+            'amount' => ['required', 'integer'],
+            'id' => ['required', 'integer'],
             'type' => 'required',
         ];
         $this->validate($data, $rules);
@@ -86,7 +67,13 @@ class OrderController extends BaseController
         $order = $this->getOrder(AuthManager::getCurrentUser());
 
         $model->orders($order)->detach();
-        return $this->render("partials.tests.order", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
+
+        for ($x = 0; $x < (int)$data['amount']; $x++) {
+            $model->orders()->attach($order);
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->Redirect($referer);
     }
 
     /**
@@ -109,72 +96,27 @@ class OrderController extends BaseController
     /**
      * Wait for the response and finalize the order!
      * @param Request $request
-     * @return Response|void
+     * @return Response
      * @throws ApiException
      * @throws Exception
      */
-    public function webhook(Request $request)
+    public function webhook(Request $request): Response
     {
         $mollie = new MollieApiClient();
         $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
 
         try {
-            /*
-             * Retrieve the payment's.
-             */
             $payment = $mollie->payments->get($_POST["id"]);
 
-
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
-                /*
-                 * The payment is paid and isn't refunded or charged back.
-                 * At this point you'd probably want to start the process of delivering the product to the customer.
-                 */
-                $order = $this::find($payment->metadata["order_id"])->update(["status" => "paid"]);
-                return $this->render("partials.tests.invoice", ['order' => $order]);
-
-
-            } elseif ($payment->isOpen()) {
-                /*
-                 * The payment is open.
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "open"]);
-            } elseif ($payment->isPending()) {
-                /*
-                 * The payment is pending.
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "pending"]);
-            } elseif ($payment->isFailed()) {
-                /*
-                 * The payment has failed.
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "failed"]);
-            } elseif ($payment->isExpired()) {
-                /*
-                 * The payment is expired.
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "expired"]);
-            } elseif ($payment->isCanceled()) {
-                /*
-                 * The payment has been canceled.
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "canceled"]);
-            } elseif ($payment->hasRefunds()) {
-                /*
-                 * The payment has been (partially) refunded.
-                 * The status of the payment is still "paid"
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "refund"]);
-            } elseif ($payment->hasChargebacks()) {
-                /*
-                 * The payment has been (partially) charged back.
-                 * The status of the payment is still "paid"
-                 */
-                $this::find($payment->metadata["order_id"])->update(["status" => "chargeback"]);
+                Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
+                return $this->json(["Error" => "Payment Success"]);
             }
+
+            Order::find($payment->metadata["order_id"])->update(["status" => "normal"]);
+            return $this->json(["Error" => "Payment Failed"]);
         } catch (ApiException $e) {
-            //echo "API call failed: " . htmlspecialchars($e->getMessage());
-            echo "Someting went wong!";
+            return $this->json(["Error" => "Some error Occurred!"]);
         }
     }
 
@@ -227,14 +169,14 @@ class OrderController extends BaseController
     {
         $order = Order::query()
             ->where("user_id", "=", $user->id)
-            ->where('paid', '=', false)
+            ->where('status', '=', "normal")
             ->first();
 
         if ($order != null)
             return $order;
 
         return Order::create([
-            'paid' => false,
+            'status' => "normal",
             'uuid' => Uuid::uuid4(),
             'user_id' => $user->id,
         ]);
@@ -249,7 +191,7 @@ class OrderController extends BaseController
     {
         return Order::query()
             ->where("user_id", "=", $user->id)
-            ->where('paid', '=', true)
+            ->where('status', '=', "paid")
             ->first();
     }
 

@@ -1,28 +1,11 @@
 <?php
 
-use App\Http\Controller\Admin\AdminEventController;
-use App\Http\Controller\Admin\AdminItemController;
-use App\Http\Controller\Admin\AdminLocationsController;
-use App\Http\Controller\Admin\AdminMainController;
-use App\Http\Controller\Admin\AdminPerformerController;
-use App\Http\Controller\Admin\AdminProgramController;
-use App\Http\Controller\Admin\AdminRestaurantController;
-use App\Http\Controller\Admin\AdminRestaurantTypesController;
-use App\Http\Controller\Admin\AdminRolesController;
-use App\Http\Controller\Admin\AdminSessionController;
-use App\Http\Controller\Admin\AdminUsersController;
-use App\Http\Controller\HomeController;
 use App\Http\Controller\Auth\LoginController;
 use App\Http\Controller\Auth\RegisterController;
-use App\Http\Controller\EventController;
-use App\Http\Controller\OrderController;
-use App\Http\Controller\RestaurantController;
-use App\Http\Controller\FrontendController;
-use App\Http\Controller\EmailController;
-use App\Http\Controller\QRController;
-use App\Http\Controller\ContactController;
 use Matrix\Managers\RouteManager;
-use \App\Http\Controller\CartController;
+
+use App\Http\Controller\{ HomeController,  EventController,  OrderController,  RestaurantController,  FrontendController,  EmailController,  ContactController};
+use App\Http\Controller\Admin\ { AdminEventController,  AdminItemController,  AdminLocationsController,  AdminMainController,  AdminPerformerController,  AdminProgramController,  AdminRestaurantController,  AdminRestaurantTypesController,  AdminRolesController,  AdminSessionController,  AdminUsersController };
 
 $routes = [
     // basic routes
@@ -35,8 +18,7 @@ $routes = [
 
     // order routes and mollie
     ["name" => "order", "url" => "/order", "controller" => [new OrderController(), 'index'], "method" => "GET"],
-    ["name" => "order_add", "url" => "/order/add", "controller" => [new OrderController(), 'add'], "method" => "POST"],
-    ["name" => "order_remove", "url" => "/order/remove", "controller" => [new OrderController(), 'remove'], "method" => "POST"],
+    ["name" => "order_add", "url" => "/order/add", "controller" => [new OrderController(), 'set'], "method" => "POST"],
     ["name" => "order_delete", "url" => "/order/delete", "controller" => [new OrderController(), 'delete'], "method" => "POST"],
     ["name" => "order_pay", "url" => "/order/pay", "controller" => [new OrderController(), 'mollie'], "method" => "GET"],
     ["name" => "webhook", "url" => "/webhook", "controller" => [new OrderController(), 'webhook'], "method" => "POST"],
