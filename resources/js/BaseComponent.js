@@ -24,7 +24,7 @@ class BaseComponent extends HTMLElement {
             method: "GET",
         });
 
-        return response.json();
+        return await response.json();
     }
 
     generateArrFromResponse(res){

@@ -204,8 +204,7 @@ class ProgramOverviewPage extends BaseComponent {
     }
 
     async initForm(e){
-        const res = await this.queryGet("http://127.0.0.1:4321/admin/program/" + e.detail)
-
+        const res = await this.queryGet(this.baseURL + "/admin/program/" + e.detail)
         this.content(res);
     }
 
