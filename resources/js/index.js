@@ -26,6 +26,7 @@ import UpdateItemModal from "./admin/modals/UpdateItemModal";
 import UpdateProgramModal from "./admin/modals/UpdateProgramModal";
 import BuyItemTicket from "./components/BuyItemTicket";
 import BuyProgramTicket from "./components/BuyProgramTicket";
+import CartChangeTicket from "./components/CartChangeTicket";
 
 /**
  * View Components
@@ -55,6 +56,7 @@ window.customElements.define('update-item-modal', UpdateItemModal)
 window.customElements.define('update-program-modal', UpdateProgramModal)
 window.customElements.define('buy-item-ticket', BuyItemTicket)
 window.customElements.define('buy-program-ticket', BuyProgramTicket)
+window.customElements.define('cart-change-ticket', CartChangeTicket)
 
 /**
  * Helper Components
