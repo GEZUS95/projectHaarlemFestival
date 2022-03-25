@@ -29,7 +29,7 @@ class EmailController extends BaseController
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmail(Request $request)
+    public function sendEmailWithForm(Request $request)
     {
         $data = $request->request->all();
 
@@ -51,15 +51,23 @@ class EmailController extends BaseController
             return $this->Redirect($referer);
         }
 
-        if($data["pdf"] && $data["pdf-name"] != null) {
+        if(isset($data["pdf"]) && isset($data["pdf-name"])) {
             new EmailManager($data["email"], $data["subject"], "emails.ad", ["name" => "Floris"], $data["pdf"], $data["pdf-name"]);
         }
         else {
             new EmailManager($data["email"], $data["subject"], "emails.ad", ["name" => "Floris"]);
         }
 
-        return $this->json(["t"=>"t"]);
-//        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
+//        return $this->json(["t"=>"t"]);
+        return $this->Redirect(RouteManager::getUrlByRouteName('home'));
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendEmail($email, $subject, $bladeName, $vars, $pdf, $pdfName){
+        $vars = ["name" => "Floris"];
+        new EmailManager($email, $subject, $bladeName, $vars, $pdf, $pdfName);
     }
 
     /**
