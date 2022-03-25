@@ -66,7 +66,7 @@ class EmailController extends BaseController
      * @throws TransportExceptionInterface
      */
     public function sendEmail($email, $subject, $bladeName, $vars, $pdf, $pdfName){
-        $vars = ["name" => "Floris"];
+//        $vars = ["name" => "Floris"];
         new EmailManager($email, $subject, $bladeName, $vars, $pdf, $pdfName);
     }
 
