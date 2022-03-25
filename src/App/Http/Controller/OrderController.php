@@ -27,6 +27,7 @@ class OrderController extends BaseController
      */
     public function index(): Response
     {
+        AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
         return $this->render("partials.tests.order", ['order' => $this->getOrder($user)]);
     }
@@ -39,6 +40,7 @@ class OrderController extends BaseController
      */
     public function receipt(): Response
     {
+        AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
         return $this->render("partials.tests.receipt", ['receipt' => $this->getReceipt($user)]);
     }
@@ -54,6 +56,8 @@ class OrderController extends BaseController
      */
     public function set(Request $request): Response
     {
+        AuthManager::isLoggedIn();
+
         $data = $request->request->all();
         $rules = [
             'token' => ['required', new TokenValidation("validate_form_token")],
@@ -85,6 +89,8 @@ class OrderController extends BaseController
      */
     public function delete(Request $request): Response
     {
+        AuthManager::isLoggedIn();
+
         $order = $this->getOrder(AuthManager::getCurrentUser());
 
         $order->delete();
@@ -127,6 +133,7 @@ class OrderController extends BaseController
      */
     public function mollie(Request $request)
     {
+        AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
         $total = 0;
         $order = $this->getOrder($user);

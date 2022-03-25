@@ -8,6 +8,7 @@ use App\Model\Performer;
 use App\Model\Program;
 use Exception;
 use Matrix\BaseController;
+use Matrix\Managers\AuthManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -63,6 +64,8 @@ class EventController extends BaseController
      */
     public function program(Request $request, $id): Response
     {
+        AuthManager::isLoggedIn();
+
         $this->session->set("validate_form_token",  bin2hex(random_bytes(24)));
 
         $program = Program::query()

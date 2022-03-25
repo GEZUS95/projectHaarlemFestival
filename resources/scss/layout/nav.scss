@@ -16,34 +16,17 @@
   text-decoration: none;
 }
 
-.layout-nav-dropdown:hover .layout-nav-dropdown {
-  background-color: dodgerblue;
-}
-
-.layout-nav-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.layout-nav-dropdown-content-link {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.layout-nav-dropdown-content-link:hover {
-  background-color: dodgerblue;
-}
-
-.layout-nav-dropdown:hover .layout-nav-dropdown-content {
-  display: block;
-}
-.layout-nav-pictograms {
+.layout-nav-links {
   display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.layout-nav-links-url {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
 }

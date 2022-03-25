@@ -57,6 +57,13 @@ class AuthManager
         return true;
     }
 
+    public static function boolLoggedIn(): bool
+    {
+        $email = SessionManager::getSessionManager()->get("user_email");
+
+        return !$email == null;
+    }
+
     /**
      * @return Builder|Model|object|null
      */

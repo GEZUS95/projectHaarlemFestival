@@ -35,11 +35,8 @@ class BuyItemTicket extends BaseComponent {
     }
 
     sendRequestForm(){
-        console.log("test");
         const number = this.shadowRoot.querySelector(".number").value;
 
-
-        console.log(this._$token)
         let formData = new FormData();
         formData.append("token", this._$token)
         formData.append("id", this._$item_id)
