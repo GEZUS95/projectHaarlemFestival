@@ -2,10 +2,16 @@
 
 namespace App\Http\Controller;
 
+use App\Model\Event;
+use App\Model\Item;
+use App\Model\Order;
+use App\Model\Program;
 use eftec\bladeone\BladeOne;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Matrix\BaseController;
 use Matrix\Factory\ValidatorFactory;
+use Matrix\Managers\AuthManager;
 use Matrix\Managers\EmailManager;
 use Matrix\Managers\RouteManager;
 use phpDocumentor\Reflection\Types\Mixed_;
@@ -77,10 +83,72 @@ class EmailController extends BaseController
     {
         $blade = new BladeOne(dirname(__DIR__, 4) . "/resources/views",dirname(__DIR__, 4) . "/public/views",BladeOne::MODE_DEBUG);
 
+        $order = $this->removeDupes(Order::query()
+            ->where("user_id", "=", AuthManager::getCurrentUser()->id)
+            ->where('status', '=', "normal")
+            ->with("items")
+            ->with("programs")
+            ->with("events")
+            ->first());
+
+        $args['order'] = $order;
+
         //generate some PDFs!
         $dompdf = new DOMPDF();  //if you use namespaces you may use new \DOMPDF()
         $dompdf->loadHtml(html_entity_decode($blade->run($blade_name, $args)));
         $dompdf->render();
         return $dompdf->output();
+    }
+
+    private function removeDupes($order): Collection
+    {
+        $alreadyQueriedItemIds = [];
+        $newItems = Collection::make([]);
+        foreach ($order->items as $item) {
+            if (in_array($item->id, $alreadyQueriedItemIds))
+                continue;
+
+            array_push($alreadyQueriedItemIds, $item->id);
+            $found = Item::query()
+                ->where("id", "=", $item->id)
+                ->with('performer')
+                ->with('location')
+                ->first();
+
+            $found["count"] = $this->count($item->id, "App\Model\Item");
+            $newItems->push($found);
+        }
+
+        $alreadyQueriedProgramIds = [];
+        $newPrograms = Collection::make([]);
+        foreach ($order->programs as $program) {
+            if (in_array($program->id, $alreadyQueriedProgramIds))
+                continue;
+
+            array_push($alreadyQueriedProgramIds, $program->id);
+            $found = Program::query()
+                ->where("id", "=", $program->id)
+                ->first();
+
+            $found["count"] = $this->count($program->id, "App\Model\Program");
+            $newPrograms->push($found);
+        }
+
+        $alreadyQueriedEventIds = [];
+        $newEvent = Collection::make([]);
+        foreach ($order->events as $event) {
+            if (in_array($event->id, $alreadyQueriedEventIds))
+                continue;
+
+            array_push($alreadyQueriedEventIds, $event->id);
+            $found = Event::query()
+                ->where("id", "=", $event->id)
+                ->first();
+
+            $found["count"] = $this->count($event->id, "App\Model\Event");
+            $newEvent->push($found);
+        }
+
+        return Collection::make(["events" => $newEvent, "programs" => $newPrograms, "items" => $newItems]);
     }
 }
