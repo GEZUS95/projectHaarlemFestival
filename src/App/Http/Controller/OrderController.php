@@ -34,7 +34,6 @@ class OrderController extends BaseController
     public function index(): Response
     {
         AuthManager::isLoggedIn();
-        $user = AuthManager::getCurrentUser();
 
         $event = Event::all()
             ->random()
@@ -42,13 +41,7 @@ class OrderController extends BaseController
 
         $image_link = $event->images[0]->file_location;
 
-        $order = $this->removeDupes(Order::query()
-            ->where("user_id", "=", $user->id)
-            ->where('status', '=', "normal")
-            ->with("items")
-            ->with("programs")
-            ->with("events")
-            ->first());
+        $order = $this->getOrderWithoutDupes();
 
         $orderIds = [];
         foreach ($order["items"] as $item) {
@@ -66,6 +59,16 @@ class OrderController extends BaseController
         }
 
         return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales]);
+    }
+
+    public function getOrderWithoutDupes(){
+        return $this->removeDupes(Order::query()
+            ->where("user_id", "=", AuthManager::getCurrentUser()->id)
+            ->where('status', '=', "normal")
+            ->with("items")
+            ->with("programs")
+            ->with("events")
+            ->first());
     }
 
     private function removeDupes($order): Collection
