@@ -14,7 +14,6 @@ use Matrix\Factory\ValidatorFactory;
 use Matrix\Managers\AuthManager;
 use Matrix\Managers\EmailManager;
 use Matrix\Managers\RouteManager;
-use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Dompdf\Dompdf;
@@ -72,7 +71,6 @@ class EmailController extends BaseController
      * @throws TransportExceptionInterface
      */
     public function sendEmail($email, $subject, $bladeName, $vars, $pdf, $pdfName){
-//        $vars = ["name" => "Floris"];
         new EmailManager($email, $subject, $bladeName, $vars, $pdf, $pdfName);
     }
 
