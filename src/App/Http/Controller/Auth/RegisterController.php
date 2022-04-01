@@ -14,6 +14,7 @@ use Matrix\Managers\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Model\User;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class RegisterController extends BaseController {
 
@@ -29,7 +30,7 @@ class RegisterController extends BaseController {
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function register(Request $request) {
         $data = $request->request->all();
