@@ -79,20 +79,17 @@ class EmailController extends BaseController
     /**
      * @throws Exception
      */
-    private function generatePDF($blade_name, $args = [])
+    public function generatePDF($blade_name, $args = [])
     {
         $blade = new BladeOne(dirname(__DIR__, 4) . "/resources/views",dirname(__DIR__, 4) . "/public/views",BladeOne::MODE_DEBUG);
-        $user = AuthManager::getCurrentUser();
-        $order = $this->removeDupes(Order::query()
-            ->where("user_id", "=", $user->id)
+        $args['user'] = AuthManager::getCurrentUser();
+        $args['order'] = $this->removeDupes(Order::query()
+            ->where("user_id", "=", $args['user']->id)
             ->where('status', '=', "normal")
             ->with("items")
             ->with("programs")
             ->with("events")
             ->first());
-
-        $args['order'] = $order;
-        $args['user'] = $user;
 
         //generate some PDFs!
         $dompdf = new DOMPDF();  //if you use namespaces you may use new \DOMPDF()
