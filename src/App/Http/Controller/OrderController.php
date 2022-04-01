@@ -223,9 +223,7 @@ class OrderController extends BaseController
 
             Order::find($payment->metadata["order_id"])->update(["status" => "normal"]);
             return $this->json(["Error" => "Payment Failed"]);
-        } catch (ApiException $e) {
-            return $this->json(["Error" => "Some error Occurred!"]);
-        } catch (TransportExceptionInterface $e) {
+        } catch (ApiException|TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
         }
     }
