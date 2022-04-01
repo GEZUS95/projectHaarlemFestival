@@ -83,7 +83,7 @@ class EmailController extends BaseController
         $args['user'] = AuthManager::getCurrentUser();
         $args['order'] = $this->removeDupes(Order::query()
             ->where("user_id", "=", $args['user']->id)
-            ->where('status', '=', "normal")
+            ->where('status', '=', $args['status'])
             ->with("items")
             ->with("programs")
             ->with("events")
