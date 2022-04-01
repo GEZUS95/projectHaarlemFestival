@@ -2,7 +2,7 @@
 <body>
 
 <h1 class="title">Haarlem Festival</h1>
-<h1 class="subtitle">Hi {{$args["order"]["name"]}}!</h1>
+<h1 class="subtitle">Hi {{$args["user"]->name}}!</h1>
 
 <p>Thanks for your order!<br>This is your confirmation email and a quick summary of the tickets you ordered!<br>
     Your tickets will be below in the form of a QR-code!</p>
