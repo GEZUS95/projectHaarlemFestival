@@ -65,7 +65,7 @@ class OrderController extends BaseController
     public function getOrderWithoutDupes(){
         return $this->removeDupes(Order::query()
             ->where("user_id", "=", AuthManager::getCurrentUser()->id)
-            ->where('status', '=', "normal")
+            ->where('status', '=', "unpaid")
             ->with("items")
             ->with("programs")
             ->with("events")
@@ -216,12 +216,12 @@ class OrderController extends BaseController
 
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
                 Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
-                $pdf = $mailController->generatePDF('emails.receipt.blade', '');
+                $pdf = $mailController->generatePDF('emails.receipt.blade', ['status'=> 'paid']);
                 $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '' , $pdf, 'receipt_'. $payment->metadata["order_id"]);
                 return $this->json(["Error" => "Payment Success"]);
             }
 
-            Order::find($payment->metadata["order_id"])->update(["status" => "normal"]);
+            Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
             return $this->json(["Error" => "Payment Failed"]);
         } catch (ApiException|TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
@@ -278,14 +278,14 @@ class OrderController extends BaseController
     {
         $order = Order::query()
             ->where("user_id", "=", $user->id)
-            ->where('status', '=', "normal")
+            ->where('status', '=', "unpaid")
             ->first();
 
         if ($order != null)
             return $order;
 
         return Order::create([
-            'status' => "normal",
+            'status' => "unpaid",
             'uuid' => Uuid::uuid4(),
             'user_id' => $user->id,
         ]);
