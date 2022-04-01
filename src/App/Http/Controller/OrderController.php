@@ -21,6 +21,7 @@ use Mollie\Api\MollieApiClient;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class OrderController extends BaseController
 {
@@ -223,6 +224,8 @@ class OrderController extends BaseController
             Order::find($payment->metadata["order_id"])->update(["status" => "normal"]);
             return $this->json(["Error" => "Payment Failed"]);
         } catch (ApiException $e) {
+            return $this->json(["Error" => "Some error Occurred!"]);
+        } catch (TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
         }
     }
