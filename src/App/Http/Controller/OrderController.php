@@ -208,12 +208,15 @@ class OrderController extends BaseController
     {
         $mollie = new MollieApiClient();
         $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
+        $mailController = new EmailController();
 
         try {
             $payment = $mollie->payments->get($_POST["id"]);
 
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
                 Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
+                $pdf = $mailController->generatePDF('emails.receipt.blade', '');
+                $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '' , $pdf, 'receipt_'. $payment->metadata["order_id"]);
                 return $this->json(["Error" => "Payment Success"]);
             }
 
