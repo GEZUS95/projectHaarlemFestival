@@ -70,8 +70,8 @@ class EmailController extends BaseController
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmail($email, $subject, $bladeName, $vars, $pdf, $pdfName){
-        new EmailManager($email, $subject, $bladeName, $vars, $pdf, $pdfName);
+    public function sendEmail($subject, $bladeName, $vars, $pdf, $pdfName){
+        new EmailManager(AuthManager::getCurrentUser()->email, $subject, $bladeName, $vars, $pdf, $pdfName);
     }
 
     /**
