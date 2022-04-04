@@ -69,7 +69,7 @@ class CreateUsersModal extends BaseModal {
 
     handleCreateBtnClick(e){
         const select = this.shadowRoot.querySelector("#roles");
-        this._$formData.permissions = select.value;
+        this._$formData.role_id = select.value;
         let formData = this.createFormData(this._$formData)
         formData.append("token", this._$token)
 
