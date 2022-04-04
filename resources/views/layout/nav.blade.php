@@ -11,6 +11,10 @@
         @else
             <p class="layout-nav-links-url">{{\Matrix\Managers\AuthManager::getCurrentUser()->name}}</p>
 
+            @if(Matrix\Managers\GuardManager::guard(App\Model\Permissions::__VIEW_CMS_PAGE__))
+                    <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("admin")}}" class="layout-nav-links-url">admin</a>
+            @endif
+
             <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order")}}" class="layout-nav-links-url">Shopping
                 cart</a>
 

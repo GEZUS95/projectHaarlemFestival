@@ -143,12 +143,12 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.tests.receipt", ['order' => $this->getReceipt($user)]);
+        return $this->render("partials.order.receipt", ['order' => $this->getReceipt($user)]);
     }
 
     /**
      * Make a post request to the back end with (id, type) example (id:1, type)
-     * Add the type to the order and create the order if it doenst exist -> call $this->create
+     * Add the type to the order and create the order if it doesn't exist -> call $this->create
      * call this->model
      * get the model and add the type to the order
      * @param Request $request
@@ -196,7 +196,7 @@ class OrderController extends BaseController
 
         $order->delete();
 
-        return $this->render("partials.tests.order", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
+        return $this->render("partials.order.index", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
     }
 
     /**
