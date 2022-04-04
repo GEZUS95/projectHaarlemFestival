@@ -57,9 +57,9 @@ class CreateProgramModal extends BaseModal {
 
     async initForm(e){
         let startTime = e.detail.startTime;
-        startTime.setTime(startTime.getTime() + (60*60*1000));
+        startTime.setTime(startTime.getTime() + (2*60*60*1000));
         let endTime = e.detail.endTime;
-        endTime.setTime(endTime.getTime() + (60*60*1000));
+        endTime.setTime(endTime.getTime() + (2*60*60*1000));
 
         this._$formData.start_time = startTime;
         this._$formData.end_time = endTime;
