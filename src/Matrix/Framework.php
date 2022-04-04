@@ -49,7 +49,8 @@ class Framework
         } catch (DataIsNotCorrectlyValidated $exception) {
             return new Response($exception);
         } catch (\Exception $exception) {
-            var_dump($exception);
+//            var_dump($exception);
+            highlight_string("<?php\n$$exception =\n" . var_export($exception, true) . ";\n?>");
             return new Response('An error occurred', 500);
         }
     }

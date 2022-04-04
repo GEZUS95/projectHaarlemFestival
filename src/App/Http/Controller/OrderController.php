@@ -62,7 +62,8 @@ class OrderController extends BaseController
         return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales]);
     }
 
-    public function getOrderWithoutDupes(){
+    public function getOrderWithoutDupes(): Collection
+    {
         return $this->removeDupes(Order::query()
             ->where("user_id", "=", AuthManager::getCurrentUser()->id)
             ->where('status', '=', "unpaid")
@@ -142,7 +143,7 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.tests.receipt", ['receipt' => $this->getReceipt($user)]);
+        return $this->render("partials.tests.receipt", ['order' => $this->getReceipt($user)]);
     }
 
     /**
@@ -259,7 +260,7 @@ class OrderController extends BaseController
                 "value" => number_format((float)$total, 2, '.', '')
             ],
             "description" => $user->name . ' ordered ',
-            "redirectUrl" => RouteManager::getUrlByRouteName("order"),
+            "redirectUrl" => RouteManager::getUrlByRouteName("receipt"),
             "webhookUrl" => RouteManager::getUrlByRouteName("webhook"),
             "metadata" => [
                 "order_id" => $order->id,
@@ -276,10 +277,10 @@ class OrderController extends BaseController
      */
     private function getOrder($user)
     {
-        $order = Order::query()
+        $order = $this->removeDupes(Order::query()
             ->where("user_id", "=", $user->id)
             ->where('status', '=', "unpaid")
-            ->first();
+            ->first());
 
         if ($order != null)
             return $order;
@@ -298,10 +299,10 @@ class OrderController extends BaseController
      */
     private function getReceipt($user)
     {
-        return Order::query()
+        return $this->removeDupes(Order::query()
             ->where("user_id", "=", $user->id)
             ->where('status', '=', "paid")
-            ->first();
+            ->first());
     }
 
     /**
