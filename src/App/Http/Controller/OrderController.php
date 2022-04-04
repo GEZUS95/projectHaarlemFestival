@@ -294,9 +294,9 @@ class OrderController extends BaseController
     /**
      * if the order already exist for the current user just return the order
      * @param $user
-     * @return Builder|Model|object
+     * @return Collection
      */
-    private function getReceipt($user)
+    private function getReceipt($user): Collection
     {
         return $this->removeDupes(Order::query()
             ->where("user_id", "=", $user->id)
