@@ -102,7 +102,7 @@
 
         <div class="partials-order-index-container">
             <div class="partials-order-index-container-bread">
-                <div class="partials-order-index-container-bread-text">Home > Shopping Cart</div>
+                <div class="partials-order-index-container-bread-text"><a href="{{Matrix\Managers\RouteManager::getUrlByRouteName('home')}}">Home</a> > Shopping Cart</div>
                 <div class="partials-order-index-container-bread-line"></div>
             </div>
             <div class="partials-order-index-container-inner">
