@@ -217,13 +217,13 @@ class OrderController extends BaseController
 
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
                 Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
-                $pdf = $mailController->generatePDF('emails.receipt.blade', ['status'=> 'paid']);
-                $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '' , $pdf, 'receipt_'. $payment->metadata["order_id"]);
+                $pdf = $mailController->generatePDF('emails.receipt.blade', ['status' => 'paid']);
+                $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '', $pdf, 'receipt_' . $payment->metadata["order_id"]);
                 return $this->json(["Error" => "Payment Success"]);
+            } else {
+                Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
+                return $this->json(["Error" => "Payment Failed"]);
             }
-
-            Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
-            return $this->json(["Error" => "Payment Failed"]);
         } catch (ApiException|TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
         }
