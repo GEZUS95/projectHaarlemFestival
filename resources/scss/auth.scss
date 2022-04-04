@@ -1,0 +1,39 @@
+.auth-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-layout-form {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: auto;
+}
+
+.btn {
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  user-select: none;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  width: 170px;
+  height: 30px;
+  background-color: #007BFF;
+}
+
+.auth-layout-btn {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}

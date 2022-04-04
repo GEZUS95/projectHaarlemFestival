@@ -1,22 +1,24 @@
 @extends('layout.main')
 @section('content')
-<h1>Register</h1>
+    <div class="auth-layout">
 
-<form action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("register_post")}}" id="register" method="post">
+
+<form class="auth-layout-form" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("register_post")}}" id="register" method="post">
+    <h1>Register</h1>
     <input type="hidden" name="token" value="{{\Matrix\Managers\SessionManager::getSessionManager()->get("register_form_csrf_token")}}">
-    Name: <input name="name" required><br>
-    Email: <input type="email" name="email" required><br>
-    Email Confirm: <input type="text" name="email_confirmation" required><br>
-    Password: <input type="password" name="password" required><br>
-    Password Confirm: <input type="password" name="password_confirmation" required><br>
-    <button class="g-recaptcha"
-            data-sitekey="{{$_ENV['GOOGLEPUBKEY']}}"
-            data-callback='onSubmit'
-            data-action='submit'>Submit</button>
+    <label for="name">Name: </label>
+    <input id="name" name="name" required><br>
+    <label for="email">Email: </label>
+    <input id="email" type="email" name="email" required><br>
+    <label for="email-confirm">Email Confirm: </label>
+    <input id="email-confirm" type="text" name="email_confirmation" required><br>
+    <label for="password">Password: </label>
+    <input id="password" type="password" name="password" required><br>
+    <label for="password-confirm">Password Confirm:</label>
+    <input id="password-confirm" type="password" name="password_confirmation" required><br>
+    <div class="auth-layout-btn">
+        <input class="btn" type="submit">
+    </div>
 </form>
-<script src="https://www.google.com/recaptcha/api.js">
-    function onSubmit(token) {
-        document.getElementById("register").submit();
-    }
-</script>
+    </div>
 @endsection

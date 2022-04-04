@@ -79,8 +79,6 @@ class AdminUsersController extends BaseController
             'role_id' => ['required', new RoleExistValidation],
         ];
 
-        var_dump($data);
-
         $this->validate($data, $rules);
 
         //@todo send email and make sure the user has to activate account!

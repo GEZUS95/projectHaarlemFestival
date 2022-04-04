@@ -5,11 +5,17 @@
 
     <div class="layout-nav-links">
         @if(!\Matrix\Managers\AuthManager::boolLoggedIn())
-            <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("login")}}" class="layout-nav-links-url">Login</a>
+            <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("login")}}"
+               class="layout-nav-links-url">Login</a>
+            <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("register")}}" class="layout-nav-links-url">Register</a>
         @else
-            <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order")}}" class="layout-nav-links-url">Shopping cart</a>
+            <p class="layout-nav-links-url">{{\Matrix\Managers\AuthManager::getCurrentUser()->name}}</p>
 
-            <form class="layout-nav-links-url" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("logout")}}" method="POST">
+            <a href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order")}}" class="layout-nav-links-url">Shopping
+                cart</a>
+
+            <form class="layout-nav-links-url" action="{{\Matrix\Managers\RouteManager::getUrlByRouteName("logout")}}"
+                  method="POST">
                 <input type="submit" class="layout-nav-links-url" value="Logout">
             </form>
         @endif
