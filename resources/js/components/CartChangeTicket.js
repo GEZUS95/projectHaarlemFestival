@@ -11,20 +11,23 @@ class CartChangeTicket extends BaseComponent {
         this._$amount = null;
     }
 
-    style(){
+    style() {
         return `
         <style>
             .add-to-cart {
                 color: #4b58b2;
                 font-weight: bold;
                 font-size: 24px;
+            }
+            .add-to-cart:hover {
+                color: #000000;
             }     
         </style>    
        `;
     }
 
-    content(){
-        this.shadowRoot.innerHTML =`
+    content() {
+        this.shadowRoot.innerHTML = `
             ${this.style()}
             <div>
                 <input type="number" name="amount" class="number" value="${this._$amount}">
@@ -34,7 +37,7 @@ class CartChangeTicket extends BaseComponent {
         this.shadowRoot.querySelector('.add-to-cart').addEventListener('click', this.sendRequestForm.bind(this))
     }
 
-    sendRequestForm(){
+    sendRequestForm() {
         const number = this.shadowRoot.querySelector(".number").value;
 
         let formData = new FormData();
@@ -48,13 +51,13 @@ class CartChangeTicket extends BaseComponent {
         xhr.send(formData);
     }
 
-    connectedCallback(){
+    connectedCallback() {
         this.content();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            this["_$"+ name] = newValue;
+            this["_$" + name] = newValue;
         }
     }
 
