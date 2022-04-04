@@ -62,7 +62,8 @@ class OrderController extends BaseController
         return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales]);
     }
 
-    public function getOrderWithoutDupes(){
+    public function getOrderWithoutDupes(): Collection
+    {
         return $this->removeDupes(Order::query()
             ->where("user_id", "=", AuthManager::getCurrentUser()->id)
             ->where('status', '=', "unpaid")
@@ -142,12 +143,12 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.tests.receipt", ['receipt' => $this->getReceipt($user)]);
+        return $this->render("partials.order.receipt", ['order' => $this->getReceipt($user)]);
     }
 
     /**
      * Make a post request to the back end with (id, type) example (id:1, type)
-     * Add the type to the order and create the order if it doenst exist -> call $this->create
+     * Add the type to the order and create the order if it doesn't exist -> call $this->create
      * call this->model
      * get the model and add the type to the order
      * @param Request $request
@@ -195,7 +196,7 @@ class OrderController extends BaseController
 
         $order->delete();
 
-        return $this->render("partials.tests.order", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
+        return $this->render("partials.order.index", ['order' => $this->getOrder(AuthManager::getCurrentUser())]);
     }
 
     /**
@@ -216,13 +217,13 @@ class OrderController extends BaseController
 
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
                 Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
-                $pdf = $mailController->generatePDF('emails.receipt.blade', ['status'=> 'paid']);
-                $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '' , $pdf, 'receipt_'. $payment->metadata["order_id"]);
+                $pdf = $mailController->generatePDF('emails.receipt.blade', ['status' => 'paid']);
+                $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '', $pdf, 'receipt_' . $payment->metadata["order_id"]);
                 return $this->json(["Error" => "Payment Success"]);
+            } else {
+                Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
+                return $this->json(["Error" => "Payment Failed"]);
             }
-
-            Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
-            return $this->json(["Error" => "Payment Failed"]);
         } catch (ApiException|TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
         }
@@ -259,7 +260,7 @@ class OrderController extends BaseController
                 "value" => number_format((float)$total, 2, '.', '')
             ],
             "description" => $user->name . ' ordered ',
-            "redirectUrl" => RouteManager::getUrlByRouteName("order"),
+            "redirectUrl" => RouteManager::getUrlByRouteName("receipt"),
             "webhookUrl" => RouteManager::getUrlByRouteName("webhook"),
             "metadata" => [
                 "order_id" => $order->id,
@@ -276,10 +277,10 @@ class OrderController extends BaseController
      */
     private function getOrder($user)
     {
-        $order = Order::query()
+        $order = $this->removeDupes(Order::query()
             ->where("user_id", "=", $user->id)
             ->where('status', '=', "unpaid")
-            ->first();
+            ->first());
 
         if ($order != null)
             return $order;
@@ -298,10 +299,10 @@ class OrderController extends BaseController
      */
     private function getReceipt($user)
     {
-        return Order::query()
+        return $this->removeDupes(Order::query()
             ->where("user_id", "=", $user->id)
             ->where('status', '=', "paid")
-            ->first();
+            ->first());
     }
 
     /**

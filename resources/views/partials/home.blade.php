@@ -8,7 +8,7 @@
                  class="partials-home-image"
             >
 
-            <div class="partials-home-image-title">Haarlem Festival</div>
+{{--            <div class="partials-home-image-title">Haarlem Festival</div>--}}
             <div class="partials-home-image-search">
                 <div class="partials-home-image-search-bar">
                     <div class="partials-home-image-search-bar-border">
