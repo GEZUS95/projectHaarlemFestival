@@ -12,7 +12,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Matrix\BaseController;
 use Matrix\Managers\AuthManager;
 use Matrix\Managers\RouteManager;
@@ -277,10 +276,10 @@ class OrderController extends BaseController
      */
     private function getOrder($user)
     {
-        $order = $this->removeDupes(Order::query()
+        $order = Order::query()
             ->where("user_id", "=", $user->id)
             ->where('status', '=', "unpaid")
-            ->first());
+            ->first();
 
         if ($order != null)
             return $order;
