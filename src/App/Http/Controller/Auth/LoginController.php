@@ -42,7 +42,7 @@ class LoginController extends BaseController {
             return $this->Redirect($referer);
         }
 
-        return $this->json(['result' => AuthManager::getCurrentUser()]);
+        return $this->Redirect(RouteManager::getUrlByRouteName("home"));
     }
 
     public function logout(Request $request): RedirectResponse
