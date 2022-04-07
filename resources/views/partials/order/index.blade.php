@@ -125,7 +125,7 @@
                                         route="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}"
                                         token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
                                         id="{{$event->id}}"
-                                        type="App\Model\Event"
+                                        type="Event"
                                         amount="{{$event->count}}"
                                 ></cart-change-ticket>
                             </div>
@@ -148,7 +148,7 @@
                                         route="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}"
                                         token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
                                         id="{{$program->id}}"
-                                        type="App\Model\Program"
+                                        type="Program"
                                         amount="{{$program->count}}"
                                 ></cart-change-ticket>
                             </div>
@@ -173,7 +173,7 @@
                                         route="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}"
                                         token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
                                         id="{{$item->id}}"
-                                        type="App\Model\Item"
+                                        type="Item"
                                         amount="{{$item->count}}"
                                 ></cart-change-ticket>
                             </div>
