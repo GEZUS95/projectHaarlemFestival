@@ -42,9 +42,10 @@ class OrderController extends BaseController
         $image_link = $event->images[0]->file_location;
 
         $order = $this->getOrderWithoutDupes();
-
+        $total = 0;
         $orderIds = [];
         foreach ($order["items"] as $item) {
+            $total += $item->price;
             if (in_array($item->id, $orderIds))
                 array_push($orderIds, $item->id);
         }
@@ -58,7 +59,7 @@ class OrderController extends BaseController
                 ->limit(2);
         }
 
-        return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales]);
+        return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales, "total_price" => $total]);
     }
 
     public function getOrderWithoutDupes(): Collection
