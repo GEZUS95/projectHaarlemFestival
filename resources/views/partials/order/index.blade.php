@@ -181,6 +181,7 @@
                         @endforeach
                     </div>
                     <div class="partials-order-index-cart-inner-footer">
+                        <p>&euro;{{number_format($total_price, 2, '.', ',')}}</p>
                         <a style="font-size: 30px; font-weight: bold" href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_pay")}}">Pay</a>
                     </div>
                 </div>
