@@ -29,6 +29,7 @@
                         <div>
                             <div class="partials-event-program-b-tickets-performer">{{$item->performer->name}}</div>
                             <div class="partials-event-program-b-tickets-location">{{$item->location->name}}</div>
+                            <div class="partials-event-program-b-tickets-price">&euro;{{number_format($item->price, 2, '.', ',')}}</div>
                         </div>
 
                         <buy-item-ticket
