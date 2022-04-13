@@ -32,23 +32,31 @@
                             <div class="partials-event-program-b-tickets-price">&euro;{{number_format($item->price, 2, '.', ',')}}</div>
                         </div>
 
+                        @if(\Matrix\Managers\AuthManager::boolLoggedIn())
                         <buy-item-ticket
                                 route="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}"
                                 token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
                                 item_id="{{$item->id}}"
                                 performer_name="{{$item->performer->name}}"
                         ></buy-item-ticket>
+                        @else
+                            <h3>Login to order tickets</h3>
+                        @endif
                     </div>
                     <hr>
                 @endforeach
             </div>
 
             <div class="partials-event-program-b-tickets-footer">
+                @if(\Matrix\Managers\AuthManager::boolLoggedIn())
                 <buy-program-ticket
                         route="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_add")}}"
                         token="{{\Matrix\Managers\SessionManager::getSessionManager()->get("validate_form_token")}}"
                         program_id="{{$program->id}}"
                 ></buy-program-ticket>
+                @else
+                    <h3>Login to order tickets</h3>
+                @endif
             </div>
         </div>
 
