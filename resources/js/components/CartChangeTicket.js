@@ -17,11 +17,15 @@ class CartChangeTicket extends BaseComponent {
             .add-to-cart {
                 color: #4b58b2;
                 font-weight: bold;
-                font-size: 24px;
+                font-size: 12px;
             }
             .add-to-cart:hover {
                 color: #000000;
             }     
+            
+            .input {
+                width: 40px;
+            }
         </style>    
        `;
     }
@@ -30,7 +34,7 @@ class CartChangeTicket extends BaseComponent {
         this.shadowRoot.innerHTML = `
             ${this.style()}
             <div>
-                <input type="number" name="amount" class="number" value="${this._$amount}">
+                <input class="input" type="number" name="amount" class="number" value="${this._$amount}">
                 <div class="add-to-cart">Change Ticket</div>
             </div>
         `
