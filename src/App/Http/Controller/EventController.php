@@ -64,8 +64,6 @@ class EventController extends BaseController
      */
     public function program(Request $request, $id): Response
     {
-        AuthManager::isLoggedIn();
-
         $this->session->set("validate_form_token",  bin2hex(random_bytes(24)));
 
         $program = Program::query()
