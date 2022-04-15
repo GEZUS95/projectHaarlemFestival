@@ -50,14 +50,13 @@ class OrderController extends BaseController
                 array_push($orderIds, $item->id);
         }
 
-        $extraSales = [];
-        if (!empty($orderIds)) {
-            $extraSales = Item::query()
-                ->whereNotIn('id', $orderIds)
-                ->get()
-                ->random()
-                ->limit(2);
-        }
+        $extraSales = Item::query()
+            ->whereNotIn('id', $orderIds)
+            ->get()
+            ->random()
+            ->limit(2)
+            ->get();
+
 
         return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales, "total_price" => $total]);
     }
@@ -224,7 +223,7 @@ class OrderController extends BaseController
                 Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
                 return $this->json(["Error" => "Payment Failed"]);
             }
-        } catch (ApiException|TransportExceptionInterface $e) {
+        } catch (ApiException | TransportExceptionInterface $e) {
             return $this->json(["Error" => "Some error Occurred!"]);
         }
     }

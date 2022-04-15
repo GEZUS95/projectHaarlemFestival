@@ -93,7 +93,7 @@
                         @endforeach
                     </div>
                     <div class="partials-order-index-cart-inner-footer">
-                        <p>&euro;{{number_format($total_price, 2, '.', ',')}}</p>
+                        <p><span style="font-weight: bold">Subtotal:</span>&nbsp &euro;{{number_format($total_price, 2, '.', ',')}}</p>
                         <a class="partials-event-program-pay-btn" href="{{\Matrix\Managers\RouteManager::getUrlByRouteName("order_pay")}}">Pay</a>
                     </div>
                 </div>
@@ -102,6 +102,19 @@
                     <div class="partials-order-index-extra-sales-line"></div>
                     <div class="partials-order-index-extra-sales-items">
                         Extra Items
+                        @foreach($sales_items as $sale)
+                            <div>
+                                <div>{{$sale->performer->name}}</div>
+                                <div>
+                                    <div>{{$sale->start_time}}</div>
+                                    <div>{{$sale->end_time}}</div>
+                                </div>
+                                <div>{{$sale->location->name}}</div>
+                                <div>{{$sale->price}}</div>
+
+                                <div>Add Ticket</div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

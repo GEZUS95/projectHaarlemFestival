@@ -42,7 +42,7 @@ class CartChangeTicket extends BaseComponent {
     }
 
     sendRequestForm() {
-        const number = this.shadowRoot.querySelector(".number").value;
+        const number = this.shadowRoot.querySelector("input").value;
 
         let formData = new FormData();
         formData.append("token", this._$token)
