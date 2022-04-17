@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Matrix\BaseController;
 use Matrix\Managers\AuthManager;
 use Matrix\Managers\RouteManager;
+use Matrix\Managers\SessionManager;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use Ramsey\Uuid\Uuid;
@@ -34,6 +35,8 @@ class OrderController extends BaseController
     public function index(): Response
     {
         AuthManager::isLoggedIn();
+
+        SessionManager::getSessionManager()->set("validate_form_token", bin2hex(random_bytes(24)));
 
         $event = Event::all()
             ->random()
@@ -176,7 +179,8 @@ class OrderController extends BaseController
             $model->orders()->attach($order);
         }
 
-        return $this->json(["Success" => "Added the type to the cart"]);
+        $referer = $request->headers->get('referer');
+        return $this->Redirect($referer);
     }
 
     /**
