@@ -105,7 +105,7 @@ class AdminEventController extends BaseController
         Image::uploadFile($_FILES["file"], $event);
 
         return $this->json(
-            ["Success" => "Successfully added the location"]
+            ["Success" => "Successfully added the event"]
         );
     }
 
@@ -148,7 +148,7 @@ class AdminEventController extends BaseController
         Image::updateFiles($_FILES["file"], Event::find($id));
 
         return $this->json(
-            ["Success" => "Successfully updated the location"]
+            ["Success" => "Successfully updated the event"]
         );
     }
 
@@ -163,7 +163,7 @@ class AdminEventController extends BaseController
         $model->delete();
 
         return $this->json(
-            ["Success" => "Successfully deleted the location"]
+            ["Success" => "Successfully deleted the event"]
         );
     }
 

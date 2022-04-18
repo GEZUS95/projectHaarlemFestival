@@ -74,7 +74,7 @@ class AdminUsersController extends BaseController
         $rules = [
             'token' => ['required', new TokenValidation("users_create_form_csrf_token")],
             'name' => 'required',
-            'email' => ['required', new UserEmailAlreadyExistValidation,'email'],
+            'email' => ['required','email'],
             'password' => 'required|min:8',
             'role_id' => ['required', new RoleExistValidation],
         ];
@@ -115,7 +115,7 @@ class AdminUsersController extends BaseController
         $rules = [
             'token' => ['required', new TokenValidation("users_create_form_csrf_token")],
             'name' => 'required',
-            'email' => ['required', new UserEmailAlreadyExistValidation,'email'],
+            'email' => ['required','email'],
             'role_id' => ['required', new RoleExistValidation],
         ];
 

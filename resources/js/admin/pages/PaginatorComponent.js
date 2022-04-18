@@ -80,14 +80,23 @@ class PaginatorComponent extends BaseComponent {
                 }
                 
                 .paginator-actions {
-                    padding: 0 10px;
-                    height: 45px;
-                    font-size: 20px;
-                    min-width: 100px;
-                    max-width: 100px;
+                    border-radius: 0.3rem;
+                    background-color: #007BFF;
+                    color: #ffffff;
+                    font-size: 12px;
+                    cursor: pointer;
+                    padding: 6px 12px;
+                    margin: 5px 20px;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                }
+                
+                .paginator-actions-2 {
+                    padding: 6px 12px;
+                    margin: 5px 20px;
+                    display: flex;
+                    align-items: center;
+                    font-weight: normal;
                 }
                 
                 .actions  {
@@ -166,7 +175,7 @@ class PaginatorComponent extends BaseComponent {
                         ${this._$fields !== null ? this._$fields.map((field) => {
                             return `<div class="paginator-con">${field}</div>`;
                         }).join('') : ''}
-                        <div class="paginator-actions">Actions</div>
+                        <div class="paginator-actions-2">Actions</div>
                     </div>
                     <div class="paginator-data">
                         ${data[this._$object_name].map((i) => {
@@ -175,7 +184,7 @@ class PaginatorComponent extends BaseComponent {
                             
                             return `<div class="paginator-row">${this._$fields.map((field) => {
                                 return `<div class="paginator-con">${i[field]}</div>`;
-                            }).join('')}<div id="${i["id"]}" class="paginator-actions paginator-update-btn">btn</div></div>`
+                            }).join('')}<div id="${i["id"]}" class="paginator-actions paginator-update-btn">Update</div></div>`
     
                         }).join('')}
                     </div>
