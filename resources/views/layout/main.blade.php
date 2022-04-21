@@ -14,6 +14,9 @@
     <title>Haarlem Festival</title>
 </head>
 <body>
+
+@include("helpers.errors")
+
 @include("layout.nav")
 <main>
     @yield("content")
