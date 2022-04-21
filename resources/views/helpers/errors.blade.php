@@ -66,4 +66,6 @@
             @endforeach
         </div>
     </div>
+
+    {{\Matrix\Managers\SessionManager::getSessionManager()->remove("validation_errors")}}
 @endif
