@@ -48,7 +48,7 @@ class OrderController extends BaseController
         $total = 0;
         $orderIds = [];
         foreach ($order["items"] as $item) {
-            $total += $item->price;
+            $total += $item->price * $item->count;
             if (in_array($item->id, $orderIds))
                 array_push($orderIds, $item->id);
         }
