@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 
+error_reporting(E_ERROR | E_PARSE);
+
 $loader = new Nette\Loaders\RobotLoader;
 $loader->addDirectory(__DIR__ . '/src');
 
