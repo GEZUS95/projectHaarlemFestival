@@ -250,6 +250,7 @@ class OrderController extends BaseController
      * Get the order and all the total prices of the program, event, item, restaurant
      * Make mollie api call and finalize the order
      * @param Request $request
+     * @return RedirectResponse|void
      * @throws ApiException
      */
     public function mollie(Request $request)
