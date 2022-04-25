@@ -66,8 +66,8 @@ class AdminItemController extends BaseController
 
         $this->validate($data, $rules);
 
-        $startTime = Carbon::parse($data["start_time"])->addHour();
-        $endTime = Carbon::parse($data["end_time"])->addHour();
+        $startTime = Carbon::parse($data["start_time"])->addHours(3);
+        $endTime = Carbon::parse($data["end_time"])->addHours(3);
 
 
         Item::create([
@@ -103,8 +103,8 @@ class AdminItemController extends BaseController
 
         $this->validate($data, $rules);
 
-        $startTime = Carbon::parse($data["start_time"])->addHour();
-        $endTime = Carbon::parse($data["end_time"])->addHour();
+        $startTime = Carbon::parse($data["start_time"])->addHours(3);
+        $endTime = Carbon::parse($data["end_time"])->addHours(3);
 
         Item::findOrFail($id)->update([
             'location_id' => $data["location_id"],

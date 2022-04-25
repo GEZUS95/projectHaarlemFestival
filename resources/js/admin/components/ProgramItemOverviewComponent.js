@@ -128,6 +128,7 @@ class ProgramItemOverviewComponent extends BaseComponent {
 
     makeTimeElement(date){
         date = new Date(date);
+        date.setHours(date.getHours() - 1)
         return `
             <div class="time">
                 <div class="time-hours">${this.padTo2Digits(date.getHours())}</div>

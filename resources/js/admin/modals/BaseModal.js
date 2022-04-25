@@ -209,7 +209,7 @@ class BaseModel extends BaseComponent {
             <div class="container">
                 <div class="nav">
                     <div class="nav-title">${this._$title}</div>
-                    <div>Cancel Btn</div>
+                    <div></div>
                 </div>
                     ${this.content()}
                 <div class="footer">

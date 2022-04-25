@@ -28,11 +28,15 @@ class ItemIsBetweenProgramTimes implements Rule
         if(!$this->program)
             return false;
 
-        return Carbon::parse($value)
-            ->isBetween(
-                Carbon::parse($this->program->start_time),
-                Carbon::parse($this->program->end_time)
-            );
+        try {
+            return Carbon::parse($value)
+                ->isBetween(
+                    Carbon::parse($this->program->start_time),
+                    Carbon::parse($this->program->end_time)
+                );
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**

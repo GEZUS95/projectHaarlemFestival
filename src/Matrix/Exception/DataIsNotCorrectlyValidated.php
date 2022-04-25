@@ -5,6 +5,8 @@ namespace Matrix\Exception;
 
 use Illuminate\Support\Collection;
 use Matrix\Managers\SessionManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Throwable;
 
@@ -43,5 +45,4 @@ class DataIsNotCorrectlyValidated extends \RuntimeException implements Exception
 
         return true;
     }
-
 }

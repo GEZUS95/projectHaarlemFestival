@@ -23,6 +23,9 @@
 <body>
 <nav-bar></nav-bar>
 <main class="partials-admin-layout-main">
+
+    @include("helpers.errors")
+
     @include("partials.admin.layout.sidenav")
     <div class="partials-admin-layout-main-content">
         @yield("content")

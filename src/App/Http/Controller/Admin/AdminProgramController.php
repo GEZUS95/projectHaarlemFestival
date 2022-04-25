@@ -99,8 +99,8 @@ class AdminProgramController extends BaseController
 
         $this->validate($data, $rules);
 
-        $startTime = Carbon::parse($data["start_time"])->addHour();
-        $endTime = Carbon::parse($data["end_time"])->addHour();
+        $startTime = Carbon::parse($data["start_time"])->addHours(2);
+        $endTime = Carbon::parse($data["end_time"])->addHours(2);
 
         Program::findOrFail($id)->update([
             'title' => $data["title"],
