@@ -48,6 +48,7 @@ class Framework
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         } catch (\Exception $exception) {
+            var_dump($exception);
             return new Response('An error occurred', 500);
         }
     }

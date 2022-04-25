@@ -24,7 +24,10 @@ class UpdateEventModal extends CreateEventModal {
         const resFormData = await this.setFormData(url, "event")
         console.log(resFormData);
         this.renderContent();
-        const img = this.setImageAttribute(resFormData["event"].images[0]["file_location"],".placeholder-image")
+        let img;
+        if(resFormData["event"].images[0])
+            img = this.setImageAttribute(resFormData["event"].images[0]["file_location"],".placeholder-image")
+        else img = this.setImageAttribute("https://via.placeholder.com/150",".placeholder-image")
 
         this.updateModalTitle("Update Event");
         this.updateImageOnChange(img)

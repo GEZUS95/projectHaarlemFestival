@@ -115,6 +115,7 @@
                                     <input type="hidden" value="{{$sale->id}}" name="id">
                                     <input type="hidden" value="1" name="amount">
                                     <input type="hidden" value="item" name="type">
+
                                     <input class="partials-order-index-extra-sales-items-card-btn" value="Add Ticket" type="submit">
                                 </form>
                             </div>

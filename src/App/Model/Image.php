@@ -58,8 +58,6 @@ class Image extends Model {
         if(!move_uploaded_file( $file['tmp_name'], $uploadFolder ))
             return false;
 
-        unlink(dirname(__DIR__, 3) . "\\resources\\uploads\\". $oldName);
-
         Image::query()->where('file_location', '=', $oldName)->update([
             'file_location' => $name,
         ]);

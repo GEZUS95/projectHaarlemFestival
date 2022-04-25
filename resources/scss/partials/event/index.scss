@@ -77,7 +77,7 @@
 
 .partials-event-index-programs-date {
   position: absolute;
-  bottom: 10%;
+  bottom: 15%;
   color: white;
   width: calc(100% - 20px);
   font-size: 20px;
@@ -125,5 +125,6 @@
 }
 
 .partials-event-index-performers {
+  display: flex;
   margin: 5px 5px 10px 20px;
 }

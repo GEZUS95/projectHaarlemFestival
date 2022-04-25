@@ -7,6 +7,7 @@ use App\Model\Item;
 use App\Model\Order;
 use App\Model\Program;
 use App\Rules\TokenValidation;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,6 +20,7 @@ use Matrix\Managers\SessionManager;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -45,10 +47,8 @@ class OrderController extends BaseController
         $image_link = $event->images[0]->file_location;
 
         $order = $this->getOrderWithoutDupes();
-        $total = 0;
         $orderIds = [];
         foreach ($order["items"] as $item) {
-            $total += $item->price;
             if (in_array($item->id, $orderIds))
                 array_push($orderIds, $item->id);
         }
@@ -60,8 +60,7 @@ class OrderController extends BaseController
             ->limit(2)
             ->get();
 
-
-        return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales, "total_price" => $total]);
+        return $this->render("partials.order.index", ['order' => $order, 'image_link' => $image_link, "sales_items" => $extraSales, "total_price" => $this->getTotalPrice($this->getOrder(AuthManager::getCurrentUser()))]);
     }
 
     public function getOrderWithoutDupes(): Collection
@@ -141,11 +140,20 @@ class OrderController extends BaseController
      * Get the receipt if it exist
      * @throws Exception
      */
+
     public function receipt(): Response
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        return $this->render("partials.order.receipt", ['order' => $this->getReceipt($user)]);
+        $receipt = Order::query()
+            ->where("user_id", "=", $user->id)
+            ->where('status', '=', "paid")
+            ->first();
+
+        if($receipt->items == null && $receipt->programs == null && $receipt->events == null)
+            return new RedirectResponse(RouteManager::getUrlByRouteName("home"));
+
+        return $this->render("partials.order.receipt", ['order' => $this->removeDupes($receipt)]);
     }
 
     /**
@@ -212,23 +220,29 @@ class OrderController extends BaseController
     public function webhook(Request $request): Response
     {
         $mollie = new MollieApiClient();
+        $uuid = $_POST["id"];
         $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
         $mailController = new EmailController();
 
         try {
-            $payment = $mollie->payments->get($_POST["id"]);
+            $payment = $mollie->payments->get($uuid);
 
             if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
-                Order::find($payment->metadata["order_id"])->update(["status" => "paid"]);
+                Order::query()
+                    ->where("uuid", "=", $uuid)
+                    ->update(["status" => "paid"]);
+
                 $pdf = $mailController->generatePDF('emails.receipt.blade', ['status' => 'paid']);
                 $mailController->sendEmail("Order is successful!", 'emails.payment_success.blade', '', $pdf, 'receipt_' . $payment->metadata["order_id"]);
                 return $this->json(["Error" => "Payment Success"]);
             } else {
+                file_put_contents(dirname(__DIR__, 4) . "/logs/mollielogs.txt", Carbon::now() . "\n order was canceled with id: " . $uuid . "\n", FILE_APPEND);
                 Order::find($payment->metadata["order_id"])->update(["status" => "unpaid"]);
                 return $this->json(["Error" => "Payment Failed"]);
             }
         } catch (ApiException | TransportExceptionInterface $e) {
-            return $this->json(["Error" => "Some error Occurred!"]);
+            file_put_contents(dirname(__DIR__, 4) . "/logs/mollielogs.txt", Carbon::now() . "\n" . $e . "\n", FILE_APPEND);
+            return $this->json(["Error" => "Payment Failed"]);
         }
     }
 
@@ -242,11 +256,35 @@ class OrderController extends BaseController
     {
         AuthManager::isLoggedIn();
         $user = AuthManager::getCurrentUser();
-        $total = 0;
         $order = $this->getOrder($user);
         $mollie = new MollieApiClient();
         $mollie->setApiKey($_ENV['MOLLIE_API_KEY']);
 
+        if($order->items == null && $order->programs == null && $order->events == null)
+            return new RedirectResponse(RouteManager::getUrlByRouteName("home"));
+
+        $payment = $mollie->payments->create([
+            "amount" => [
+                "currency" => "EUR",
+                "value" => number_format((float)$this->getTotalPrice($order), 2, '.', '')
+            ],
+            "description" => $user->name . ' ordered ',
+            "redirectUrl" => RouteManager::getUrlByRouteName("receipt"),
+            "webhookUrl" => RouteManager::getUrlByRouteName("webhook"),
+            "metadata" => [
+                "order_id" => $order->id,
+            ],
+        ]);
+
+        $order->update(["uuid" => $payment->id]);
+
+        header("Location: " . $payment->getCheckoutUrl(), true, 303);
+
+    }
+
+    private function getTotalPrice($order): int
+    {
+        $total = 0;
         foreach ($order->events as $event) {
             $total += $event->total_price_event;
         }
@@ -256,21 +294,7 @@ class OrderController extends BaseController
         foreach ($order->items as $item) {
             $total += $item->price;
         }
-
-        $payment = $mollie->payments->create([
-            "amount" => [
-                "currency" => "EUR",
-                "value" => number_format((float)$total, 2, '.', '')
-            ],
-            "description" => $user->name . ' ordered ',
-            "redirectUrl" => RouteManager::getUrlByRouteName("receipt"),
-            "webhookUrl" => RouteManager::getUrlByRouteName("webhook"),
-            "metadata" => [
-                "order_id" => $order->id,
-            ],
-        ]);
-        header("Location: " . $payment->getCheckoutUrl(), true, 303);
-
+        return $total;
     }
 
     /**
@@ -293,19 +317,6 @@ class OrderController extends BaseController
             'uuid' => Uuid::uuid4(),
             'user_id' => $user->id,
         ]);
-    }
-
-    /**
-     * if the order already exist for the current user just return the order
-     * @param $user
-     * @return Collection
-     */
-    private function getReceipt($user): Collection
-    {
-        return $this->removeDupes(Order::query()
-            ->where("user_id", "=", $user->id)
-            ->where('status', '=', "paid")
-            ->first());
     }
 
     /**
