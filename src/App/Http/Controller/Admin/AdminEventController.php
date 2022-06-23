@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controller\Admin;
 
 use App\Model\Event;
