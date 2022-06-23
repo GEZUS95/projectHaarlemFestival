@@ -73,7 +73,7 @@
 
     <div class="partials-order-index">
 
-        <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("images", ["slug" => $image_link])}}"
+        <img src="{{\Matrix\Managers\RouteManager::getUrlByRouteName("assets", ["slug" => "banner.jpg"])}}"
              alt="haarlem"
              class="partials-order-index-image-background"
         >
@@ -127,11 +127,12 @@
                         @endforeach
 
                         @foreach($order["items"] as $item)
+
                             <hr>
                             <div class="partials-order-index-cart-inner-con">
                                 <div class="partials-event-program-b-tickets-time">
-                                    <div>{{\Carbon\Carbon::parse($item->start_time)->format('H:i')}}</div>
-                                    <div>- {{\Carbon\Carbon::parse($item->end_time)->format('H:i')}}</div>
+                                    <div>{{\Carbon\Carbon::parse($item->start_time)->format('d m H:i')}}</div>
+                                    <div>&nbsp;- {{\Carbon\Carbon::parse($item->end_time)->format('d m H:i')}}</div>
                                 </div>
 
                                 <div>

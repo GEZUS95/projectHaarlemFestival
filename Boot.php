@@ -10,6 +10,6 @@ $dotenv->load();
 //Load capsule into the application
 include __DIR__ . "/src/Config/Connection.php";
 
-error_reporting(E_ALL & ~E_NOTICE & ~E_USER_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE & ~E_USER_NOTICE);
 
 
